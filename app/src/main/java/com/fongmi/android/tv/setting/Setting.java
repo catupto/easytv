@@ -413,8 +413,8 @@ public class Setting {
     }
 
     public static int getLanguage() {
-        int language = Prefers.getInt("language", LANGUAGE_FOLLOW_SYSTEM);
-        return isLanguage(language) ? language : LANGUAGE_FOLLOW_SYSTEM;
+        int language = Prefers.getInt("language", LANGUAGE_SIMPLIFIED);
+        return isLanguage(language) ? language : LANGUAGE_SIMPLIFIED;
     }
 
     public static void putLanguage(int language) {
