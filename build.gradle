@@ -1,7 +1,9 @@
 plugins {
     alias libs.plugins.android.application apply false
     alias libs.plugins.android.library apply false
-    // PLUGIN-05: Chaquopy plugin removed with the Python runtime.
+    // Chaquopy 插件按需启用：只在 -PfullEdition=true 的「全功能版」构建里 apply。
+    // 精简版（默认）不加载插件，chaquo 模块退化为空壳，APK 不含 Python 运行时。
+    alias libs.plugins.chaquo.python apply false
 }
 
 tasks.register('clean', Delete) {

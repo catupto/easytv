@@ -2,9 +2,27 @@ plugins {
     id 'com.android.library'
 }
 
-// PLUGIN-05: Python runtime removed to minimize the APK. This module stays as a
-// thin compatibility shell so existing callers/tests still compile. See
-// docs/PLUGIN-05-minimal-apk.md.
+// 双版本构建开关：
+//   默认（不加参数）   = 精简版 lite，src/main 下的空壳实现，APK ~23MB，无 Python
+//   -PfullEdition=true = 全功能版 full，用 src/full 覆盖空壳，APK ~45MB，支持 .py 站源
+//
+// 为什么必须用属性开关而不是 flavor：
+// Chaquopy 是 Gradle 插件，构建期把解释器 + assets 硬注入 package task
+// （PLUGIN-05 实测 packagingOptions/resources/mergeAssets 三种排除全部无效），
+// 无法在同一模块内按 flavor 二选一，只能在配置阶段整体切换。
+def fullEdition = project.hasProperty('fullEdition') && project.property('fullEdition').toBoolean()
+
+if (fullEdition) {
+    apply plugin: 'com.chaquo.python'
+}
+
+def localProps = new Properties()
+def localPropsFile = rootProject.file('local.properties')
+if (localPropsFile.exists()) {
+    localPropsFile.withInputStream { localProps.load(it) }
+}
+def chaquopyBuildPython = project.findProperty('chaquopyBuildPython') ?: localProps['chaquopyBuildPython']
+
 android {
     namespace = 'com.fongmi.chaquo'
 
@@ -13,6 +31,45 @@ android {
     defaultConfig {
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
+
+        if (fullEdition) {
+            python {
+                version = "3.10"
+                if (chaquopyBuildPython) buildPython chaquopyBuildPython.toString()
+                pip {
+                    install("-r", "requirements.txt")
+                }
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            // 默认：src/main 下的空壳 Loader/Spider 参与编译（精简版）。
+            // fullEdition：java 源目录整体替换为 src/full/java（完整实现）。
+            // 必须用「替换」而不是「追加 + exclude」——java.exclude 作用于整个源集
+            // 且按路径匹配，会把 src/full 里的同名文件一并排除掉，结果是
+            // Loader/Spider 两个类都消失、构建静默通过但产物缺类。
+            if (fullEdition) {
+                java.setSrcDirs(['src/full/java'])
+                python.srcDirs = ['src/full/python']
+            }
+        }
+    }
+
+    if (fullEdition) {
+        flavorDimensions = ["abi"]
+
+        productFlavors {
+            arm64_v8a {
+                dimension "abi"
+                ndk { abiFilters "arm64-v8a" }
+            }
+            armeabi_v7a {
+                dimension "abi"
+                ndk { abiFilters "armeabi-v7a" }
+            }
+        }
     }
 
     compileOptions {
