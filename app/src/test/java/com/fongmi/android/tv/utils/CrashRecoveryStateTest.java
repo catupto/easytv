@@ -63,11 +63,11 @@ public class CrashRecoveryStateTest {
 
     @Test
     public void anrTraceStaysTextAndIsBounded() {
-        byte[] raw = "ANR in com.silent.android.webhtv\nReason: Input dispatching timed out".getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        byte[] raw = "ANR in com.hjdhnx.android.easytv\nReason: Input dispatching timed out".getBytes(java.nio.charset.StandardCharsets.UTF_8);
 
         String text = CrashRecoveryState.traceText(raw, 6);
 
-        assertTrue(text.startsWith("ANR in com.silent.android.webhtv"));
+        assertTrue(text.startsWith("ANR in com.hjdhnx.android.easytv"));
         assertTrue(CrashRecoveryState.traceText(new byte[20000], 3).length() <= 4096);
     }
 

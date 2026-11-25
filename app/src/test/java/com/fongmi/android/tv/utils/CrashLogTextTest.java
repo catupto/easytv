@@ -15,7 +15,7 @@ public class CrashLogTextTest {
                 "5.6.0-test",
                 "2026-10-21T20:00:00.000+0800",
                 12345L,
-                "com.silent.android.webhtv:error_activity",
+                "com.hjdhnx.android.easytv:error_activity",
                 4242,
                 10123,
                 "main",
@@ -34,7 +34,7 @@ public class CrashLogTextTest {
         assertTrue(report.startsWith(CrashLogText.REPORT_HEADER));
         assertTrue(report.contains("appVersion=5.6.0-test"));
         assertTrue(report.contains("elapsedMs=12345"));
-        assertTrue(report.contains("process=com.silent.android.webhtv:error_activity"));
+        assertTrue(report.contains("process=com.hjdhnx.android.easytv:error_activity"));
         assertTrue(report.contains("pid=4242"));
         assertTrue(report.contains("thread=main"));
         assertTrue(report.contains("debugLogEnabled=false"));
@@ -108,12 +108,12 @@ public class CrashLogTextTest {
     @Test
     public void sessionCarriesTheEnvironmentThatDecidesReproducibility() {
         CrashLogText.Environment environment = new CrashLogText.Environment(
-                "5.6.0-20261116", "Xiaomi MI TV", "Android 12 (API 31)", "arm64-v8a", "com.silent.android.webhtv", "mpv");
+                "5.6.0-20261116", "Xiaomi MI TV", "Android 12 (API 31)", "arm64-v8a", "com.hjdhnx.android.easytv", "mpv");
 
         String body = CrashLogText.composeSession(null, List.of(), false, false, false, environment);
 
         assertTrue(body.startsWith(CrashLogText.SESSION_HEADER));
-        assertTrue(body.contains("app=5.6.0-20261116 abi=arm64-v8a kernel=mpv process=com.silent.android.webhtv"));
+        assertTrue(body.contains("app=5.6.0-20261116 abi=arm64-v8a kernel=mpv process=com.hjdhnx.android.easytv"));
         assertTrue(body.contains("Xiaomi MI TV / Android 12 (API 31)"));
     }
 

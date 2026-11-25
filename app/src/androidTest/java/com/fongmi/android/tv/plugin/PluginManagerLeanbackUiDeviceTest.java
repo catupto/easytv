@@ -225,9 +225,9 @@ public class PluginManagerLeanbackUiDeviceTest {
                 local.requestFocus();
             });
             key(KeyEvent.KEYCODE_DPAD_RIGHT);
-            assertFocused("com.silent.android.webhtv:id/remoteImportPlugin");
+            assertFocused("com.hjdhnx.android.easytv:id/remoteImportPlugin");
             key(KeyEvent.KEYCODE_DPAD_RIGHT);
-            assertFocused("com.silent.android.webhtv:id/reloadPlugins");
+            assertFocused("com.hjdhnx.android.easytv:id/reloadPlugins");
             capture("plugin-manager-tv-page.png");
             scenario.onActivity(activity -> {
                 invoke(activity, "beginBusy");
