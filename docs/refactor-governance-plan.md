@@ -263,7 +263,7 @@ grep -rhoE '"[^"]*\.java"' app/src/test* --include=*SourceTest.java \
 - [ ] leanback 测试基线已补测
 - [ ] `SourceTextTest` 标记接口已创建
 - [ ] 至少 75 个 `*SourceTest.java` 已加 `@Category`
-- [ ] `-PexcludeSourceTextTests` 参数可用且生效
+- [ ] `-PexcludeSourceTextTests` 参数可用且生效（用「基线失败数从 21 降到约 12」交叉验证）
 - [ ] 全量测试结果与基线一致
 - [ ] 「实现文本耦合地图」已产出
 - [ ] 已提交并打恢复标签
