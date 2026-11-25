@@ -1,0 +1,27 @@
+#!/bin/sh
+# 自动将 CLAUDE.md 镜像同步为 AGENTS.md，保证其他 Agent（Codex 等）读取到的内容与
+# CLAUDE.md 一致。CLAUDE.md 是唯一可编辑的来源；本钩子只做单向覆盖。
+#
+# 启用方式（新 clone 后执行一次，Git 不会提交 .git/hooks 目录）：
+#   git config core.hooksPath .githooks
+
+set -e
+
+repo_root=$(git rev-parse --show-toplevel)
+src="$repo_root/CLAUDE.md"
+dst="$repo_root/AGENTS.md"
+
+if [ ! -f "$src" ]; then
+    exit 0
+fi
+
+marker="<!-- AUTO-GENERATED: 本文件由 .githooks/pre-commit 从 CLAUDE.md 自动镜像生成，不要手动编辑；请改 CLAUDE.md -->"
+
+{
+    printf '%s\n\n' "$marker"
+    cat "$src"
+} > "$dst"
+
+git add "$dst"
+
+exit 0
