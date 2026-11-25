@@ -37,5 +37,9 @@ graphify-out/
 .codex/task-state/
 ext/cores-build/
 ext/core-sources/
+# 分发用的外置内核包（体积大，见 ext/cores-build，随时可重新打包）
+ext/EasyTV-外置内核包-*.zip
+ext/EasyTV-cores-*.zip
+ext/SHA256SUMS*.txt
 # PLUGIN-07: DV5 renderer static libs are rebuild artifacts, not source.
 third_party/exo-dv5-native/prebuilt/
