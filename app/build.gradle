@@ -12,6 +12,9 @@ if (localPropsFile.exists()) {
 def hasReleaseSigning = localProps['storeFile'] && localProps['keyAlias'] && localProps['storePassword']
 def releaseKeyPassword = localProps['keyPassword'] ?: localProps['storePassword']
 def fastRelease = (project.findProperty('fastRelease') ?: 'false').toString().toBoolean()
+// 全功能版开关（-PfullEdition=true）：与 chaquo 模块共用同一个属性。
+// 只在全功能版里打包 BasicPitch TFLite 音高生成器 + 模型；精简版保持原样。
+def fullEdition = (project.findProperty('fullEdition') ?: 'false').toString().toBoolean()
 def buildTimestamp = new Date().format('yyyyMMddHHmm', TimeZone.getTimeZone('Asia/Shanghai'))
 def buildTime = fastRelease ? "fast-${buildTimestamp}" : buildTimestamp
 def releaseTag = (System.getenv('WEBHTV_RELEASE_TAG') ?: '').replace('\\', '\\\\').replace('"', '\\"')
@@ -108,6 +111,12 @@ android {
     // ASS rendering is part of normal builds; package the matching prebuilt ABI.
     sourceSets.main.jniLibs.srcDir(rootProject.file('third_party/exo-ass-native/prebuilt'))
     sourceSets.androidTest.assets.srcDir(files("$projectDir/schemas").files)
+    // 全功能版：追加 BasicPitch TFLite 生成器（src/full/java）与模型（src/full/assets）。
+    // 精简版不追加，KaraokeTrackRepository 走纯 Java 降级实现。
+    if (fullEdition) {
+        sourceSets.main.java.srcDir('src/full/java')
+        sourceSets.main.assets.srcDir('src/full/assets')
+    }
 
     signingConfigs {
         release {
@@ -223,7 +232,11 @@ dependencies {
     implementation libs.permissionx
     implementation libs.simple.xml
     implementation libs.textdrawable
-    // PLUGIN-05: tensorflow-lite removed with BasicPitch pitch generator (see PLUGIN-05 doc).
+    // PLUGIN-05: tensorflow-lite 曾随 BasicPitch 一并移除以缩小 APK。
+    // 全功能版（-PfullEdition=true）恢复它，配合 src/full 下的生成器；精简版不含。
+    if (fullEdition) {
+        implementation libs.tensorflow.lite
+    }
     implementation libs.zxing.core
     leanbackImplementation libs.leanback
     leanbackImplementation libs.androidautosize

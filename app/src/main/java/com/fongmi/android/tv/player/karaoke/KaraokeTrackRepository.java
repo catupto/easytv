@@ -147,9 +147,10 @@ public class KaraokeTrackRepository {
         if (input == null || input.isEmpty()) return ImportResult.fail("empty player");
         try {
             String signature = input.getSignature();
-            // PLUGIN-05: BasicPitch TFLite generator removed to keep the APK small.
-            // Always use the pure-Java fallback generator.
-            String text = KaraokePitchTrackGenerator.build(input, lines, progress);
+            // BasicPitch TFLite 生成器只在全功能版（-PfullEdition）里编译进 APK；精简版没有这个类。
+            // 用反射探测，避免精简版产生硬引用导致 NoClassDefFoundError。
+            String text = buildWithBasicPitchIfAvailable(input, lines, progress);
+            if (text == null) text = KaraokePitchTrackGenerator.build(input, lines, progress);
             deleteGeneratedBoundIfAny(signature, input.getLegacySignature());
             delete(generatedFile(signature));
             delete(generatedFile(input.getLegacySignature()));
@@ -157,6 +158,21 @@ public class KaraokeTrackRepository {
         } catch (Exception e) {
             android.util.Log.e("karaoke-generate", "pitch generation failed basicPitch=" + PlayerSetting.isKaraokeBasicPitchTflite() + " url=" + input.getUrl() + " duration=" + input.getDuration() + " headers=" + input.getHeaders().size() + " lines=" + (lines == null ? 0 : lines.size()), e);
             return ImportResult.fail(e.getMessage());
+        }
+    }
+
+    /**
+     * 全功能版才带 BasicPitch TFLite 生成器；精简版没有这个类。
+     * 反射调用并在任何失败时返回 null，让调用方走纯 Java 降级，避免精简版崩溃。
+     */
+    private static String buildWithBasicPitchIfAvailable(MediaInput input, List<LyricsLine> lines, KaraokePitchTrackGenerator.Progress progress) {
+        if (!PlayerSetting.isKaraokeBasicPitchTflite()) return null;
+        try {
+            Class<?> cls = Class.forName("com.fongmi.android.tv.player.karaoke.BasicPitchTfliteGenerator");
+            java.lang.reflect.Method build = cls.getMethod("build", MediaInput.class, List.class, KaraokePitchTrackGenerator.Progress.class);
+            return (String) build.invoke(null, input, lines, progress);
+        } catch (Throwable ignored) {
+            return null;
         }
     }
 
