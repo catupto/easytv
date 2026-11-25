@@ -139,17 +139,24 @@ assertTrue("isLive must tolerate a late callback after engine release",
 
 ### 任务清单
 
-#### P0.1 建立测试基线（必须先做）
+#### P0.1 建立测试基线 ✅ 已完成（2026-11-25 人工实测）
 
-1. 运行：
-   ```bash
-   bash gradlew :app:testMobileArm64_v8aDebugUnitTest 2>&1 | tee /tmp/baseline-mobile.log
-   bash gradlew :app:testLeanbackArm64_v8aDebugUnitTest 2>&1 | tee /tmp/baseline-leanback.log
-   ```
-2. 从日志中提取：总测试数、通过数、失败数、跳过的测试名。
-3. 把结果写入 `docs/refactor-governance-plan.md` 的「测试基线」章节。
+**决定：P0.1 已由人工完成，Agent 直接跳到 P0.2，不要重跑 mobile 基线。**
 
-**验收：** 文档中存在确定的基线数字（例如「mobile: 1243 tests, 1241 passed, 2 failed: XxxTest」）。**如果已有失败测试，必须原样记录，不要尝试修复**——它们不属于重构范围。
+已实测：`mobileArm64_v8aDebug` = 6,226 tests，21 failed，3 skipped。
+完整失败清单见「既有失败清单」章节。
+
+**Agent 只需补做一项：测一次 leanback 基线**
+
+```bash
+bash gradlew :app:testLeanbackArm64_v8aDebugUnitTest > build/base-leanback.log 2>&1; echo "EXIT=$?" >> build/base-leanback.log
+```
+
+把数字补进「测试基线」表格。**失败用例照原样记录，不要修。**
+
+> 注意：
+> - 日志务必重定向到**仓库内路径**（如 `build/xxx.log`）。实测 `/tmp` 在部分调用下 Python 无法访问，增加排查难度。
+> - 跑完记得删掉日志文件，不要提交（`build/` 已在 .gitignore 中）。
 
 #### P0.2 建立源码文本测试分类机制
 
@@ -252,7 +259,8 @@ grep -rhoE '"[^"]*\.java"' app/src/test* --include=*SourceTest.java \
 
 ### P0 完成标准（全部满足才能进 P1）
 
-- [ ] `docs/refactor-governance-plan.md` 有测试基线数字
+- [x] `docs/refactor-governance-plan.md` 有 mobile 测试基线数字（6,226 / 21 failed / 3 skipped）
+- [ ] leanback 测试基线已补测
 - [ ] `SourceTextTest` 标记接口已创建
 - [ ] 至少 75 个 `*SourceTest.java` 已加 `@Category`
 - [ ] `-PexcludeSourceTextTests` 参数可用且生效
@@ -494,7 +502,7 @@ protected void onEpisodeSelected(Episode item) { ... 遥控器焦点处理 ... }
 
 | 阶段 | 状态 | 已完成项 | 当前项 | 下一动作（恰好一个） |
 |---|---|---|---|---|
-| P0 | ⬜ 未开始 | — | — | 运行 P0.1 建立测试基线 |
+| P0 | 🟡 进行中 | P0.1 测试基线（mobile 实测 6226/21 failed/3 skipped） | — | 补测 leanback 基线，然后开始 P0.2 |
 | P1 | ⬜ 未开始 | — | — | — |
 | P2 | ⬜ 未开始 | — | — | — |
 | P3 | ⬜ 未开始 | — | — | — |
@@ -504,14 +512,49 @@ protected void onEpisodeSelected(Episode item) { ... 遥控器焦点处理 ... }
 
 ### 测试基线
 
-> P0.1 完成后填写。以后每个阶段完成时更新一次，用于检测回归。
+> **已由人工在 2026-11-25 实测完成，Agent 不需要重跑 P0.1。**
+> 基线一旦变化就是回归信号。
 
-| Flavor | 总数 | 通过 | 失败 | 记录日期 |
-|---|---:|---:|---:|---|
-| mobile（含源码断言） | — | — | — | — |
-| leanback（含源码断言） | — | — | — | — |
-| mobile（排除源码断言） | — | — | — | — |
-| leanback（排除源码断言） | — | — | — | — |
+**mobileArm64_v8aDebug：6,226 tests completed, 21 failed, 3 skipped**（耗时 8 分 10 秒，暖缓存）
+
+| Flavor | 总数 | 通过 | 失败 | 跳过 | 记录日期 |
+|---|---:|---:|---:|---:|---|
+| mobile（含源码断言） | 6,226 | 6,202 | **21** | 3 | 2026-11-25 |
+| leanback（含源码断言） | — | — | — | — | 待测 |
+
+### 既有失败清单（21 个，**属于基线，不是你的改动造成的**）
+
+> Agent 铁律：**以下用例失败是已知状态，绝对不要尝试修复它们。**
+> 你的重构如果让「通过数」低于 6,202，才是回归。
+
+| # | 测试类 | 用例 | 类别 |
+|---:|---|---|---|
+| 1 | `CacheTotalLimitApplyContractTest` | `bothLimitEntriesShareThePlaybackApplyPath` | 源码断言 |
+| 2 | `CacheTotalLimitApplyContractTest` | `totalLimitChangeAppliesAndRepaintsTheSummary` | 行为 |
+| 3 | `ChaquopyRequirementsTest` | `requestsCertificateDependencyIsPackagedExplicitly` | 打包配置 |
+| 4 | `FfmpegVc1SupportTest` | `bundledFfmpeg_hasVc1DecoderForEveryAbi` | 原生资产 |
+| 5 | `FollowingAlistImportTest` | `serverlessNormalizersPreserveFollowOption` | 行为 |
+| 6 | `LabEnvTest` | `deleteTreeUnlocksReadOnlyDirectory` | 环境/文件系统 |
+| 7 | `MpvFontConfigTest` | `writeIfChanged_replacesStaleConfigurationAndCleansTemporaryFile` | 文件系统 |
+| 8 | `MpvHlsCacheCoordinatorTest` | `successfulCommitPublishesCompleteFileAndReleasesReservation` | 缓存 |
+| 9 | `PlaybackOwnershipSourceTest` | `staleSwitchCallbacksRecheckPageAndPlaybackContext` | **源码断言** |
+| 10 | `PlaybackOwnershipSourceTest` | `staleSwitchCallbacksRecheckPageAndPlaybackContextWithApplyGuard` | **源码断言** |
+| 11 | `PlayerPlaybackRegressionSourceTest` | `mobileExoStartupPassesResumePositionAndSkipsTheSecondRestoreSeek` | **源码断言** |
+| 12 | `PythonSpiderDiagnosticsWiringTest` | `dependencyFailureKeepsAnUnconditionalLogcatChannel` | **源码断言** |
+| 13 | `PythonSpiderDiagnosticsWiringTest` | `dependencyFailureKeepsTheBridgeCallGuarded` | **源码断言** |
+| 14 | `PythonStartIdempotenceSourceTest` | `constructorStartsPythonThroughTheGuardedEntryPoint` | **源码断言** |
+| 15 | `PythonStartIdempotenceSourceTest` | `theStarterIsSynchronizedAndToleratesALostRace` | **源码断言** |
+| 16 | `ThemeBinderContractTest` | `nativeActivitiesOutsideBaseActivityAreExplicitlyAccountedFor` | 契约 |
+| 17 | `TmdbDetailActivityLayoutTest` | `colorfulDetailDoesNotKeepPlaybackServiceBoundBetweenEpisodeLaunches` | 布局 |
+| 18 | `TmdbVideoTest` | `displayTypeUsesChineseCategoryNames` | 行为 |
+| 19 | `TvAppExitSourceTest` | `backgroundResumeIsDebouncedAndWorkerStopIsVisible` | **源码断言** |
+| 20 | `TvFixedLightSurfaceContrastTest` | `paletteForegroundsStayReadableOnFixedLightSurfaces` | 视觉契约 |
+| 21 | `VideoActivityLayoutTest` | `leanbackPlaybackLoadingIgnoresStaleReadyBeforeNewPlayerStarts` | 布局 |
+
+**重要观察：** 21 个既有失败中有 **9 个是 `*SourceTest` / 源码文本断言**（第 1、9、10、11、12、13、14、15、19 项）。这直接证明 P0 的必要性——这些断言已经在漂移，并非稳定的安全网。
+
+**交叉验证手段：** P0.2 加 `@Category` 后，用 `-PexcludeSourceTextTests` 跑时，失败数应从 21 降到约 12。对不上说明分类做错了。
+
 
 ### 已知问题清单
 
@@ -602,6 +645,8 @@ bash gradlew :app:testLeanbackArm64_v8aDebugUnitTest
 - 验证 Gradle 脚本改动用 `:app:help`，不要直接跑测试。
 - 重构涉及 Java 代码时，用增量编译，避免 `clean`。
 - 单次测试启动后用 `run_in_background` + 轮询日志，不要重复启动（会争抢锁导致更慢）。
+- **绝对不要加 `--offline`**。实测：`mobileArm64_v8aDebugAnnotationProcessorClasspath` 需要 `org.xerial:sqlite-jdbc:3.41.2.2`，该依赖不在本地缓存，`--offline` 会让构建在 `:app:javaPreCompileMobileArm64_v8aDebug` 直接失败并报 `No cached version available for offline mode`。这是环境依赖缺失，**不是代码问题**，不要因此去改 `app/build.gradle`。
+- 首次成功构建后 `app/build/intermediates/javac/` 会缓存约 8,000 个 class，后续增量编译只需 1-3 分钟。**第一次构建慢是正常的，不要中途放弃。**
 
 ### JUnit 版本
 
