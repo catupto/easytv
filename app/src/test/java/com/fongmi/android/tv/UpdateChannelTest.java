@@ -26,17 +26,16 @@ public class UpdateChannelTest {
     }
 
     @Test
-    public void betaKeepsCnbManifestAsMigrationFallbackBeforeGithubApi() throws Exception {
+    public void betaFallsBackToGithubApiWithoutCnbMirror() throws Exception {
         String source = read(findMainJavaPath().resolve(Path.of("com", "fongmi", "android", "tv", "Updater.java")));
         String method = between(source, "private Update getUpdate", "private Update getGithubStableUpdate");
 
-        int cnbFallback = method.indexOf("Github.getCnbMirrorAsset");
-        int cnbShortCircuit = method.indexOf("hasManifest()) return", cnbFallback);
-        int betaApi = method.indexOf("getGithubBetaUpdate", cnbShortCircuit);
+        int betaApi = method.indexOf("getGithubBetaUpdate");
 
-        assertTrue("Beta should retain the currently published CNB manifest as a migration fallback", cnbFallback >= 0);
-        assertTrue("A valid CNB beta manifest must prevent a direct GitHub API request", cnbShortCircuit > cnbFallback);
-        assertTrue("The direct GitHub API must remain the last resort", betaApi > cnbShortCircuit);
+        assertTrue("Beta must look up the GitHub Releases API after the fixed channel manifest",
+                betaApi >= 0);
+        assertFalse("The upstream CNB mirror must not remain as a beta fallback",
+                method.contains("Github.getCnbMirrorAsset"));
     }
 
     @Test

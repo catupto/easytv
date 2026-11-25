@@ -56,7 +56,6 @@ public class Updater implements UpdateTransfer.Callback, UpdateListener {
 
     private static final String TAG = "Updater";
     private static final String DEFAULT_RELEASE_NOTES = "手动触发 GitHub Actions 构建发布。";
-    private static final String SOURCE_CNB = "cnb";
     private static final String SOURCE_GITHUB = "github";
     private static final long GITHUB_REQUEST_TIMEOUT_MS = TimeUnit.SECONDS.toMillis(4);
     private static final long UPDATE_CHECK_TIMEOUT_MS = GITHUB_REQUEST_TIMEOUT_MS * 5 + TimeUnit.SECONDS.toMillis(2);
@@ -176,11 +175,7 @@ public class Updater implements UpdateTransfer.Callback, UpdateListener {
         String manifestName = getManifestName(channel);
         Update update = readUpdate(channel, Github.getChannelAsset(manifestName), SOURCE_GITHUB);
         if (update.hasManifest()) return update;
-        if (Update.CHANNEL_BETA.equals(channel)) {
-            update = readUpdate(channel, Github.getCnbMirrorAsset(manifestName), SOURCE_CNB);
-            if (update.hasManifest()) return update;
-            return getGithubBetaUpdate(channel);
-        }
+        if (Update.CHANNEL_BETA.equals(channel)) return getGithubBetaUpdate(channel);
         update = readUpdate(channel, Github.getGithubLatestAsset(manifestName), SOURCE_GITHUB);
         if (update.hasManifest()) return update;
         return getGithubStableUpdate(channel);
@@ -329,7 +324,7 @@ public class Updater implements UpdateTransfer.Callback, UpdateListener {
         String apk = TextUtils.isEmpty(update.apk) ? getDefaultApkName(update.channel) : update.apk;
         if (SOURCE_GITHUB.equals(source) && !TextUtils.isEmpty(update.name)) return Github.getGithubReleaseAsset(update.name, getFileName(apk, update.channel));
         if (apk.startsWith("http://") || apk.startsWith("https://")) return apk;
-        return Github.getCnbAsset(apk);
+        return Github.getGithubLatestAsset(apk);
     }
 
     private String getFileName(String value, String channel) {

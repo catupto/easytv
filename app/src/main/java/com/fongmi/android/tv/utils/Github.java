@@ -2,24 +2,15 @@ package com.fongmi.android.tv.utils;
 
 public class Github {
 
-    private static final String GITHUB_LATEST = "https://github.com/Silent1566/webhtv/releases/latest/download";
-    private static final String GITHUB_RELEASE = "https://github.com/Silent1566/webhtv/releases/download";
+    private static final String GITHUB_LATEST = "https://github.com/hjdhnx/easytv/releases/latest/download";
+    private static final String GITHUB_RELEASE = "https://github.com/hjdhnx/easytv/releases/download";
     private static final String GITHUB_UPDATE_CHANNEL = GITHUB_RELEASE + "/update-channel";
-    private static final String CNB_MANIFEST = "https://cnb.cool/fish2035/webhtv-release/-/git/raw/main/apk";
-    private static final String GITHUB_API = "https://api.github.com/repos/Silent1566/webhtv/releases/tags";
-    private static final String GITHUB_RELEASES_API = "https://api.github.com/repos/Silent1566/webhtv/releases";
-    private static final String GITHUB_RELEASE_ASSETS_API = "https://api.github.com/repos/Silent1566/webhtv/releases/assets";
+    private static final String GITHUB_API = "https://api.github.com/repos/hjdhnx/easytv/releases/tags";
+    private static final String GITHUB_RELEASES_API = "https://api.github.com/repos/hjdhnx/easytv/releases";
+    private static final String GITHUB_RELEASE_ASSETS_API = "https://api.github.com/repos/hjdhnx/easytv/releases/assets";
 
     public static String getChannelAsset(String name) {
         return GITHUB_UPDATE_CHANNEL + "/" + name;
-    }
-
-    public static String getCnbMirrorAsset(String name) {
-        return CNB_MANIFEST + "/" + name;
-    }
-
-    public static String getCnbAsset(String name) {
-        return getGithubLatestAsset(name);
     }
 
     public static String getGithubLatestAsset(String name) {
@@ -28,28 +19,6 @@ public class Github {
 
     public static String getGithubReleaseAsset(String tag, String name) {
         return GITHUB_RELEASE + "/" + tag + "/" + name;
-    }
-
-    public static String getJson(String name) {
-        return getCnbAsset(name + ".json");
-    }
-
-    public static String getJson(String name, String channel) {
-        if ("beta".equals(channel)) return getCnbAsset(name + "-beta.json");
-        return getJson(name);
-    }
-
-    public static String getApk(String name) {
-        return getCnbAsset(name + ".apk");
-    }
-
-    public static String getApk(String name, String channel) {
-        if ("beta".equals(channel)) return getCnbAsset(name + "-beta.apk");
-        return getApk(name);
-    }
-
-    public static String getAsset(String name, String channel) {
-        return getCnbAsset(name);
     }
 
     public static String getReleaseApi(String tag) {

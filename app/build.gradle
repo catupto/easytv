@@ -38,8 +38,8 @@ android {
         applicationId "com.hjdhnx.android.easytv"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
-        versionCode 560
-        versionName "5.6.0"
+        versionCode 1
+        versionName "1.0.0"
         // PLUGIN-06/FIX: locale filtering removed. AGP 9's resourceConfigurations
         // with "zh" did not match values-zh-rCN/values-zh-rTW and stripped all
         // localized strings, leaving the UI English. See LANG-02.
