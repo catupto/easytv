@@ -262,6 +262,7 @@ import com.fongmi.android.tv.ui.dialog.SubtitleDialog;
 import com.fongmi.android.tv.ui.dialog.TitleDialog;
 import com.fongmi.android.tv.ui.dialog.TimerDialog;
 import com.fongmi.android.tv.utils.Traffic;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -6279,7 +6280,7 @@ private boolean runtimeSourceOnly;
      * 仅 TV 端生效；返回值同时受 leanback 与设置项约束，手机端行为保持不变。
      */
     private boolean isManualPlaybackMode() {
-        return Util.isLeanback() && !PlayerSetting.isAutoPlay();
+        return DeviceModePolicy.current().isTv() && !PlayerSetting.isAutoPlay();
     }
 
     /**

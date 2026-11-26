@@ -258,6 +258,7 @@ import com.fongmi.android.tv.player.mpv.MpvConfigStore;
 import com.fongmi.android.tv.setting.LyricsSetting;
 import com.fongmi.android.tv.ui.custom.AudioPlayerBackgroundDrawable;
 import com.fongmi.android.tv.ui.custom.KaraokeResultView;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -2256,7 +2257,7 @@ private final Task.Scope mPersonalRecommendationTasks = new Task.Scope(Task.reco
                 setR1Callback();
                 return true;
             });
-            if (Util.isLeanback()) {
+            if (DeviceModePolicy.current().isTv()) {
                 view.setFocusable(true);
                 view.setFocusableInTouchMode(true);
             }

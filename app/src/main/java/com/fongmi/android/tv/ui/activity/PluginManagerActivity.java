@@ -56,6 +56,7 @@ import com.fongmi.android.tv.utils.FileChooser;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.PermissionUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.utils.Path;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -602,7 +603,7 @@ public class PluginManagerActivity extends BaseActivity {
         TextInputEditText input = new TextInputEditText(this);
         input.setSingleLine(false);
         input.setMinLines(4);
-        if (Util.isLeanback()) input.setMaxLines(8);
+        if (DeviceModePolicy.current().isTv()) input.setMaxLines(8);
         input.setText(PluginEnvironmentStore.get().get(entry.id()));
 
         TextInputLayout layout = new TextInputLayout(this);
@@ -628,7 +629,7 @@ public class PluginManagerActivity extends BaseActivity {
                     String value = input.getText() == null ? "" : input.getText().toString().trim();
                     if (!value.isEmpty() && !isJsonObject(value)) {
                         layout.setError(getString(R.string.plugin_manager_params_invalid));
-                        if (Util.isLeanback()) input.requestFocus();
+                        if (DeviceModePolicy.current().isTv()) input.requestFocus();
                         return;
                     }
                     PluginEnvironmentStore store = PluginEnvironmentStore.get();
@@ -642,7 +643,7 @@ public class PluginManagerActivity extends BaseActivity {
                 }));
         dialog.show();
         LightDialog.apply(dialog);
-        if (Util.isLeanback()) wireParameterDialogFocus(dialog, input);
+        if (DeviceModePolicy.current().isTv()) wireParameterDialogFocus(dialog, input);
     }
 
     private static void wireParameterDialogFocus(androidx.appcompat.app.AlertDialog dialog, TextInputEditText input) {

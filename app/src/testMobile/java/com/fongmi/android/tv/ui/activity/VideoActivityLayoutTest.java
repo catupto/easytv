@@ -3757,7 +3757,7 @@ public class VideoActivityLayoutTest {
 
         assertTrue("manual playback mode must be derived from the user VOD autoplay setting and stay TV-only",
                 source.contains("private boolean isManualPlaybackMode() {")
-                        && source.contains("return Util.isLeanback() && !PlayerSetting.isAutoPlay();"));
+                        && source.contains("return DeviceModePolicy.current().isTv() && !PlayerSetting.isAutoPlay();"));
 
         // 进场焦点：用户确认「进来的时候还是聚焦在播放器上」，手动模式不再把初始焦点送到选集。
         // 曾经那样做会让用户按 UP 到播放器后又被拽回去，并在切线路后与 RecyclerView 的焦点回收

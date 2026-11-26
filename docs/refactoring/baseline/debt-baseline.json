@@ -19,7 +19,7 @@
   "totals": {
     "_note": "Ceilings, not equalities: a batch may add scaffolding while shrinking debt.",
     "java_files_max": 2687,
-    "java_lines_max": 576254
+    "java_lines_max": 576258
   },
   "extremes": {
     "_note": "Each of these may only go down (plan §6.1 ladder).",
@@ -36,8 +36,8 @@
   },
   "large_files": {
     "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java": 14365,
-    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 13271,
-    "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11976,
+    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 13272,
+    "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11977,
     "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9819,
     "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java": 6667,
     "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4187,
@@ -88,13 +88,13 @@
     "app/src/main/java/com/fongmi/android/tv/ui/dialog/PanNetworkDiagnosticDialog.java": 1079,
     "app/src/main/java/com/fongmi/android/tv/setting/PlayerSetting.java": 1064,
     "app/src/main/java/com/fongmi/android/tv/player/exo/PlaybackAnalyticsListener.java": 1053,
-    "app/src/main/java/com/fongmi/android/tv/ui/activity/PluginManagerActivity.java": 1040,
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/PluginManagerActivity.java": 1041,
     "app/src/main/java/tv/danmaku/ijk/media/player/IjkMediaPlayer.java": 1031
   },
   "flavor": {
     "_note": "80 -> 0 by batch 4.6. dup_files entries are repo-relative to the java root.",
     "dup_files_max": 63,
-    "dup_lines_max": 55398,
+    "dup_lines_max": 55400,
     "dup_files": [
       "com/fongmi/android/tv/ui/activity/FileActivity.java",
       "com/fongmi/android/tv/ui/activity/HistoryActivity.java",
@@ -159,7 +159,8 @@
       "com/fongmi/android/tv/ui/holder/VodOvalHolder.java",
       "com/fongmi/android/tv/ui/holder/VodRectHolder.java",
       "com/fongmi/android/tv/utils/PiP.java"
-    ]
+    ],
+    "_dup_lines_note": "dup_lines is the two-sided line total of the 63 remaining same-path files. It can rise by a line or two when an identical one-line edit (e.g. adding the DeviceModePolicy import) lands in both copies of a still-split file. It may not rise otherwise, and it drops to 0 when 4.6 removes the flavor dimension."
   },
   "namespace_files": [
     "app/src/main/java/androidx/media3/mpvplayer/HlsAdTimeline.java",
@@ -441,7 +442,7 @@
       "isLeanback_raw_lines is the plan's §2.2.4 `grep -c` number (232 at anchor); it",
       "also counts doc mentions, so it is reported but NOT gated."
     ],
-    "isLeanback_callsites": 79,
+    "isLeanback_callsites": 71,
     "setting_static_callsites": 645,
     "setting_static_files": 114,
     "app_get_files": 94,

@@ -58,6 +58,7 @@ import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;
 import com.fongmi.android.tv.utils.TmdbImageSaver;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -137,7 +138,7 @@ public class TmdbPersonActivity extends BaseActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (Util.isLeanback() && binding != null && event != null && event.getAction() == KeyEvent.ACTION_DOWN) {
+        if (DeviceModePolicy.current().isTv() && binding != null && event != null && event.getAction() == KeyEvent.ACTION_DOWN) {
             View focus = getCurrentFocus();
             if (focus != null && isFocusInside(binding.filterGroup, focus)) {
                 if (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT) return moveFilterFocus(focus, true);
@@ -740,7 +741,7 @@ public class TmdbPersonActivity extends BaseActivity {
     }
 
     private View createPhotoActions(Dialog dialog, ImageView image, ProgressBar progress, List<String> photos, int[] current, int[] request) {
-        if (Util.isLeanback()) return createPhotoRemoteActions(dialog, image, progress, photos, current, request);
+        if (DeviceModePolicy.current().isTv()) return createPhotoRemoteActions(dialog, image, progress, photos, current, request);
         FrameLayout actions = new FrameLayout(this);
         actions.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
