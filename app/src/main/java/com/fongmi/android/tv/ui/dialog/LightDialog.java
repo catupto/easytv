@@ -25,7 +25,7 @@ import com.fongmi.android.tv.theme.ThemeController;
 import com.fongmi.android.tv.theme.ThemeEditorUi;
 import com.fongmi.android.tv.ui.helper.TouchOptimizationHelper;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -47,7 +47,7 @@ public final class LightDialog {
         Drawable background = shell(dialog.getContext());
         int verticalInset = (int) (dialog.getContext().getResources().getDisplayMetrics().density * 24);
         window.setBackgroundDrawable(new InsetDrawable(background, 0, verticalInset, 0, verticalInset));
-        if (Util.isLeanback()) applyAlertWindow(dialog, window);
+        if (DeviceModePolicy.current().isTv()) applyAlertWindow(dialog, window);
         // AlertController installs the message and button views during show(), so the
         // binder root is registered here and re-walked by descendant-count changes.
         ThemeController.bindDialog(dialog);
@@ -230,7 +230,7 @@ public final class LightDialog {
         button.setInsetBottom(0);
         button.setCornerRadius(ResUtil.dp2px(6));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setTextColor(ContextCompat.getColorStateList(context, primary ? R.color.dialog_primary_button_text : R.color.dialog_outlined_button_text));
         button.setBackgroundTintList(ContextCompat.getColorStateList(context, primary ? R.color.dialog_primary_button_bg : R.color.dialog_outlined_button_bg));
         button.setStrokeColor(ContextCompat.getColorStateList(context, R.color.dialog_outlined_button_stroke));

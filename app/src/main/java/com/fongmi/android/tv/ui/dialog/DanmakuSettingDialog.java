@@ -27,6 +27,7 @@ import com.fongmi.android.tv.databinding.DialogDanmakuSettingBinding;
 import com.fongmi.android.tv.player.PlayerManager;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -52,7 +53,7 @@ public final class DanmakuSettingDialog {
     public void show(FragmentActivity activity) {
         FragmentManager manager = activity.getSupportFragmentManager();
         for (Fragment fragment : manager.getFragments()) if (fragment instanceof BottomSheet || fragment instanceof SideSheet) return;
-        if (Util.isFullscreenLand(activity) || Util.isLeanback()) new SideSheet(player, restoreParent).show(manager, null);
+        if (Util.isFullscreenLand(activity) || DeviceModePolicy.current().isTv()) new SideSheet(player, restoreParent).show(manager, null);
         else new BottomSheet(player, restoreParent).show(manager, null);
     }
 

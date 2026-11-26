@@ -51,6 +51,7 @@ import com.fongmi.android.tv.utils.KeyUtil;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.crawler.SpiderDebug;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -140,7 +141,7 @@ public final class DanmakuSearchInputDialog extends DialogFragment implements Ca
         dialog.setCanceledOnTouchOutside(true);
         dialog.setOnShowListener(d -> {
             bindEvents();
-            if (Util.isLeanback()) search.requestFocus();
+            if (DeviceModePolicy.current().isTv()) search.requestFocus();
             else Util.showKeyboard(input);
         });
         return dialog;

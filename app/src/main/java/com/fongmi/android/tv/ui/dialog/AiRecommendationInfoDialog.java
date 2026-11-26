@@ -20,7 +20,7 @@ import com.fongmi.android.tv.ui.helper.TmdbRatingFormatter;
 import com.fongmi.android.tv.utils.ImgUtil;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.TmdbImageSelector;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class AiRecommendationInfoDialog {
         });
         confirm.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             detailScroll.setFocusable(true);
             detailScroll.setFocusableInTouchMode(true);
             notInterested.setFocusableInTouchMode(true);

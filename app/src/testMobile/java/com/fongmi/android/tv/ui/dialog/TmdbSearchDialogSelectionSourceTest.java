@@ -53,7 +53,7 @@ public class TmdbSearchDialogSelectionSourceTest {
         String leanbackItemLayout = Files.exists(leanbackItemPath) ? read(leanbackItemPath) : "";
 
         assertTrue("TV dialog width must scale with the current display instead of stopping at a small fixed dp cap",
-                dialog.contains("boolean leanback = Util.isLeanback();")
+                dialog.contains("boolean leanback = DeviceModePolicy.current().isTv();")
                         && dialog.contains("metrics.widthPixels * 0.88f"));
         assertTrue("TV result list height must scale with the current display",
                 dialog.contains("metrics.heightPixels * 0.52f"));

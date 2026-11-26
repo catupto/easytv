@@ -52,8 +52,8 @@ public class GroupRuleDialogLayoutTest {
                         && source.contains("AiGroupRulePreviewSizing.calculate")
                         && source.contains("initial.post(() -> requestFocus(initial))"));
         assertTrue("TV candidate checkboxes and dialog buttons should participate in touch-mode focus",
-                source.contains("check.setFocusableInTouchMode(Util.isLeanback())")
-                        && source.contains("button.setFocusableInTouchMode(Util.isLeanback())"));
+                source.contains("check.setFocusableInTouchMode(DeviceModePolicy.current().isTv())")
+                        && source.contains("button.setFocusableInTouchMode(DeviceModePolicy.current().isTv())"));
         assertTrue("Preview text must not become a selectable TV focus trap",
                 !previewLayout.contains("android:textIsSelectable=\"true\""));
         assertTrue("AI preview should intercept DPAD at the dialog level before NestedScrollView consumes it",

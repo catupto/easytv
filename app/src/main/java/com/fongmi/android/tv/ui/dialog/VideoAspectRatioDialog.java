@@ -16,7 +16,7 @@ import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.player.VideoAspectMode;
 import com.fongmi.android.tv.setting.PlayerSetting;
 import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -98,7 +98,7 @@ public final class VideoAspectRatioDialog {
     private static void configureFocus(TextInputEditText width, TextInputEditText height, Button negative, Button positive) {
         ensureId(negative);
         ensureId(positive);
-        boolean leanback = Util.isLeanback();
+        boolean leanback = DeviceModePolicy.current().isTv();
         for (View view : new View[]{width, height, negative, positive}) {
             view.setFocusable(true);
             if (leanback) view.setFocusableInTouchMode(true);

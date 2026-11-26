@@ -15,7 +15,7 @@ import com.fongmi.android.tv.databinding.DialogTitleBinding;
 import com.fongmi.android.tv.player.PlayerManager;
 import com.fongmi.android.tv.ui.adapter.TitleAdapter;
 import com.fongmi.android.tv.ui.custom.SpaceItemDecoration;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 public final class TitleDialog extends BaseBottomSheetDialog implements TitleAdapter.OnClickListener {
 
@@ -64,11 +64,11 @@ public final class TitleDialog extends BaseBottomSheetDialog implements TitleAda
 
     @Override
     protected boolean transparent() {
-        return !Util.isLeanback();
+        return !DeviceModePolicy.current().isTv();
     }
 
     @Override
     protected boolean stableOverlay() {
-        return !Util.isLeanback();
+        return !DeviceModePolicy.current().isTv();
     }
 }

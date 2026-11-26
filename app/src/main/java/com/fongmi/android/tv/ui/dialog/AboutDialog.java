@@ -28,7 +28,7 @@ import com.fongmi.android.tv.utils.GithubProxy;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.github.catvod.net.OkHttp;
 
@@ -184,7 +184,7 @@ public final class AboutDialog {
     }
 
     private static void configureGithubProxyWindow(FragmentActivity activity, AlertDialog dialog, DialogGithubProxyBinding binding) {
-        boolean leanback = Util.isLeanback();
+        boolean leanback = DeviceModePolicy.current().isTv();
         Window window = dialog.getWindow();
         if (window == null) return;
         // 手机与电视都铺满全屏：不再按屏幕比例手算宽高，列表改为吃掉剩余空间。
@@ -262,7 +262,7 @@ public final class AboutDialog {
     private static boolean configureWindow(FragmentActivity activity, Dialog dialog, DialogAboutBinding binding) {
         Window window = dialog.getWindow();
         if (window == null) return false;
-        if (Util.isLeanback()) return configureFullscreenWindow(window, binding);
+        if (DeviceModePolicy.current().isTv()) return configureFullscreenWindow(window, binding);
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = (int) (ResUtil.getScreenWidth(activity) * (ResUtil.isLand(activity) ? 0.62f : 0.92f));
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;

@@ -22,7 +22,7 @@ import com.fongmi.android.tv.bean.Site;
 import com.fongmi.android.tv.setting.Setting;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -186,7 +186,7 @@ public final class CspWarmupDialog {
         button.setPadding(dp(context, 10), 0, dp(context, 10), 0);
         button.setCornerRadius(dp(context, 6));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         styleTopSwitch(button);
         return button;
     }
@@ -215,7 +215,7 @@ public final class CspWarmupDialog {
         button.setPadding(dp(context, 8), 0, dp(context, 8), 0);
         button.setCornerRadius(dp(context, 6));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         styleModeButton(button, selected);
         return button;
     }

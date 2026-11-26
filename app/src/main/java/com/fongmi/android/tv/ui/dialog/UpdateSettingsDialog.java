@@ -21,7 +21,7 @@ import com.fongmi.android.tv.update.UpdateSource;
 import com.fongmi.android.tv.update.UpdateUrl;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.tabs.TabLayout;
 
 public final class UpdateSettingsDialog {
@@ -116,7 +116,7 @@ public final class UpdateSettingsDialog {
     private static void renderSource(DialogUpdateSettingsBinding binding, State state) {
         boolean github = UpdateSource.GITHUB.equals(state.source);
         binding.ociPanel.setVisibility(github ? View.GONE : View.VISIBLE);
-        if (Util.isLeanback()) binding.sourceTabs.post(() -> configureTvFocus(binding, state));
+        if (DeviceModePolicy.current().isTv()) binding.sourceTabs.post(() -> configureTvFocus(binding, state));
     }
 
     private static void renderOci(FragmentActivity activity, DialogUpdateSettingsBinding binding, State state) {
@@ -148,7 +148,7 @@ public final class UpdateSettingsDialog {
     }
 
     private static void configureTvFocus(DialogUpdateSettingsBinding binding, State state) {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         tvFocusable(binding.close);
         tvFocusable(binding.save);
         binding.close.setOnKeyListener((view, keyCode, event) -> event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DPAD_DOWN && focusSelectedTab(binding));

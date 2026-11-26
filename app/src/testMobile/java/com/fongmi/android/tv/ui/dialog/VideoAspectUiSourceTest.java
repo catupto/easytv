@@ -62,7 +62,7 @@ public class VideoAspectUiSourceTest {
     public void choiceDialogAdaptsHeightForMobileAndKeepsSequentialDpadFocus() throws Exception {
         String dialog = read(source("main", "java", "com", "fongmi", "android", "tv", "ui", "dialog", "ChoiceDialog.java"));
         int adaptation = dialog.indexOf("adaptListHeight(window);");
-        int leanbackFocus = dialog.indexOf("if (Util.isLeanback())");
+        int leanbackFocus = dialog.indexOf("if (DeviceModePolicy.current().isTv())");
         assertTrue("choice list height must adapt inside the post-layout callback", dialog.contains("window.getDecorView().post(() -> {"));
         assertTrue("choice list height must adapt before Leanback-only focus work", adaptation >= 0 && leanbackFocus > adaptation);
         assertTrue("choice list height must use the post-layout visible window frame", dialog.contains("getWindowVisibleDisplayFrame(frame)"));

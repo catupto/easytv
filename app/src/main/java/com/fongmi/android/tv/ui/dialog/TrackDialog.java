@@ -46,7 +46,7 @@ import com.fongmi.android.tv.utils.FileChooser;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -819,12 +819,12 @@ public final class TrackDialog extends BaseBottomSheetDialog implements TrackAda
 
     @Override
     protected boolean transparent() {
-        return !Util.isLeanback();
+        return !DeviceModePolicy.current().isTv();
     }
 
     @Override
     protected boolean stableOverlay() {
-        return !Util.isLeanback();
+        return !DeviceModePolicy.current().isTv();
     }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

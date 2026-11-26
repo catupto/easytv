@@ -16,7 +16,7 @@ import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.databinding.DialogMpvConfigEditorBinding;
 import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MpvConfigEditorDialog extends BaseAlertDialog {
@@ -61,7 +61,7 @@ public class MpvConfigEditorDialog extends BaseAlertDialog {
     }
 
     private void setupTvFocus() {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         tvFocusable(binding.back);
         tvFocusable(binding.save);
         tvFocusable(binding.editor);
@@ -121,7 +121,7 @@ public class MpvConfigEditorDialog extends BaseAlertDialog {
             binding.getRoot().setLayoutParams(rootParams);
         }
         binding.getRoot().post(() -> window.setLayout(params.width, params.height));
-        if (Util.isLeanback()) binding.back.post(() -> binding.back.requestFocus());
+        if (DeviceModePolicy.current().isTv()) binding.back.post(() -> binding.back.requestFocus());
         else if (creating) binding.editor.requestFocus();
     }
 }

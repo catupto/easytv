@@ -13,7 +13,7 @@ import androidx.viewbinding.ViewBinding;
 import com.fongmi.android.tv.databinding.DialogOffsetBinding;
 import com.fongmi.android.tv.player.PlayerManager;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 public final class OffsetDialog {
 
@@ -37,7 +37,7 @@ public final class OffsetDialog {
     public void show(FragmentActivity activity) {
         FragmentManager manager = activity.getSupportFragmentManager();
         for (Fragment f : manager.getFragments()) if (f instanceof BottomSheet || f instanceof SideSheet) return;
-        if (Util.isLeanback()) new SideSheet(player, type).show(manager, null);
+        if (DeviceModePolicy.current().isTv()) new SideSheet(player, type).show(manager, null);
         else new BottomSheet(player, type).show(manager, null);
     }
 

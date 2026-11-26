@@ -37,7 +37,7 @@ import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.utils.Prefers;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
@@ -433,7 +433,7 @@ public final class GroupRuleDialog {
             check.setTextSize(14);
             check.setChecked(true);
             check.setFocusable(true);
-            check.setFocusableInTouchMode(Util.isLeanback());
+            check.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
             int padding = dp(8);
             check.setPadding(padding, padding, padding, padding);
             checks.add(check);
@@ -494,7 +494,7 @@ public final class GroupRuleDialog {
         for (View button : new View[]{neutral, negative, positive}) {
             if (button == null) continue;
             button.setFocusable(true);
-            button.setFocusableInTouchMode(Util.isLeanback());
+            button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         }
         for (int i = 0; i < checks.size(); i++) {
             View up = i > 0 ? checks.get(i - 1) : null;

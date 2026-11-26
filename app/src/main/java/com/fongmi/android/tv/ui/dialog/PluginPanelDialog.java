@@ -19,8 +19,8 @@ import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.databinding.DialogPluginPanelBinding;
 import com.fongmi.android.tv.ui.activity.PlaybackActivity;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
 import com.fongmi.android.tv.utils.WebViewUtil;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 /**
  * 插件面板：把插件脚本返回的 html 渲染在一块侧滑面板里。
@@ -372,7 +372,7 @@ public final class PluginPanelDialog extends BaseSideSheetDialog {
         if (!loading) view.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
         // 面板是独立窗口：遥控器的方向键只看得到这个窗口里的控件，找不到任何"下一个"就会卡住。
         // 显式给出关闭按钮 ↔ 正文之间的上下通道，方向键才既出得去又回得来。
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             binding.pluginPanelClose.setNextFocusDownId(R.id.pluginPanelWeb);
             binding.pluginPanelWeb.setNextFocusUpId(R.id.pluginPanelClose);
         }

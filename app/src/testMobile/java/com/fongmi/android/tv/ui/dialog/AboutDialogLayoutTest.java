@@ -149,7 +149,7 @@ public class AboutDialogLayoutTest {
 
         // 电视端走独立的全屏分支，手机端保持原有 wrap_content 行为不变。
         assertTrue("TV should take a dedicated fullscreen path",
-                source.contains("if (Util.isLeanback()) return configureFullscreenWindow(window, binding);"));
+                source.contains("if (DeviceModePolicy.current().isTv()) return configureFullscreenWindow(window, binding);"));
         assertTrue("The scroll area should absorb leftover space so the action buttons stay pinned",
                 source.contains("weight = 1"));
         assertTrue("Phones must keep sizing the window to their content",

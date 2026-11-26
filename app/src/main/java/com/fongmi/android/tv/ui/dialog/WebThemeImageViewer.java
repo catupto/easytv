@@ -33,6 +33,7 @@ import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.TmdbImageSaver;
 import com.fongmi.android.tv.utils.TmdbImageSelector;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public final class WebThemeImageViewer {
         actions.setGravity(Gravity.CENTER);
         actions.setPadding(ResUtil.dp2px(10), ResUtil.dp2px(8), ResUtil.dp2px(10), ResUtil.dp2px(8));
         actions.setBackgroundColor(0xCC11141B);
-        boolean compactActions = !Util.isLeanback();
+        boolean compactActions = !DeviceModePolicy.current().isTv();
         FrameLayout.LayoutParams actionParams = new FrameLayout.LayoutParams(
                 compactActions ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
                 ResUtil.dp2px(64), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);

@@ -14,7 +14,7 @@ import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.databinding.DialogMpvConfigRenameBinding;
 import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MpvConfigRenameDialog extends BaseAlertDialog {
@@ -52,7 +52,7 @@ public class MpvConfigRenameDialog extends BaseAlertDialog {
     }
 
     private void setupTvFocus() {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         tvFocusable(binding.close);
         tvFocusable(binding.name);
         tvFocusable(binding.cancel);
@@ -109,6 +109,6 @@ public class MpvConfigRenameDialog extends BaseAlertDialog {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         window.setAttributes(params);
         window.setLayout(params.width, WindowManager.LayoutParams.WRAP_CONTENT);
-        if (Util.isLeanback()) binding.name.post(() -> binding.name.requestFocus());
+        if (DeviceModePolicy.current().isTv()) binding.name.post(() -> binding.name.requestFocus());
     }
 }

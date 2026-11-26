@@ -38,7 +38,7 @@ import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.TmdbImageSelector;
 import com.fongmi.android.tv.utils.TmdbImageSaver;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -79,8 +79,8 @@ public class PhotoViewerDialog {
         FrameLayout root = new FrameLayout(activity);
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         root.setBackgroundColor(Color.BLACK);
-        root.setFocusable(Util.isLeanback());
-        root.setFocusableInTouchMode(Util.isLeanback());
+        root.setFocusable(DeviceModePolicy.current().isTv());
+        root.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
 
         // ViewPager2 支持左右滑动
         ViewPager2 viewPager = new ViewPager2(activity);
@@ -107,7 +107,7 @@ public class PhotoViewerDialog {
         );
         saveWrapperParams.setMargins(16, 48, 16, 16);
         saveBtnWrapper.setLayoutParams(saveWrapperParams);
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             saveBtnWrapper.setFocusable(true);
             saveBtnWrapper.setFocusableInTouchMode(true);
             saveBtnWrapper.setClickable(true);
@@ -146,7 +146,7 @@ public class PhotoViewerDialog {
         root.addView(saveBtnWrapper);
 
         // 左上角旋转按钮 - 仅非TV版显示
-        if (!Util.isLeanback()) {
+        if (!DeviceModePolicy.current().isTv()) {
             MaterialButton rotateBtn = new MaterialButton(activity);
             rotateBtn.setText(R.string.detail_image_rotate);
             rotateBtn.setTextColor(Color.WHITE);
@@ -173,7 +173,7 @@ public class PhotoViewerDialog {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) window.getDecorView().setDefaultFocusHighlightEnabled(false);
         }
 
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             View.OnKeyListener keyListener = (view, keyCode, event) -> handleTvKey(root, saveBtnWrapper, viewPager, event);
             dialog.setOnKeyListener((d, keyCode, event) -> handleTvKey(root, saveBtnWrapper, viewPager, event));
             root.setOnKeyListener(keyListener);
@@ -187,11 +187,11 @@ public class PhotoViewerDialog {
         });
 
         dialog.show();
-        if (Util.isLeanback()) saveBtnWrapper.requestFocus();
+        if (DeviceModePolicy.current().isTv()) saveBtnWrapper.requestFocus();
     }
 
     private boolean handleTvKey(View root, View saveBtnWrapper, ViewPager2 viewPager, KeyEvent event) {
-        if (!Util.isLeanback() || !KeyUtil.isActionDown(event)) return false;
+        if (!DeviceModePolicy.current().isTv() || !KeyUtil.isActionDown(event)) return false;
         if (KeyUtil.isLeftKey(event)) return movePhoto(viewPager, false);
         if (KeyUtil.isRightKey(event)) return movePhoto(viewPager, true);
         if (KeyUtil.isUpKey(event)) return saveBtnWrapper.requestFocus();
