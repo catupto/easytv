@@ -54,29 +54,29 @@ public final class MPVLib {
 
     public static synchronized boolean ensureLoaded(Context context) {
         if (loaded) return true;
-        if (loadError != null) {
-            com.fongmi.android.tv.player.NativeLibraryDiagnostics.failure("mpv-bundle", loadError);
-            return false;
-        }
         String loadingLibrary = "mpv-bundle";
         try {
             Context app = context.getApplicationContext();
-            String abi = chooseAbi(app);
-            if (abi == null) throw new UnsatisfiedLinkError("No external MPV native libraries for " + String.join(",", Build.SUPPORTED_ABIS));
-            com.fongmi.android.tv.player.ExternalCoreLoader.ensure(app, CORE, abi);
-            File dir = com.fongmi.android.tv.player.ExternalCoreLoader.installedDir(app, CORE, abi);
-            if (dir == null) throw new IOException("MPV external core not installed for " + abi);
+            // 用统一入口：对每个 ABI 先 ensure（触发首次解压），再取目录。
+            // 不要先 chooseAbi()——它只认已解压目录，首次安装时永远返回 null。
+            File dir = com.fongmi.android.tv.player.ExternalCoreLoader.ensureAny(app, CORE);
+            if (dir == null) {
+                String detail = com.fongmi.android.tv.player.ExternalCoreLoader.diagnose(app, CORE);
+                throw new IOException("MPV external core not installed:\n" + detail);
+            }
             for (String lib : LOAD_ORDER) {
                 File so = new File(dir, System.mapLibraryName(lib));
                 if (!so.isFile()) throw new IOException("Missing external MPV library: " + so.getName());
                 loadingLibrary = so.getName();
                 System.load(so.getAbsolutePath());
             }
-            loadedAbi = abi;
+            loadedAbi = dir.getName();
             loaded = true;
+            loadError = null;
             com.fongmi.android.tv.player.NativeLibraryDiagnostics.request();
             return true;
         } catch (Throwable e) {
+            // 不永久缓存失败：用户放好包后下次调用可重试。
             loadError = e;
             com.fongmi.android.tv.player.NativeLibraryDiagnostics.failure(loadingLibrary, e);
             Log.e(TAG, "Unable to load bundled MPV native libraries", e);
@@ -140,6 +140,11 @@ public final class MPVLib {
         return isBundledVulkanEnabled(context) && isDeviceVulkan13Capable(context);
     }
 
+    /**
+     * 只返回【已解压】内核的 ABI，不触发安装。
+     * 仅供已确定内核就位后的场景（如 Vulkan 能力探测）使用；
+     * 首次安装必须用 ExternalCoreLoader.ensureAny()，否则会死锁。
+     */
     private static String chooseAbi(Context app) {
         for (String abi : Build.SUPPORTED_ABIS) {
             if (com.fongmi.android.tv.player.ExternalCoreLoader.installedDir(app, CORE, abi) != null) return abi;

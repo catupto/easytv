@@ -7,25 +7,26 @@ import java.util.Arrays;
 public abstract class IjkLibLoader {
     private static final String TAG = "IjkLibLoader";
     private boolean isAvailable;
-    private boolean loadAttempted;
     private final String[] nativeLibraries;
 
     public IjkLibLoader(String... strArr) {
         this.nativeLibraries = strArr;
     }
 
+    /**
+     * 只缓存「成功」状态：一旦加载成功就永久复用（native so 进程内只需 load 一次）。
+     * 失败不缓存——外置内核包可能是在 App 启动之后才放进去的，用户放好后必须能重试成功。
+     * 原实现用 loadAttempted 把失败也永久化，导致首次失败后再也用不了 IJK。
+     */
     public synchronized boolean isAvailable() {
-        if (this.loadAttempted) {
-            return this.isAvailable;
-        }
-        this.loadAttempted = true;
+        if (this.isAvailable) return true;
         try {
             for (String str : this.nativeLibraries) {
                 loadLibrary(str);
             }
             this.isAvailable = true;
-        } catch (Throwable unused) {
-            Log.w(TAG, "Failed to load " + Arrays.toString(this.nativeLibraries));
+        } catch (Throwable e) {
+            Log.w(TAG, "Failed to load " + Arrays.toString(this.nativeLibraries), e);
         }
         return this.isAvailable;
     }

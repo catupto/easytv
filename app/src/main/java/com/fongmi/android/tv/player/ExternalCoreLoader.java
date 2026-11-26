@@ -84,6 +84,36 @@ public final class ExternalCoreLoader {
         }
     }
 
+    /**
+     * 按设备支持的 ABI 顺序尝试就位内核包，返回第一个可用的 so 目录。
+     *
+     * <p>这是给加载器用的统一入口：它先对【每个】ABI 调用 {@link #ensure}（会触发首次解压），
+     * 再取目录。不要先只用 installedDir() 过滤 ABI——首次安装时还没有解压目录，
+     * 那样会导致包永远得不到解压机会（MPV 曾经的 bug）。
+     *
+     * @return 可用的 so 目录；全部失败返回 null
+     */
+    public static File ensureAny(Context context, String core) {
+        for (String abi : android.os.Build.SUPPORTED_ABIS) {
+            String error = ensure(context, core, abi);
+            if (error != null) continue;
+            File dir = installedDir(context, core, abi);
+            if (dir != null) return dir;
+        }
+        return null;
+    }
+
+    /** 诊断信息：列出每个 ABI 的包状态，供失败时展示，避免静默失败。 */
+    public static String diagnose(Context context, String core) {
+        StringBuilder sb = new StringBuilder();
+        for (String abi : android.os.Build.SUPPORTED_ABIS) {
+            String error = ensure(context, core, abi);
+            sb.append(core).append('/').append(abi).append(": ")
+                    .append(error == null ? "OK" : error).append('\n');
+        }
+        return sb.toString();
+    }
+
     private static void unzip(File zip, File out) throws IOException {
         if (!out.exists() && !out.mkdirs()) throw new IOException("Unable to create " + out);
         try (ZipFile archive = new ZipFile(zip)) {

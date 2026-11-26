@@ -141,17 +141,19 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
         @Override // tv.danmaku.ijk.media.player.IjkLibLoader
         public void loadLibrary(String str) {
             android.content.Context context = com.fongmi.android.tv.App.get();
-            for (String abi : android.os.Build.SUPPORTED_ABIS) {
-                com.fongmi.android.tv.player.ExternalCoreLoader.ensure(context, "ijk", abi);
-                java.io.File dir = com.fongmi.android.tv.player.ExternalCoreLoader.installedDir(context, "ijk", abi);
-                if (dir == null) continue;
+            // 用统一入口：对每个 ABI 先 ensure（触发首次解压）再取目录。
+            java.io.File dir = com.fongmi.android.tv.player.ExternalCoreLoader.ensureAny(context, "ijk");
+            if (dir != null) {
                 java.io.File so = new java.io.File(dir, System.mapLibraryName(str));
                 if (so.isFile()) {
                     System.load(so.getAbsolutePath());
                     return;
                 }
             }
-            System.loadLibrary(str);
+            // APK 已不含内置 ijk so，System.loadLibrary 必然失败。
+            // 抛出带诊断信息的异常，让调用方能看到真实原因。
+            throw new UnsatisfiedLinkError("ijk external core unavailable: "
+                    + com.fongmi.android.tv.player.ExternalCoreLoader.diagnose(context, "ijk"));
         }
     }
 
