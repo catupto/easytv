@@ -2869,7 +2869,7 @@ public class TmdbDetailActivityLayoutTest {
         String mobileFallback = "showInlineControls(true);";
         String normalizedEnter = enterBody.replaceAll("\\s+", " ").trim();
         String expectedEnter = "if (KeyUtil.isEnterKey(event)) { if (KeyUtil.isActionUp(event)) { "
-                + "if (Util.isLeanback()) " + toggleCall + " else " + mobileFallback
+                + "if (DeviceModePolicy.current().isTv()) " + toggleCall + " else " + mobileFallback
                 + " } return true; }";
         assertTrue("fullscreen confirm must only perform the platform-specific action on ACTION_UP",
                 normalizedEnter.equals(expectedEnter));
@@ -2881,7 +2881,7 @@ public class TmdbDetailActivityLayoutTest {
                         && enterBody.indexOf(mobileFallback) == enterBody.lastIndexOf(mobileFallback));
         assertTrue("TV fullscreen playback toggles must keep controls hidden like the native leanback player",
                 activity.substring(toggle, toggleEnd)
-                        .contains("if (Util.isLeanback() && inlineFullscreen) hideInlineControls();"));
+                        .contains("if (DeviceModePolicy.current().isTv() && inlineFullscreen) hideInlineControls();"));
         // 控制栏首个按钮必须是"下一集"：原先排在它前面的播放/暂停按钮会拖慢遥控器连播，
         // 且从未登记进 PlayerButtonSetting 因而设置项管不到，已移除。播放/暂停由上面
         // expectedEnter 钉住的全屏确认键路径承担，与影视原生控制栏首项为 next 一致。
@@ -2900,7 +2900,7 @@ public class TmdbDetailActivityLayoutTest {
         assertFalse("removed play/pause action must not be re-wired in the detail activity",
                 activity.contains("binding.playerPlaybackAction"));
         assertTrue("TV inline confirm should enter fullscreen before falling back to the controls overlay",
-                helperBody.contains("if (Util.isLeanback() && canEnterInlineFullscreenOnConfirm())")
+                helperBody.contains("if (DeviceModePolicy.current().isTv() && canEnterInlineFullscreenOnConfirm())")
                         && helperBody.contains("enterInlineFullscreen();")
                         && helperBody.contains("private boolean canEnterInlineFullscreenOnConfirm()")
                         && helperBody.contains("!inlinePiPLayout")
@@ -3009,17 +3009,17 @@ public class TmdbDetailActivityLayoutTest {
                         && !backFromFullscreenBody.contains("if (isPlayerMode())")
                         && backFromFullscreenBody.indexOf("exitInlineFullscreen();") < backFromFullscreenBody.indexOf("modeController.onExitFullscreen()")
                         && backFromFullscreenBody.contains("return;")
-                        && !backFromFullscreenBody.contains("Util.isLeanback() && modeController.isPlayerMode()")
+                        && !backFromFullscreenBody.contains("DeviceModePolicy.current().isTv() && modeController.isPlayerMode()")
                         && !backFromFullscreenBody.contains("finishPlaybackToHome();")
                         && !backFromFullscreenBody.contains("Setting.isPlayBackToDetail()")
                         && focusBody.contains("if (!isInlinePlayerMode()) return;")
                         && !focusBody.contains("if (!modeController.isFusionMode()) return;"));
         assertTrue("leanback fullscreen Back should hide visible controls before exiting fullscreen",
-                keyBody.indexOf("KeyUtil.isBackKey(event) && Util.isLeanback() && inlineFullscreen") >= 0
-                        && keyBody.indexOf("KeyUtil.isBackKey(event) && isInlineControlsVisible()") < keyBody.indexOf("KeyUtil.isBackKey(event) && Util.isLeanback() && inlineFullscreen")
+                keyBody.indexOf("KeyUtil.isBackKey(event) && DeviceModePolicy.current().isTv() && inlineFullscreen") >= 0
+                        && keyBody.indexOf("KeyUtil.isBackKey(event) && isInlineControlsVisible()") < keyBody.indexOf("KeyUtil.isBackKey(event) && DeviceModePolicy.current().isTv() && inlineFullscreen")
                         && keyBody.contains("if (KeyUtil.isActionUp(event)) backFromInlineFullscreen();")
-                        && backBody.indexOf("if (Util.isLeanback() && inlineFullscreen)") >= 0
-                        && backBody.indexOf("if (isInlineControlsVisible())") < backBody.indexOf("if (Util.isLeanback() && inlineFullscreen)")
+                        && backBody.indexOf("if (DeviceModePolicy.current().isTv() && inlineFullscreen)") >= 0
+                        && backBody.indexOf("if (isInlineControlsVisible())") < backBody.indexOf("if (DeviceModePolicy.current().isTv() && inlineFullscreen)")
                         && backBody.contains("backFromInlineFullscreen();"));
     }
 
@@ -3435,7 +3435,7 @@ public class TmdbDetailActivityLayoutTest {
                 syncBody.contains("if (shouldShowInlinePauseInfo(playing)) showInlinePauseInfo();")
                         && syncBody.contains("else hideInlinePauseInfo();"));
         assertTrue("pause feedback must only appear for active leanback fullscreen playback",
-                conditionBody.contains("Util.isLeanback()")
+                conditionBody.contains("DeviceModePolicy.current().isTv()")
                         && conditionBody.contains("inlineFullscreen")
                         && conditionBody.contains("inlineStarted")
                         && conditionBody.contains("!playing")
@@ -3452,7 +3452,7 @@ public class TmdbDetailActivityLayoutTest {
                         && touchEndBody.contains("binding.gestureSeek.bringToFront();")
                         && touchEndBody.contains("return;"));
         assertTrue("TV fullscreen play/pause action must dismiss controls like the native leanback player",
-                toggleBody.contains("if (Util.isLeanback() && inlineFullscreen) hideInlineControls();"));
+                toggleBody.contains("if (DeviceModePolicy.current().isTv() && inlineFullscreen) hideInlineControls();"));
         assertTrue("entering fullscreen while already paused must restore the pause prompt",
                 enterBody.contains("syncInlinePauseInfo(playing);"));
         assertTrue("playback and READY callbacks must both synchronize pause feedback",

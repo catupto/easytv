@@ -239,6 +239,7 @@ import com.fongmi.android.tv.plugin.PluginController;
 import com.fongmi.android.tv.plugin.PluginHostEvents;
 import com.fongmi.android.tv.plugin.PluginSurface;
 import com.fongmi.android.tv.web.WebHomeInlineVodStore;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -1596,7 +1597,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
             return true;
         });
         view.setFocusable(true);
-        if (Util.isLeanback()) view.setFocusableInTouchMode(true);
+        if (DeviceModePolicy.current().isTv()) view.setFocusableInTouchMode(true);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ResUtil.dp2px(40));
         params.setMargins(ResUtil.dp2px(4), ResUtil.dp2px(2), ResUtil.dp2px(4), ResUtil.dp2px(2));
@@ -1878,7 +1879,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
     }
 
     private boolean shouldShowInlinePauseInfo(boolean playing) {
-        return Util.isLeanback()
+        return DeviceModePolicy.current().isTv()
                 && inlineFullscreen
                 && inlineStarted
                 && isInlinePlayerMode()
@@ -2078,7 +2079,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
     }
 
     private void enterInlineFullscreenOrShowControlsOnConfirm() {
-        if (Util.isLeanback() && canEnterInlineFullscreenOnConfirm()) {
+        if (DeviceModePolicy.current().isTv() && canEnterInlineFullscreenOnConfirm()) {
             enterInlineFullscreen();
             return;
         }
@@ -2461,7 +2462,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
     }
 
     private boolean isLeanbackInlinePlayerPanel() {
-        return Util.isLeanback() && (modeController.isFusionMode() || modeController.isPlayerMode());
+        return DeviceModePolicy.current().isTv() && (modeController.isFusionMode() || modeController.isPlayerMode());
     }
 
     private void setupPlayerPanelFocusLayer() {
@@ -4819,7 +4820,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
 
     private void openExternalLink(String url) {
         if (TextUtils.isEmpty(url)) return;
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             ChoiceDialog.showSingle(this, R.string.detail_external_open_title,
                     new CharSequence[]{getString(R.string.detail_external_open_builtin), getString(R.string.detail_external_open_external)},
                     -1, which -> {
@@ -7490,7 +7491,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
     }
 
     private View createPhotoActions(Dialog dialog, ImageView image, ProgressBar progress, List<String> photos, int[] current, int[] request) {
-        if (Util.isLeanback()) return createPhotoRemoteActions(dialog, image, progress, photos, current, request);
+        if (DeviceModePolicy.current().isTv()) return createPhotoRemoteActions(dialog, image, progress, photos, current, request);
         return createPhotoMobileActions(photos, current);
     }
 
@@ -8239,7 +8240,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
         }
         if (player().isPlaying()) controller().pause();
         else controller().play();
-        if (Util.isLeanback() && inlineFullscreen) hideInlineControls();
+        if (DeviceModePolicy.current().isTv() && inlineFullscreen) hideInlineControls();
         else setInlineHideCallback();
     }
 
@@ -8302,7 +8303,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
     }
 
     private boolean suppressInlineDisplayForLeanbackFusionExit() {
-        if (!Util.isLeanback() || !modeController.isFusionMode()) return false;
+        if (!DeviceModePolicy.current().isTv() || !modeController.isFusionMode()) return false;
         inlineDisplaySuppressUntil = Math.max(inlineDisplaySuppressUntil, SystemClock.uptimeMillis() + LEANBACK_FUSION_EXIT_DISPLAY_SUPPRESS_MS);
         hideInlineDisplayPanel();
         return true;
@@ -8867,7 +8868,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
 
     protected boolean hasInlineCast() {
         // TV 设备不需要投屏功能（投屏是手机投给 TV 的，TV 本身就是播放设备）
-        return !Util.isLeanback() && hasInlineMedia() && hasClass("com.fongmi.android.tv.ui.dialog.CastDialog") && hasClass("com.fongmi.android.tv.bean.CastVideo");
+        return !DeviceModePolicy.current().isTv() && hasInlineMedia() && hasClass("com.fongmi.android.tv.ui.dialog.CastDialog") && hasClass("com.fongmi.android.tv.bean.CastVideo");
     }
 
     protected boolean hasInlineInfo() {
@@ -10582,7 +10583,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
      */
     @Override
     public boolean isImmersive() {
-        if (Util.isLeanback()) return false;
+        if (DeviceModePolicy.current().isTv()) return false;
         return inlineFullscreen && !inlinePiPLayout && !inPip;
     }
 
@@ -10598,7 +10599,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
         } catch (Throwable ignored) {
             // 插件入口是可选增强：重算失败不该影响播放页。
         }
-        if (Util.isLeanback()) return;
+        if (DeviceModePolicy.current().isTv()) return;
         try {
             PluginHostEvents.playbackFullscreen(this, isImmersive());
         } catch (Throwable ignored) {
@@ -10768,7 +10769,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
         int topMarginDp = modeController.isFusionMode() ? 22 : 14;
         int bottomMarginDp = modeController.isFusionMode() ? 20 : 16;
         // TV 版左右贴边（margin=0），mobile 版左右留白 16dp
-        int horizontalMarginDp = Util.isLeanback() ? 0 : 16;
+        int horizontalMarginDp = DeviceModePolicy.current().isTv() ? 0 : 16;
         FrameLayout.LayoutParams params;
         ViewGroup.LayoutParams current = binding.playerPanel.getLayoutParams();
         if (current instanceof FrameLayout.LayoutParams framed) params = framed;
@@ -11329,7 +11330,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
             if (KeyUtil.isActionUp(event)) hideInlineControls();
             return true;
         }
-        if (KeyUtil.isBackKey(event) && Util.isLeanback() && inlineFullscreen) {
+        if (KeyUtil.isBackKey(event) && DeviceModePolicy.current().isTv() && inlineFullscreen) {
             if (KeyUtil.isActionUp(event)) backFromInlineFullscreen();
             return true;
         }
@@ -11354,7 +11355,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
         }
         if (KeyUtil.isEnterKey(event)) {
             if (KeyUtil.isActionUp(event)) {
-                if (Util.isLeanback()) toggleInlinePlayback();
+                if (DeviceModePolicy.current().isTv()) toggleInlinePlayback();
                 else showInlineControls(true);
             }
             return true;
@@ -11910,7 +11911,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
             hideInlineControls();
             return;
         }
-        if (Util.isLeanback() && inlineFullscreen) {
+        if (DeviceModePolicy.current().isTv() && inlineFullscreen) {
             backFromInlineFullscreen();
             return;
         }
@@ -13816,7 +13817,7 @@ public class TmdbDetailActivity extends PlaybackActivity implements TrackDialog.
     }
 
     private void applyChipFocus(MaterialButton button, boolean selected, boolean focused, ThemeColors colors) {
-        button.setSelected(!Util.isLeanback() || selected || focused);
+        button.setSelected(!DeviceModePolicy.current().isTv() || selected || focused);
         button.setStrokeWidth(focused ? focusRingWidthPx() : ResUtil.dp2px(selected ? 2 : CHIP_STROKE_DP));
         button.setStrokeColor(ColorStateList.valueOf(focused ? focusStroke() : (selected ? colors.accent : colors.line)));
         // 描边/底色只改 MaterialShapeDrawable，不会重写 View padding（material 1.14.0 里只有
