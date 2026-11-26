@@ -42,6 +42,12 @@ for candidate in python python3 py; do
 done
 [[ -n "$PY" ]] || { echo "ERROR: no working Python (tried python, python3, py)" >&2; exit 2; }
 
+# 导出当前 shell 的解释器路径，供 Python 侧 subprocess 复用。
+# 不导出的话 Python 里 subprocess(["bash", ...]) 会经 PATH 命中
+# C:\Windows\System32\bash.exe（WSL 启动器），在未装 WSL / 被安全策略拦截时
+# 直接 rc=1，且 stderr 是 GBK/UTF-16 错误文本 —— 门禁会因此无法运行。
+export BASH
+
 "$PY" - "$BASELINE_DIR" "$CURRENT" "$SELF_TEST" <<'PYEOF'
 import json
 import os
@@ -58,9 +64,13 @@ arch = os.path.join(root, "scripts", "arch")
 
 
 def run(script, out_path, *extra):
+    # 必须用启动本脚本的那个 bash（Git-Bash），不能用裸 "bash"：
+    # 从 Python 的 subprocess 里 "bash" 会经 PATH 解析到 C:\Windows\System32\bash.exe
+    # （WSL 启动器），在 WSL 未安装/被安全策略拦截时返回 rc=1 且 stderr 是 GBK 错误文本。
+    # 显式指定编码 + errors=replace，避免把 GBK 文本按 UTF-8 解码时抛 UnicodeDecodeError。
     return subprocess.run(
-        ["bash", os.path.join(arch, script), "--json-out", out_path] + list(extra),
-        capture_output=True, text=True, check=False)
+        [os.environ.get("BASH") or "bash", os.path.join(arch, script), "--json-out", out_path] + list(extra),
+        capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
 
 
 def measure(tmpdir):
@@ -176,7 +186,8 @@ if current_arg:
         # Windows Python build cannot open, so resolve it via cygpath when available.
         if not os.path.isfile(path):
             converted = subprocess.run(["cygpath", "-w", path], capture_output=True,
-                                       text=True, check=False).stdout.strip()
+                                       text=True, encoding="utf-8", errors="replace",
+                                       check=False).stdout.strip()
             if converted and os.path.isfile(converted):
                 path = converted
         if not os.path.isfile(path):
