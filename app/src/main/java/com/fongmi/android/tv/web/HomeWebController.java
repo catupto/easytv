@@ -41,10 +41,10 @@ import com.fongmi.android.tv.utils.KeyUtil;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.Task;
 import com.fongmi.android.tv.utils.UrlUtil;
-import com.fongmi.android.tv.utils.Util;
 import com.fongmi.android.tv.utils.WebViewUtil;
 import com.fongmi.android.tv.web.ext.WebHomeExtension;
 import com.fongmi.android.tv.web.ext.WebHomeExtensionRegistry;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.common.net.HttpHeaders;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
@@ -191,7 +191,7 @@ public class HomeWebController {
                 ? WebViewCompat.getProfile(webView).getCookieManager()
                 : CookieManager.getInstance();
         defaultUserAgent = webView.getSettings().getUserAgentString();
-        if (Util.isLeanback()) webView.setNextFocusUpId(R.id.title);
+        if (DeviceModePolicy.current().isTv()) webView.setNextFocusUpId(R.id.title);
         webView.setBackgroundColor(Color.TRANSPARENT);
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, !dataProfile.isolated());
@@ -1131,7 +1131,7 @@ public class HomeWebController {
         root.add("theme", theme);
 
         JsonObject client = new JsonObject();
-        client.addProperty("isLeanback", Util.isLeanback());
+        client.addProperty("isLeanback", DeviceModePolicy.current().isTv());
         client.addProperty("isLandscape", activity.getResources().getConfiguration().orientation
                 == android.content.res.Configuration.ORIENTATION_LANDSCAPE);
         client.addProperty("width", webView.getWidth());
@@ -1553,7 +1553,7 @@ public class HomeWebController {
     }
 
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (!isVisible() || !Util.isLeanback() || !isRemoteKey(event)) return false;
+        if (!isVisible() || !DeviceModePolicy.current().isTv() || !isRemoteKey(event)) return false;
         long start = System.currentTimeMillis();
         long gap = lastKeyAt > 0 ? start - lastKeyAt : -1;
         lastKeyAt = start;
@@ -2152,7 +2152,7 @@ public class HomeWebController {
                   };
                   window.dispatchEvent(new CustomEvent('fmsdk'));
                 })();
-                """, com.fongmi.android.tv.BuildConfig.FLAVOR_mode, com.fongmi.android.tv.utils.Util.isLeanback(), debugTools ? debugSdkHook() : "");
+                """, com.fongmi.android.tv.BuildConfig.FLAVOR_mode, com.fongmi.android.tv.device.DeviceModePolicy.current().isTv(), debugTools ? debugSdkHook() : "");
     }
 
     private String debugSdkHook() {

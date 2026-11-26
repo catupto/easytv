@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.ui.dialog.PluginPanelDialog;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -410,7 +410,7 @@ public final class PluginController {
 
     private static boolean isLeanback() {
         try {
-            return Util.isLeanback();
+            return DeviceModePolicy.current().isTv();
         } catch (Throwable ignored) {
             return false;
         }

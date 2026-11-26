@@ -39,7 +39,7 @@ import com.fongmi.android.tv.setting.MpvPerformanceSetting;
 import com.fongmi.android.tv.setting.PlaybackPerformanceCatalog;
 import com.fongmi.android.tv.setting.PlaybackPerformanceSetting;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.crawler.SpiderDebug;
 
 import java.util.ArrayList;
@@ -988,11 +988,11 @@ public class MpvPlayerEngine implements PlayerEngine {
         boolean zeroCopyBlocked = MpvPerformanceSetting.isZeroCopyBlocked();
         boolean autoDirectEligible = !zeroCopyBlocked && MpvAutoOutputPolicy.canStartSurfaceDirect(
                 decode == HARD,
-                Util.isLeanback(),
+                DeviceModePolicy.current().isTv(),
                 MpvPerformanceSetting.isInterpolation() || lutAllowed && LutSetting.isEnabled(),
                 MpvConfigStore.hasGpuVideoProcessing());
         surfaceDirect = (surfaceDirectOverride == null
-                ? MpvPerformanceSetting.shouldUseSurfaceDirect(autoDirectEligible, Util.isLeanback(), decode == HARD)
+                ? MpvPerformanceSetting.shouldUseSurfaceDirect(autoDirectEligible, DeviceModePolicy.current().isTv(), decode == HARD)
                 : surfaceDirectOverride && decode == HARD && !zeroCopyBlocked);
         boolean requestVulkan = vulkanRenderOverride != null
                 ? vulkanRenderOverride

@@ -128,6 +128,7 @@ import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.crawler.SpiderDebug;
 import com.github.catvod.net.OkHttp;
 import com.google.common.net.HttpHeaders;
@@ -1225,7 +1226,7 @@ public class PlayerManager implements ParseCallback {
     public boolean shouldKeepVideoShutterClosed() {
         return isMpv()
                 && MpvPerformanceSetting.isAutoSurfaceDirectEnabled()
-                && Util.isLeanback()
+                && DeviceModePolicy.current().isTv()
                 && engine != null && engine.isHard()
                 && MpvPerformanceSetting.getOutputMode() == MpvPerformanceSetting.OUTPUT_AUTO
                 && !mpvAutoOutputEvaluated
@@ -5802,7 +5803,7 @@ public void resetTrack(int type) {
         mpv.setSurfaceDirectOverride(null);
         boolean autoDirectEligible = MpvAutoOutputPolicy.canStartSurfaceDirect(
                 engine.isHard(),
-                Util.isLeanback(),
+                DeviceModePolicy.current().isTv(),
                 videoEffectsActive || videoEffectsDirty || MpvPerformanceSetting.isInterpolation()
                         || lutAllowed && LutSetting.isEnabled(),
                 MpvConfigStore.hasGpuVideoProcessing());
@@ -5811,7 +5812,7 @@ public void resetTrack(int type) {
             autoDirectEligible = false;
         }
         boolean shouldStartDirect = MpvPerformanceSetting.shouldUseSurfaceDirect(
-                autoDirectEligible, Util.isLeanback(), engine.isHard());
+                autoDirectEligible, DeviceModePolicy.current().isTv(), engine.isHard());
         boolean externalSubtitleActive = spec != null && spec.getSubs() != null && !spec.getSubs().isEmpty();
         boolean leaveForSubtitle = MpvAutoOutputPolicy.shouldLeaveSurfaceDirectForSubtitle(
                 automaticOutput, mpv.isSurfaceDirect(), externalSubtitleActive, mpvExplicitSubtitlePreference);
@@ -5982,7 +5983,7 @@ public void resetTrack(int type) {
                 && mpv.isDv7Hdr10Active();
         MpvAutoOutputPolicy.Decision decision = MpvAutoOutputPolicy.evaluate(
                 width, height, engine.isHard(),
-                Util.isLeanback(), lutOrFilterActive, customGpuProcessing,
+                DeviceModePolicy.current().isTv(), lutOrFilterActive, customGpuProcessing,
                 dolbyVisionSupport,
                 dolbyVision ? videoDetails.dolbyVisionProfile() : C.INDEX_UNSET,
                 dv7Hdr10FallbackEnabled,
@@ -6057,7 +6058,7 @@ public void resetTrack(int type) {
                                 PlaybackTelemetry.DecisionInput.number("width", width, PlaybackAutoContext.ValueSource.PLAYER_CALLBACK, PlaybackAutoContext.Confidence.HIGH),
                                 PlaybackTelemetry.DecisionInput.number("height", height, PlaybackAutoContext.ValueSource.PLAYER_CALLBACK, PlaybackAutoContext.Confidence.HIGH),
                                 PlaybackTelemetry.DecisionInput.bool("hard_decode", engine.isHard(), PlaybackAutoContext.ValueSource.PLAYBACK_REQUEST, PlaybackAutoContext.Confidence.HIGH),
-                                PlaybackTelemetry.DecisionInput.bool("leanback", Util.isLeanback(), PlaybackAutoContext.ValueSource.SYSTEM_API, PlaybackAutoContext.Confidence.HIGH),
+                                PlaybackTelemetry.DecisionInput.bool("leanback", DeviceModePolicy.current().isTv(), PlaybackAutoContext.ValueSource.SYSTEM_API, PlaybackAutoContext.Confidence.HIGH),
                                 PlaybackTelemetry.DecisionInput.bool("tracks_ready", tracksReady, PlaybackAutoContext.ValueSource.PLAYER_CALLBACK, PlaybackAutoContext.Confidence.HIGH),
                                 PlaybackTelemetry.DecisionInput.bool("early_evaluation", earlyEvaluation, PlaybackAutoContext.ValueSource.PLAYER_MANAGER, PlaybackAutoContext.Confidence.HIGH),
                                 PlaybackTelemetry.DecisionInput.bool("subtitle_active", subtitleActive, PlaybackAutoContext.ValueSource.PLAYBACK_REQUEST, PlaybackAutoContext.Confidence.HIGH),

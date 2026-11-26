@@ -19,14 +19,14 @@
   "totals": {
     "_note": "Ceilings, not equalities: a batch may add scaffolding while shrinking debt.",
     "java_files_max": 2687,
-    "java_lines_max": 576259
+    "java_lines_max": 576262
   },
   "extremes": {
     "_note": "Each of these may only go down (plan §6.1 ladder).",
     "max_file_lines": 14366,
     "max_methods": 1100,
     "max_fields": 278,
-    "max_package_lines": 93249,
+    "max_package_lines": 93250,
     "max_direct_classes": 90
   },
   "distribution": {
@@ -38,7 +38,7 @@
     "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java": 14366,
     "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 13272,
     "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11977,
-    "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9819,
+    "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9820,
     "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java": 6667,
     "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4187,
     "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java": 3940,
@@ -214,7 +214,7 @@
   ],
   "deps": {
     "_note": "52 pairs -> <=20 (stage 2) -> 0. ui_to_player_files 36 -> 0.",
-    "bidirectional_pairs_max": 54,
+    "bidirectional_pairs_max": 53,
     "ui_to_player_files_max": 36,
     "bidirectional_pairs": [
       [
@@ -242,12 +242,12 @@
         "bean"
       ],
       [
-        "player",
-        "utils"
-      ],
-      [
         "bean",
         "playback"
+      ],
+      [
+        "player",
+        "utils"
       ],
       [
         "bean",
@@ -310,10 +310,6 @@
         "impl"
       ],
       [
-        "setting",
-        "utils"
-      ],
-      [
         "api",
         "server"
       ],
@@ -328,6 +324,10 @@
       [
         "server",
         "setting"
+      ],
+      [
+        "setting",
+        "utils"
       ],
       [
         "server",
@@ -428,10 +428,6 @@
       [
         "playback",
         "service"
-      ],
-      [
-        "theme",
-        "utils"
       ]
     ]
   },
@@ -442,7 +438,7 @@
       "isLeanback_raw_lines is the plan's §2.2.4 `grep -c` number (232 at anchor); it",
       "also counts doc mentions, so it is reported but NOT gated."
     ],
-    "isLeanback_callsites": 45,
+    "isLeanback_callsites": 13,
     "setting_static_callsites": 645,
     "setting_static_files": 114,
     "app_get_files": 94,

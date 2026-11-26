@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fongmi.android.tv.setting.Setting;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -35,14 +35,14 @@ public final class TouchOptimizationHelper {
     }
 
     public static void sync(View root) {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         if (root == null) return;
         if (Setting.isTouchOptimized()) optimize(root);
         else restore(root);
     }
 
     public static void sync(Dialog dialog) {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         if (dialog == null || dialog.getWindow() == null) return;
         View decor = dialog.getWindow().getDecorView();
         decor.post(() -> sync(decor));

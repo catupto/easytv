@@ -48,7 +48,7 @@ public class MpvOutputShutterSourceTest {
                 "public boolean shouldKeepVideoShutterClosed()", "public boolean isExo()");
 
         assertTrue("phones never reach surface direct, so the shutter must not close there",
-                method.contains("Util.isLeanback()"));
+                method.contains("DeviceModePolicy.current().isTv()"));
         assertTrue("a software-decoded session cannot reach surface direct either",
                 method.contains("engine.isHard()"));
     }

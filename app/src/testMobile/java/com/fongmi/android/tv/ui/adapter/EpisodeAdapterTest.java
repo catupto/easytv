@@ -270,7 +270,7 @@ public class EpisodeAdapterTest {
                         && detailActivity.contains("button.setHorizontallyScrolling(true);")
                         && detailActivity.contains("button.setSingleLine(true);"));
         assertTrue("programmatic detail labels must marquee while visible on mobile or active on TV",
-                detailActivity.contains("button.setSelected(!Util.isLeanback() || selected || focused);"));
+                detailActivity.contains("button.setSelected(!DeviceModePolicy.current().isTv() || selected || focused);"));
     }
 
     @Test

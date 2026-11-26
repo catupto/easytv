@@ -38,7 +38,7 @@ public class TouchOptimizationHelperSourceTest {
     public void mobileFlavorDoesNotTraverseViews() throws Exception {
         String source = read("app/src/main/java/com/fongmi/android/tv/ui/helper/TouchOptimizationHelper.java");
 
-        assertTrue(source.contains("if (!Util.isLeanback()) return;"));
+        assertTrue(source.contains("if (!DeviceModePolicy.current().isTv()) return;"));
     }
 
     @Test

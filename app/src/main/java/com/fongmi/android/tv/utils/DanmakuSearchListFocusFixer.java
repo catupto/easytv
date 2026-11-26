@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fongmi.android.tv.App;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -39,7 +40,7 @@ public final class DanmakuSearchListFocusFixer {
     }
 
     public static void start() {
-        if (started || !Util.isLeanback()) return;
+        if (started || !DeviceModePolicy.current().isTv()) return;
         started = true;
         HANDLER.post(PULSE);
     }

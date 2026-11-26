@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.R;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 /** Read-only application entry point for future theme adoption. */
 public final class ThemeController {
@@ -54,7 +54,7 @@ public final class ThemeController {
         int delegate = switch (mode) {
             case 0 -> AppCompatDelegate.MODE_NIGHT_NO;
             case 1 -> AppCompatDelegate.MODE_NIGHT_YES;
-            default -> Util.isLeanback()
+            default -> DeviceModePolicy.current().isTv()
                     ? AppCompatDelegate.MODE_NIGHT_YES
                     : AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
         };

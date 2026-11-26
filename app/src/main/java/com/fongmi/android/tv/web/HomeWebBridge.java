@@ -26,8 +26,8 @@ import com.fongmi.android.tv.utils.AppCache;
 import com.fongmi.android.tv.utils.ImgUtil;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.Task;
-import com.fongmi.android.tv.utils.Util;
 import com.fongmi.android.tv.web.ext.WebHomeExtensionRegistry;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.crawler.SpiderDebug;
 import com.github.catvod.utils.Json;
 import com.google.gson.JsonElement;
@@ -182,7 +182,7 @@ public class HomeWebBridge {
     private String vodHome(JsonObject payload) throws Exception {
         Site site = activeSite(payload);
         Result result = SiteApi.homeContent(site);
-        return WebHomeVodContract.home(site, result, Util.isLeanback(), isLandscape(), suggestedColumns()).toString();
+        return WebHomeVodContract.home(site, result, DeviceModePolicy.current().isTv(), isLandscape(), suggestedColumns()).toString();
     }
 
     private String vodCategory(JsonObject payload) throws Exception {
@@ -193,7 +193,7 @@ public class HomeWebBridge {
         boolean filter = booleanValue(payload, "filter", false);
         HashMap<String, String> extend = extend(payload);
         Result result = SiteApi.categoryContent(site.getKey(), typeId, String.valueOf(page), filter, extend);
-        return WebHomeVodContract.category(site, typeId, page, filter, extend, result, Util.isLeanback(), isLandscape(), suggestedColumns()).toString();
+        return WebHomeVodContract.category(site, typeId, page, filter, extend, result, DeviceModePolicy.current().isTv(), isLandscape(), suggestedColumns()).toString();
     }
 
     private Site activeSite(JsonObject payload) {
@@ -242,7 +242,7 @@ public class HomeWebBridge {
     }
 
     private int suggestedColumns() {
-        if (Util.isLeanback()) return 6;
+        if (DeviceModePolicy.current().isTv()) return 6;
         return isLandscape() ? 5 : 3;
     }
 

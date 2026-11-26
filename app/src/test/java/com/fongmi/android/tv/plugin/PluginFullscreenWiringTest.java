@@ -137,7 +137,7 @@ public class PluginFullscreenWiringTest {
         assertFalse("不许再发裸 inlineFullscreen 字段",
                 detailEvent.contains("playbackFullscreen(this, inlineFullscreen)"));
         // 电视端拦截是既有契约，不许在改口径时顺手删掉。
-        assertTrue("详情页事件仍必须在电视端被拦截", detailEvent.contains("if (Util.isLeanback()) return;"));
+        assertTrue("详情页事件仍必须在电视端被拦截", detailEvent.contains("if (DeviceModePolicy.current().isTv()) return;"));
     }
 
     @Test

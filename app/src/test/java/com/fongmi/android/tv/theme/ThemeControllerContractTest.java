@@ -145,7 +145,7 @@ public class ThemeControllerContractTest {
     public void tvDefaultsToDarkWhileMobileKeepsFollowingTheSystem() throws Exception {
         String controller = read("src/main/java/com/fongmi/android/tv/theme/ThemeController.java");
         assertTrue("TV 默认必须落到深色：follow-system 分支要按 flavour 分流",
-                controller.contains("Util.isLeanback()")
+                controller.contains("DeviceModePolicy.current().isTv()")
                         && controller.contains("AppCompatDelegate.MODE_NIGHT_YES")
                         && controller.contains("AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM"));
         // 显式选择仍然优先（浅色/深色都能生效）

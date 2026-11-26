@@ -31,7 +31,7 @@ import com.fongmi.android.tv.update.OciMirror;
 import com.fongmi.android.tv.update.UpdateSource;
 import com.fongmi.android.tv.utils.GithubProxy;
 import com.fongmi.android.tv.utils.WebViewUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.crawler.DebugLogStore;
 import com.github.catvod.crawler.SpiderDebug;
 import com.github.catvod.utils.Trans;
@@ -405,7 +405,7 @@ public class Setting {
     }
 
     public static boolean isTouchOptimized() {
-        return Util.isLeanback() && Prefers.getBoolean("touch_optimized");
+        return DeviceModePolicy.current().isTv() && Prefers.getBoolean("touch_optimized");
     }
 
     public static void putTouchOptimized(boolean enabled) {

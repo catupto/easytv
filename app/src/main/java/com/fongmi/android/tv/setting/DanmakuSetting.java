@@ -8,7 +8,7 @@ import androidx.media3.ui.danmaku.DanmakuConfig;
 import com.fongmi.android.tv.api.CatSource;
 import com.fongmi.android.tv.api.config.VodConfig;
 import com.fongmi.android.tv.node.NodeRuntime;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.utils.Prefers;
 
 public class DanmakuSetting {
@@ -221,11 +221,11 @@ public class DanmakuSetting {
     }
 
     private static int getDefaultMaxOnScreen() {
-        return Util.isLeanback() ? 80 : 150;
+        return DeviceModePolicy.current().isTv() ? 80 : 150;
     }
 
     private static float getDefaultScrollAreaRatio() {
-        return Util.isLeanback() ? 0.42f : 0.5f;
+        return DeviceModePolicy.current().isTv() ? 0.42f : 0.5f;
     }
 
     public static float getLineSpacing() {

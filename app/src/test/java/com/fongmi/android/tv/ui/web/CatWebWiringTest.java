@@ -239,7 +239,7 @@ public class CatWebWiringTest {
         int nextMethod = source.indexOf("private void addRatingChip(String key", method);
         String body = method >= 0 && nextMethod > method ? source.substring(method, nextMethod) : "";
 
-        assertTrue("TMDB 外链必须区分 TV 场景", method >= 0 && body.contains("Util.isLeanback()"));
+        assertTrue("TMDB 外链必须区分 TV 场景", method >= 0 && body.contains("DeviceModePolicy.current().isTv()"));
         assertTrue("TV 端必须先弹打开方式选择", body.contains("ChoiceDialog.showSingle(")
                 && body.contains("detail_external_open_builtin")
                 && body.contains("detail_external_open_external"));

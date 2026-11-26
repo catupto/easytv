@@ -32,7 +32,7 @@ import com.fongmi.android.tv.ui.dialog.EpisodeDetailDialog;
 import com.fongmi.android.tv.ui.dialog.WebThemeImageViewer;
 import com.fongmi.android.tv.ui.helper.TmdbNavigation;
 import com.fongmi.android.tv.utils.Notify;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.utils.Json;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -113,7 +113,7 @@ final class WebHomeThemeBridge {
         Site site = activeSite(payload, context);
         Result result = SiteApi.homeContent(site);
         requireActive(active);
-        JsonObject response = WebHomeVodContract.home(site, result, Util.isLeanback(), isLandscape(),
+        JsonObject response = WebHomeVodContract.home(site, result, DeviceModePolicy.current().isTv(), isLandscape(),
                 suggestedColumns());
         if (context.isV2()) context.accessSession.protectHome(response);
         return response.toString();
@@ -133,7 +133,7 @@ final class WebHomeThemeBridge {
         Result result = SiteApi.categoryContent(site.getKey(), typeId, String.valueOf(page), filter, extend);
         requireActive(active);
         JsonObject response = WebHomeVodContract.category(site, typeId, page, filter, extend, result,
-                Util.isLeanback(), isLandscape(), suggestedColumns());
+                DeviceModePolicy.current().isTv(), isLandscape(), suggestedColumns());
         if (context.isV2()) context.accessSession.protectCategory(response, publicTypeId);
         return response.toString();
     }
@@ -536,7 +536,7 @@ final class WebHomeThemeBridge {
     }
 
     private int suggestedColumns() {
-        if (Util.isLeanback()) return 6;
+        if (DeviceModePolicy.current().isTv()) return 6;
         return isLandscape() ? 5 : 3;
     }
 
