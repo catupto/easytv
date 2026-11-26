@@ -238,11 +238,20 @@ dependencies {
         implementation libs.tensorflow.lite
     }
     implementation libs.zxing.core
-    leanbackImplementation libs.leanback
+    // 单包化前置（2.5-pre / ADR-0002）：把 main 侧最终要直接引用的依赖并入主配置，
+    // 使 app/src/main 可以编译 androidx.leanback 控件；biometric 原仅 mobile 声明，
+    // 并入主配置后两侧一致且无行为影响。zxing-android-embedded 原先在 leanback 与
+    // mobile 各声明一次，此处去重为单条。
+    //
+    // 例外：androidautosize 暂不并入。其 AAR 内置 InitProvider，会在所有变体启动时
+    // 通过 ActivityLifecycleCallbacks 对每个 Activity 全局套用密度缩放；且 init() 在
+    // 缺少 design_width_in_dp 时默认按 360dp(竖屏)/1080dp(横屏) 兜底，而该 meta-data
+    // 只配置在 leanback 清单里。并入会让手机端横屏 UI 整体缩小。待阶段 4.1（单包化）
+    // 用 tools:node="remove" 移除 provider + 运行期按设备形态手动初始化后再并入。
+    implementation libs.leanback
+    implementation libs.biometric
+    implementation libs.zxing.android.embedded
     leanbackImplementation libs.androidautosize
-    leanbackImplementation libs.zxing.android.embedded
-    mobileImplementation libs.biometric
-    mobileImplementation libs.zxing.android.embedded
     testImplementation libs.junit
     testImplementation libs.work.testing
     annotationProcessor libs.room.compiler
