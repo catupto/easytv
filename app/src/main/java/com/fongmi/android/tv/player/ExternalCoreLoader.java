@@ -35,10 +35,17 @@ public final class ExternalCoreLoader {
     private ExternalCoreLoader() {
     }
 
-    /** 用户放置内核包的目录。 */
+    /**
+     * 用户放置内核包的目录。
+     *
+     * <p>必须主动 mkdirs：如果用户从未用文件管理器建过这个目录，或该目录曾被 adb shell
+     * 以 shell 属主创建（导致 App 无权访问），由 App 自己创建可保证属主正确。
+     */
     public static File extDir(Context context) {
         File base = context.getExternalFilesDir(null);
-        return new File(base == null ? context.getFilesDir() : base, EXT_DIR);
+        File dir = new File(base == null ? context.getFilesDir() : base, EXT_DIR);
+        if (!dir.isDirectory()) dir.mkdirs();
+        return dir;
     }
 
     /** 内核解压后的私有目录。 */
@@ -65,7 +72,13 @@ public final class ExternalCoreLoader {
         if (installed != null) return null;
         File zip = new File(extDir(context), core + "-" + abi + ".zip");
         File sum = new File(extDir(context), core + "-" + abi + ".zip.sha256");
-        if (!zip.isFile()) return "缺少外置内核包: " + zip.getAbsolutePath();
+        if (!zip.isFile()) {
+            // 区分「文件真不存在」和「文件存在但 App 无权读取」——用 adb shell 创建的
+            // 目录属主是 shell(2000)，App(10496) 无权限，isFile() 同样返回 false。
+            if (zip.exists()) return "内核包存在但无读取权限: " + zip.getAbsolutePath()
+                    + "（请用手机文件管理器重新放置，勿用 adb shell 建目录）";
+            return "缺少外置内核包: " + zip.getAbsolutePath();
+        }
         if (!sum.isFile()) return "缺少校验清单: " + sum.getAbsolutePath();
         try {
             String expected = readFirstLine(sum).trim();
