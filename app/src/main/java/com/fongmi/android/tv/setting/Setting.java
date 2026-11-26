@@ -397,11 +397,13 @@ public class Setting {
     }
 
     public static boolean isIncognito() {
-        return Prefers.getBoolean("incognito");
+        // 批次 2.1：改走 SettingSource，让 playback 等下层包可以依赖抽象而不是本门面。
+        // 键名 "incognito" 与默认值 false 逐字不变（Prefers.getBoolean(key) 的隐式默认即 false）。
+        return SettingSource.current().getBoolean("incognito", false);
     }
 
     public static void putIncognito(boolean incognito) {
-        Prefers.put("incognito", incognito);
+        SettingSource.current().put("incognito", incognito);
     }
 
     public static boolean isTouchOptimized() {

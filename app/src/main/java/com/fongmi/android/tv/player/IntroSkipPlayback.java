@@ -5,6 +5,8 @@ import com.fongmi.android.tv.service.IntroSkipService;
 import com.fongmi.android.tv.service.IntroSkipService.IntroSkipPlan;
 import com.fongmi.android.tv.service.IntroSkipService.Segment;
 import com.fongmi.android.tv.setting.Setting;
+import com.fongmi.android.tv.setting.SettingKeys;
+import com.fongmi.android.tv.setting.SettingSource;
 import com.fongmi.android.tv.utils.Task;
 import com.github.catvod.crawler.SpiderDebug;
 
@@ -286,7 +288,7 @@ public class IntroSkipPlayback {
      */
     public boolean apply(PlayerManager player, EndingAction onEnding) {
         if (player == null || player.isReleased() || plan == null || plan.isEmpty()) return false;
-        int mode = Setting.getIntroSkipMode();
+        int mode = SettingSource.current().getInt(SettingKeys.INTRO_SKIP_MODE, Setting.INTRO_SKIP_OFF);
         if (mode == Setting.INTRO_SKIP_OFF) return false;
         if (mode == Setting.INTRO_SKIP_CONFIRM && hasConfirmation(player)) return true;
         long position = player.getPosition();
@@ -419,10 +421,10 @@ public class IntroSkipPlayback {
 
     private boolean isKindEnabled(Segment segment) {
         switch (segment.getKind()) {
-            case RECAP: return Setting.isIntroSkipKindEnabled(Setting.INTRO_SKIP_KIND_RECAP);
-            case INTRO: return Setting.isIntroSkipKindEnabled(Setting.INTRO_SKIP_KIND_INTRO);
-            case OUTRO: return Setting.isIntroSkipKindEnabled(Setting.INTRO_SKIP_KIND_OUTRO);
-            case PREVIEW: return Setting.isIntroSkipKindEnabled(Setting.INTRO_SKIP_KIND_PREVIEW);
+            case RECAP: return (SettingSource.current().getInt(SettingKeys.INTRO_SKIP_KINDS, Setting.INTRO_SKIP_KIND_DEFAULT) & Setting.INTRO_SKIP_KIND_RECAP) != 0;
+            case INTRO: return (SettingSource.current().getInt(SettingKeys.INTRO_SKIP_KINDS, Setting.INTRO_SKIP_KIND_DEFAULT) & Setting.INTRO_SKIP_KIND_INTRO) != 0;
+            case OUTRO: return (SettingSource.current().getInt(SettingKeys.INTRO_SKIP_KINDS, Setting.INTRO_SKIP_KIND_DEFAULT) & Setting.INTRO_SKIP_KIND_OUTRO) != 0;
+            case PREVIEW: return (SettingSource.current().getInt(SettingKeys.INTRO_SKIP_KINDS, Setting.INTRO_SKIP_KIND_DEFAULT) & Setting.INTRO_SKIP_KIND_PREVIEW) != 0;
             default: return false;
         }
     }

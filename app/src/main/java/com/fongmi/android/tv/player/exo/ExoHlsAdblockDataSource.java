@@ -14,7 +14,8 @@ import com.fongmi.android.tv.utils.HlsAdblockNotice;
 import com.fongmi.android.tv.utils.HlsAdblockPipeline;
 import com.fongmi.android.tv.utils.HlsManifestCleaner;
 import com.fongmi.android.tv.api.config.HlsRuleConfig;
-import com.fongmi.android.tv.setting.Setting;
+import com.fongmi.android.tv.setting.SettingKeys;
+import com.fongmi.android.tv.setting.SettingSource;
 import com.fongmi.android.tv.utils.Notify;
 import com.github.catvod.crawler.SpiderDebug;
 
@@ -59,7 +60,7 @@ final class ExoHlsAdblockDataSource implements DataSource {
             String text = new String(original, StandardCharsets.UTF_8);
             List<HlsManifestCleaner.Rule> rules = List.of();
             boolean legacyFallback = false;
-            if (Setting.isAdblock()) {
+            if (SettingSource.current().getBoolean(SettingKeys.ADBLOCK, true)) {
                 rules = HlsRuleConfig.getRules();
                 legacyFallback = HlsRuleConfig.isLegacyFallbackEnabled();
             }

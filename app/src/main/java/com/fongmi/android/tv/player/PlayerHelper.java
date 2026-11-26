@@ -16,7 +16,8 @@ import androidx.media3.common.util.Util;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.BuildConfig;
-import com.fongmi.android.tv.setting.Setting;
+import com.fongmi.android.tv.setting.SettingKeys;
+import com.fongmi.android.tv.setting.SettingSource;
 import com.fongmi.android.tv.utils.FileUtil;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class PlayerHelper {
     }
 
     public static String getUa() {
-        return resolveUa(Setting.getUa(), PlayerHelper::getDefaultUa);
+        return resolveUa(SettingSource.current().getString(SettingKeys.UA, ""), PlayerHelper::getDefaultUa);
     }
 
     public static String resolveUa(String ua, Supplier<String> fallback) {

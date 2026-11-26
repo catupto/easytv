@@ -7,6 +7,8 @@ import androidx.appcompat.app.AlertDialog;
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.service.IntroSkipService.Segment;
 import com.fongmi.android.tv.setting.Setting;
+import com.fongmi.android.tv.setting.SettingKeys;
+import com.fongmi.android.tv.setting.SettingSource;
 import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.ui.dialog.LightDialog;
 import com.fongmi.android.tv.utils.Notify;
@@ -71,7 +73,7 @@ public final class IntroSkipKinds {
 
     /** 当前选择的摘要，用于设置页那一行的右侧文字。 */
     public static String summary() {
-        int kinds = Setting.getIntroSkipKinds();
+        int kinds = SettingSource.current().getInt(SettingKeys.INTRO_SKIP_KINDS, Setting.INTRO_SKIP_KIND_DEFAULT);
         if (kinds == 0) return ResUtil.getString(R.string.intro_skip_kinds_none);
         if (kinds == Setting.INTRO_SKIP_KIND_ALL) return ResUtil.getString(R.string.intro_skip_kinds_all);
         StringBuilder text = new StringBuilder();
@@ -88,7 +90,7 @@ public final class IntroSkipKinds {
      */
     public static void show(Activity activity, Runnable onChanged) {
         if (activity == null || activity.isFinishing()) return;
-        int kinds = Setting.getIntroSkipKinds();
+        int kinds = SettingSource.current().getInt(SettingKeys.INTRO_SKIP_KINDS, Setting.INTRO_SKIP_KIND_DEFAULT);
         String[] labels = new String[FLAGS.length];
         boolean[] checked = new boolean[FLAGS.length];
         for (int i = 0; i < FLAGS.length; i++) {
@@ -101,7 +103,7 @@ public final class IntroSkipKinds {
                 .setPositiveButton(R.string.dialog_positive, (d, w) -> {
                     int result = 0;
                     for (int i = 0; i < FLAGS.length; i++) if (checked[i]) result |= FLAGS[i];
-                    Setting.putIntroSkipKinds(result);
+                    SettingSource.current().put(SettingKeys.INTRO_SKIP_KINDS, result & Setting.INTRO_SKIP_KIND_ALL);
                     if (onChanged != null) onChanged.run();
                 })
                 .setNegativeButton(R.string.dialog_negative, null)

@@ -83,7 +83,8 @@ import com.fongmi.android.tv.setting.PlaybackExperimentSetting;
 import com.fongmi.android.tv.setting.PlaybackPerformanceCatalog;
 import com.fongmi.android.tv.setting.PlaybackPerformanceSetting;
 import com.fongmi.android.tv.setting.PlayerSetting;
-import com.fongmi.android.tv.setting.Setting;
+import com.fongmi.android.tv.setting.SettingKeys;
+import com.fongmi.android.tv.setting.SettingSource;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.UrlUtil;
 import com.github.catvod.crawler.SpiderDebug;
@@ -356,7 +357,7 @@ public class ExoUtil {
         builder.setDrmConfiguration(buildDrmConfig(spec.getDrm()));
         builder.setRequestMetadata(buildRequestMetadata(spec));
         builder.setMediaMetadata(spec.getMetadata());
-        builder.setAdblock(Setting.isAdblock() && HlsRuleConfig.isLegacyFallbackEnabled());
+        builder.setAdblock(SettingSource.current().getBoolean(SettingKeys.ADBLOCK, true) && HlsRuleConfig.isLegacyFallbackEnabled());
         builder.setMimeType(spec.getFormat());
         builder.setImageDurationMs(15000);
         builder.setMediaId(mediaId == null || mediaId.isEmpty() ? spec.getKey() : mediaId);
@@ -473,8 +474,8 @@ public class ExoUtil {
                         .build());
         // 只有开启了自动匹配的用户才让「字幕优先语言」影响播放器选轨；关闭时保持纯粹的
         // 设备 Locale 行为，避免为自动匹配引入的偏好改变这些用户原有的选轨结果。
-        builder.setPreferredTextLanguages(Setting.isSubtitleAutoMatchEnabled()
-                ? LangUtil.getPreferredTextLanguages(Setting.getSubtitlePreferredLanguage())
+        builder.setPreferredTextLanguages(SettingSource.current().getBoolean(SettingKeys.SUBTITLE_AUTO_MATCH, false)
+                ? LangUtil.getPreferredTextLanguages(SettingSource.current().getString(SettingKeys.SUBTITLE_PREFERRED_LANGUAGE, "zh"))
                 : LangUtil.getPreferredTextLanguages());
         ExoTunnelingPolicy.Decision tunneling = getTunnelingDecision(decode, tunnelingFallbackAttempted);
         builder.setTunnelingEnabled(tunneling.enabled());
