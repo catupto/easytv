@@ -317,7 +317,7 @@ public class EpisodeListDialog extends AppCompatDialogFragment implements FlagAd
 
     private int getEpisodeSpan(List<Episode> episodes) {
         if (tmdbCard) return 2;
-        EpisodeTitleCompact.apply(episodes);
+        EpisodeTitleCompact.apply(episodes, com.fongmi.android.tv.setting.Setting.isCompactEpisodeTitle());
         int maxLen = 0;
         for (Episode item : episodes) maxLen = Math.max(maxLen, item.getDisplayName().length());
         if (maxLen >= 12) return PlayerSetting.getEpisodeColumn();

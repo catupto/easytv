@@ -73,7 +73,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<BaseEpisodeHolder> {
         if (titleReadyListener == null) {
             invalidateTitleRequest();
             ArrayList<Episode> snapshot = items == null ? new ArrayList<>() : new ArrayList<>(items);
-            EpisodeTitleCompact.apply(snapshot);
+            EpisodeTitleCompact.apply(snapshot, Setting.isCompactEpisodeTitle());
             mItems.clear();
             mItems.addAll(snapshot);
             notifyDataSetChanged();
@@ -85,7 +85,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<BaseEpisodeHolder> {
     public void refreshTitles() {
         if (titleReadyListener == null) {
             invalidateTitleRequest();
-            EpisodeTitleCompact.apply(mItems);
+            EpisodeTitleCompact.apply(mItems, Setting.isCompactEpisodeTitle());
             notifyDataSetChanged();
             return;
         }

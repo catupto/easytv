@@ -773,7 +773,7 @@ private boolean runtimeSourceOnly;
     private static boolean canOpenLegacyTmdbDetail(String key, String id, boolean cast) {
         if (cast || TextUtils.isEmpty(key)) return false;
         if (SiteApi.PUSH.equals(key)) return TmdbSitePolicy.isEnabled(key, id);
-        return !AudioUtil.isAudioSiteEnabled(key) && !isShortDramaSiteEnabled(key) && TmdbSitePolicy.isEnabled(key, id);
+        return !AudioUtil.isAudioSiteEnabled(key, Setting::isAudioSiteEnabled) && !isShortDramaSiteEnabled(key) && TmdbSitePolicy.isEnabled(key, id);
     }
 
     private static boolean isShortDramaSiteEnabled(String key) {
@@ -1070,7 +1070,7 @@ private boolean runtimeSourceOnly;
     public static boolean startImmersiveAudioSite(Activity activity, String key, String id, String name, String pic, String mark) {
         if (SiteApi.PUSH.equals(key)) return false;
         if (!PlayerSetting.isImmersiveAudioMode()) return false;
-        if (!AudioUtil.isAudioSiteEnabled(key)) return false;
+        if (!AudioUtil.isAudioSiteEnabled(key, Setting::isAudioSiteEnabled)) return false;
         Notify.show("正在加载音频");
         Task.execute(() -> {
             try {

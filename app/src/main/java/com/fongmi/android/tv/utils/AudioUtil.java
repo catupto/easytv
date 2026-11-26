@@ -6,7 +6,6 @@ import com.fongmi.android.tv.api.SiteApi;
 import com.fongmi.android.tv.api.config.VodConfig;
 import com.fongmi.android.tv.bean.Result;
 import com.fongmi.android.tv.bean.Site;
-import com.fongmi.android.tv.setting.Setting;
 
 import java.util.Locale;
 
@@ -21,10 +20,21 @@ public class AudioUtil {
         return isAudioUrl(result.getUrl().v()) || isAudioUrl(result.getRealUrl());
     }
 
-    public static boolean isAudioSiteEnabled(String key) {
+    /**
+     * 批次 2.1：配置判定由调用方注入，本类不再读全局设置。
+     *
+     * <p>为什么改成传 {@code siteEnabled} 谓词而不是注入 {@code SettingSource}：
+     * {@code utils} 最终并入 {@code :core:common}，不能反向依赖 {@code :core:setting}
+     * （主方案 §2.1）。本类仍负责"站点解析"这件纯逻辑（{@code VodConfig} 查询），
+     * 只把"这个站点是否在音频配置里启用"这个业务判断交回上层。
+     *
+     * <p>参数是 {@code (key, name) -> boolean} 而不是 {@code boolean}，因为需要站点的
+     * key 与 name 两个字段才能判定——这是原实现就有的语义，没有新增能力。
+     */
+    public static boolean isAudioSiteEnabled(String key, java.util.function.BiPredicate<String, String> siteEnabled) {
         if (TextUtils.isEmpty(key) || SiteApi.PUSH.equals(key)) return true;
         Site site = VodConfig.get().getSite(key);
-        return Setting.isAudioSiteEnabled(site.getKey(), site.getName());
+        return siteEnabled.test(site.getKey(), site.getName());
     }
 
     public static boolean isAudioUrl(String url) {

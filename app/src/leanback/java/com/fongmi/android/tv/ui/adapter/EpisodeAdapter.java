@@ -79,7 +79,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.ViewHold
     }
 
     public void addAll(List<Episode> items) {
-        EpisodeTitleCompact.apply(items);
+        EpisodeTitleCompact.apply(items, Setting.isCompactEpisodeTitle());
         mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();
@@ -196,7 +196,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.ViewHold
         maxWidth = Math.max(ResUtil.dp2px(240), maxWidth);
         int spacing = ResUtil.dp2px(8);
         int padding = ResUtil.dp2px(40);
-        EpisodeTitleCompact.apply(items);
+        EpisodeTitleCompact.apply(items, Setting.isCompactEpisodeTitle());
         for (Episode item : items) maxTextWidth = Math.max(maxTextWidth, ResUtil.getTextWidth(getTitle(item), 16) + padding);
         for (int candidate : new int[]{8, 6, 5, 4, 3, 2}) {
             int width = (maxWidth - spacing * (candidate - 1)) / candidate;

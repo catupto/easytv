@@ -7,6 +7,7 @@ import com.fongmi.android.tv.bean.Result;
 import com.fongmi.android.tv.setting.PlayerSetting;
 import com.fongmi.android.tv.ui.activity.AudioActivity;
 import com.fongmi.android.tv.utils.AudioUtil;
+import com.fongmi.android.tv.setting.Setting;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class AudioContentHandler implements ContentHandler {
 
     @Override
     public boolean canHandleSite(String key, String name) {
-        return AudioUtil.isAudioSiteEnabled(key);
+        return AudioUtil.isAudioSiteEnabled(key, Setting::isAudioSiteEnabled);
     }
 
     @Override

@@ -19,7 +19,7 @@
   "totals": {
     "_note": "Ceilings, not equalities: a batch may add scaffolding while shrinking debt.",
     "java_files_max": 2691,
-    "java_lines_max": 576588
+    "java_lines_max": 576608
   },
   "extremes": {
     "_note": "Each of these may only go down (plan §6.1 ladder).",
@@ -326,16 +326,16 @@
         "setting"
       ],
       [
-        "setting",
-        "utils"
-      ],
-      [
         "server",
         "ui"
       ],
       [
         "api",
         "playback"
+      ],
+      [
+        "setting",
+        "utils"
       ],
       [
         "db",
@@ -439,7 +439,7 @@
       "also counts doc mentions, so it is reported but NOT gated."
     ],
     "isLeanback_callsites": 13,
-    "setting_static_callsites": 640,
+    "setting_static_callsites": 639,
     "setting_static_files": 111,
     "app_get_files": 94,
     "player_manager_files": 48,

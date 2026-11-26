@@ -27,7 +27,7 @@ public class AudioPlaybackStyleRoutingTest {
         String source = read(findMainJavaPath().resolve(Path.of("com", "fongmi", "android", "tv", "content", "AudioContentHandler.java")));
 
         assertTrue("Audio sites must still be claimed so immersive mode can use the direct audio launch path",
-                source.contains("return AudioUtil.isAudioSiteEnabled(key);"));
+                source.contains("return AudioUtil.isAudioSiteEnabled(key, Setting::isAudioSiteEnabled);"));
         assertTrue("Audio sites must be routed through the audio launcher in every playback style",
                 source.contains("return AudioActivity.startSite(activity, key, id, name, pic, mark);"));
         assertTrue("Audio URLs must not be claimed by the built-in handler in immersive mode",

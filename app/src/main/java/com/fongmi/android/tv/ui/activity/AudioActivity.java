@@ -156,7 +156,7 @@ public class AudioActivity extends PlaybackActivity {
     public static boolean startSite(Activity activity, String key, String id, String name, String pic, String mark) {
         if (PlayerSetting.isImmersiveAudioMode()) return VideoActivity.startImmersiveAudioSite(activity, key, id, name, pic, mark);
         if (SiteApi.PUSH.equals(key)) return false;
-        if (!AudioUtil.isAudioSiteEnabled(key)) return false;
+        if (!AudioUtil.isAudioSiteEnabled(key, Setting::isAudioSiteEnabled)) return false;
         Notify.show("正在加载音频");
         Task.execute(() -> {
             try {
@@ -191,7 +191,7 @@ public class AudioActivity extends PlaybackActivity {
 
     public static boolean startIfAudio(Activity activity, String playbackKey, String siteKey, String flag, String vodName, String vodPic, List<Episode> episodes, int index, Result result, long timeout) {
         if (PlayerSetting.isImmersiveAudioMode()) return false;
-        if (!AudioUtil.isAudioSiteEnabled(siteKey)) return false;
+        if (!AudioUtil.isAudioSiteEnabled(siteKey, Setting::isAudioSiteEnabled)) return false;
         boolean audio = AudioUtil.isAudio(result);
         if (SiteApi.PUSH.equals(siteKey) && !audio) return false;
         if (!audio && (result == null || result.getUrl().isEmpty())) return false;

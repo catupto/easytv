@@ -1,7 +1,6 @@
 package com.fongmi.android.tv.utils;
 
 import com.fongmi.android.tv.bean.Episode;
-import com.fongmi.android.tv.setting.Setting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,8 +78,18 @@ public final class EpisodeTitleCompact {
     private EpisodeTitleCompact() {
     }
 
-    public static void apply(List<Episode> episodes) {
-        apply(episodes, compute(episodes, Setting.isCompactEpisodeTitle()));
+    /**
+     * 批次 2.1：{@code compactEnabled} 由调用方传入，本类不再读全局设置。
+     *
+     * <p>为什么改签名而不是注入 {@code SettingSource}：{@code utils} 包最终要并入
+     * {@code :core:common}，而 {@code :core:common} 不能反向依赖 {@code :core:setting}
+     * （主方案 §2.1）。所以这一层必须保持"不知道设置存在"，配置只能由上层传值。
+     *
+     * <p>调用方（两侧的 {@code EpisodeAdapter}）本来就在 UI 层，可以直接读
+     * {@code Setting.isCompactEpisodeTitle()} 后传进来，依赖方向仍然向下。
+     */
+    public static void apply(List<Episode> episodes, boolean compactEnabled) {
+        apply(episodes, compute(episodes, compactEnabled));
     }
 
     public static List<String> compute(List<Episode> episodes, boolean compactEnabled) {
