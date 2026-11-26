@@ -297,3 +297,62 @@ public static int gridColumnCount(Context context, Style style) // 横屏少一�
 | 每个子批双变体 device 测试 | a1 17s+20s / a2 8s+13s / a3 8s+14s / a4 212tests+19s，全部绿 |
 | 新增失败 | 0（a4 的 2 个失败是 `CacheTotalLimitApplyContractTest`，在 21 条基线内） |
 | `guard.sh` | 每个子批后均绿 |
+
+## 批次 4.3-b / 4.3-c · `isLeanback()` 迁移收尾（Gate T3）
+
+### 结果
+
+| 批次 | 提交 | 范围 | `isLeanback_callsites` |
+|---|---|---|---:|
+| 4.3-a（4 子批） | `aa40ea1` / `7c9486e` / `8ab58a4` / `714a6c7` | `ui/dialog` + `ui/adapter` | 219 → 79 |
+| 4.3-b1 | `bba6af8` | `PluginManagerActivity` / `TmdbPersonActivity` / 两侧 `VideoActivity` | 79 → 71 |
+| 4.3-b2 | `f6c810c` | `TmdbDetailActivity` + 锁定它的 10 处测试断言 | 71 → 45 |
+| 4.3-c | `553981d` | 剩余 12 个生产文件 + 7 处测试断言 | 45 → 13 |
+
+**终值 13，Gate T3 目标 ≤40 达成（相对起点 232 降 94%）**。
+
+### 剩余 13 处全部不可迁移
+
+| 位置 | 处数 | 为什么不迁 |
+|---|---:|---|
+| `device/DeviceModePolicy.java` + `FlavorDeviceModePolicy.java` | 5 | **谓词自身的实现**，它就是终点 |
+| `device/DeviceModePolicyContractTest.java` | 2 | 断言"新旧两者给出同一答案"，是迁移期的护栏 |
+| `ui/dialog/ThemeDialog.java`（两侧） | 3 | ADR-0010 保留的双 flavor 差异，随 4.6 一起处理 |
+| `androidTest/Plugin*DeviceTest` | 5 | instrumented 测试的 `Assume.assumeTrue` 跳过条件 |
+
+### `Util.isLeanback()` 本体
+
+按方案 4.3 纪律**最后才改**，本批仍未改动：
+
+```java
+public static boolean isLeanback() {
+    return "leanback".equals(BuildConfig.FLAVOR_mode);
+}
+```
+
+它要在 4.6 删除 `mode` 维度时改成转发 `policy.isTv()` —— 那时 `BuildConfig.FLAVOR_mode`
+本身不存在，改早没有意义且会让 4.6 的 diff 变脏。
+
+### 一个真实 bug（迁移中暴露并修复）
+
+`HomeWebController.java:2155` 用的是**全限定名** `com.fongmi.android.tv.utils.Util.isLeanback()`，
+朴素的字符串替换产生了 `com.fongmi.android.tv.utils.DeviceModePolicy.current().isTv()` ——
+一个不存在的包路径，编译报 `找不到符号: 类 DeviceModePolicy 位置: 程序包 ...tv.utils`。
+修正为完整限定名 `...tv.device.DeviceModePolicy`。全仓只此一处用全限定形式，其余都用 import 的简单名。
+
+**教训**：批量替换前应先 grep 全限定形式。本批如果只跑单变体构建、或只看"编译通过"，
+这个错误会被 `guard.sh` 之外的检查漏掉 —— 但它会直接编译失败，属可发现错误。
+
+### 额外收益：一对一双向依赖解开
+
+`theme ↔ utils` 因移除 `ThemeController` 的 `Util` import 而解除，双向依赖 **54 → 53**。
+白名单已在同一提交内同步剪除该条目（§6.9：条目消失必须同步删除，防止白名单腐烂）。
+
+### 验证
+
+| 项 | 结果 |
+|---|---|
+| 每子批双变体构建 | b1 38s / b2 35s / c 1m13s，全部 SUCCESSFUL |
+| 每子批双变体 device 测试 | b1 171tests+20s / b2 144tests / c 全量，全部通过 |
+| 全量单测（4.3-c 后） | **6,237 完成 / 20 失败 / 3 跳过 → 通过 6,214**，新增失败 **0**，与迁移前完全一致 |
+| `guard.sh` | 绿 |
