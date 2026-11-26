@@ -876,6 +876,22 @@ private boolean runtimeSourceOnly;
         startSkippingDispatch(activity, key, id, name, pic, mark, collect, cast, tmdbItem, wallPic, content, launch, searchKeyword);
     }
 
+    /**
+     * 与触屏侧同签名的重载（批次 4.2b）。
+     *
+     * <p>合并 {@code Product} 时发现两侧的 {@code startSkippingDispatch} 参数列表不一致：
+     * TV 侧多 {@code boolean cast} 与 {@code long launch}，于是「阅读器回退」这一步无法写进
+     * {@code main}，只能两侧各留一份适配器。补上这个重载后两侧签名对齐：
+     * TV 侧的 {@code cast=false}（阅读器回退是站内播放，不走投屏）、{@code launch=now}
+     * （与旧行为一致：立即起播，不续播）。
+     *
+     * <p>这样 {@code ProductReaderFallback} 才能回到 {@code main} 只有一份，
+     * 也才能算真正的「消除差异」而不是「把差异搬到另一个文件」。
+     */
+    public static void startSkippingDispatch(Activity activity, String key, String id, String name, String pic, String mark, boolean collect, com.fongmi.android.tv.bean.TmdbItem tmdbItem, String wallPic, String content) {
+        startSkippingDispatch(activity, key, id, name, pic, mark, collect, false, tmdbItem, wallPic, content, System.currentTimeMillis());
+    }
+
     /** 跳过 ContentDispatcher 的启动路径（供阅读器等 handler 判定内容不归自己管时回退）。 */
     public static void startSkippingDispatch(Activity activity, String key, String id, String name, String pic, String mark, boolean collect, boolean cast, com.fongmi.android.tv.bean.TmdbItem tmdbItem, String wallPic, String content, long launch) {
         startSkippingDispatch(activity, key, id, name, pic, mark, collect, cast, tmdbItem, wallPic, content, launch, "");

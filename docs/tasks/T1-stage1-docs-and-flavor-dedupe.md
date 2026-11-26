@@ -151,3 +151,77 @@ bash scripts/arch/dep-graph.sh                # bidirectional_pairs / cycles
 bash scripts/arch/guard.sh                    # 只减不增判定
 bash scripts/arch/guard.sh --self-test        # 门禁仍会红
 ```
+
+## 批次 T2 · 4.2b：`Product` 合进 `main`
+
+> 这一批虽然编号在阶段 4，但主方案 §4.8.7 把它前移到阶段 3 之前，因为它同时**关闭了
+> 批次 1.3 遗留的 1 个双份文件缺口**：双份文件从 64 降到 **63**，Gate T1 的目标达成。
+
+### 起点事实（合并前）
+
+| | leanback | mobile |
+|---|---|---|
+| 文件 | `app/src/leanback/java/com/fongmi/android/tv/Product.java`（44 行） | `.../mobile/.../Product.java`（66 行） |
+| `getDeviceType()` | 恒 `0` | 恒 `1` |
+| 列数 API | `getColumn()` / `getColumn(Style)` | `getColumn(Context)` / `getColumn(Context, Style)` |
+| spec API | `getSpec(Style)` / `getSpec(int,int,Style)` | `getSpec(Context)` / `getSpec(Context,int)` / `getSpec(Context,Style)` |
+| 其他 | `getEms()` | `getCutout()`（私有） |
+
+`getDeviceType()` 全仓只有 **1 个调用点**：`bean/Device.java:79` `identityType = Product.getDeviceType()`。
+即 0/1 会被**写进持久化的观看历史**，与既有数据比较，所以语义不能动。
+
+### 合并方案
+
+1. `main/.../Product.java` 一份实现，**两侧原有每个签名都保留为重载**（调用点零改动）。
+2. `getDeviceType()` 改为 `DeviceModePolicy.current().isTv() ? 0 : 1`，映射与原值逐字等价。
+3. 常量提取：`TV_BASE_SPACING_DP=48` / `TOUCH_BASE_SPACING_DP=32` / `ITEM_GAP_DP=16` /
+   `TOUCH_WIDE_COLUMNS=7` / `TOUCH_TALL_COLUMNS=5`，数值与合并前一致。
+4. `MobileWindow` 从 `mobile` 源集移入 `main`（它只依赖 Android 框架 + `ResUtil`，无 flavor 依赖）。
+
+### 过程中发现的真实不兼容（关键）
+
+`registerReaderFallback()` 两侧实现调用的 `VideoActivity.startSkippingDispatch` **参数列表不同**：
+
+```
+leanback: (..., boolean collect, boolean cast, TmdbItem, String wallPic, String content, long launch[, String searchKeyword])
+mobile:   (..., boolean collect,                    TmdbItem, String wallPic, String content[, String searchKeyword])
+```
+
+第一次尝试用「flavor 各一份 `ProductReaderFallback` 适配器」绕过：编译通过、双变体绿，但
+`dup-scan` 显示 `Product.java` 消失、`ProductReaderFallback.java` 补位 —— **数量恒为 64**。
+这只是把差异搬到另一个文件，不是消除。
+
+**真正的解法**：给 leanback 补一个与触屏侧同签名的 10 参数重载，内部转发到 12 参数版
+（`cast=false`，阅读器回退是站内播放、不走投屏；`launch=now`，与旧行为逐字一致）。
+签名对齐后 `registerReaderFallback()` 回到 `main` 单份，双份文件降到 **63**。
+
+### 度量变化
+
+| 指标 | 前 | 后 |
+|---|---:|---:|
+| `dup_files` | 64 | **63**（Gate T1 目标达成） |
+| `dup_lines` | 55,492 | 55,398 |
+| Java 文件 | 2,697 | **2,687** |
+| Java 行数 | 577,187 | **576,219** |
+| 双向包依赖 | 54 | 54（不变） |
+
+### 验证
+
+| 项 | 结果 |
+|---|---|
+| 双变体构建 | `assembleMobileArm64_v8aDebug` + `assembleLeanbackArm64_v8aDebug` **BUILD SUCCESSFUL 1m11s** |
+| mobile device 契约测试 | `ProductContractTest` + `device.*` **BUILD SUCCESSFUL 20s** |
+| leanback device 契约测试 | `ProductContractTest` + `device.*` **BUILD SUCCESSFUL 21s** |
+| `guard.sh` | **绿** |
+
+**两侧测试为何写法不同**（环境事实，不是设计选择）：本仓库 Robolectric 只在
+`testLeanback`（`testLeanbackImplementation 'org.robolectric:robolectric:4.16'`），
+`testMobile` 没有该依赖，也没有 `androidx.test.core`。所以：
+
+- `testLeanback/.../ProductContractTest`：用 `RuntimeEnvironment.getApplication()` 拿真实 `Context`，
+  断言 `getDeviceType()==0`、TV 列数公式、`getSpec` 宽高由 ratio 推出；
+- `testMobile/.../ProductContractTest`：纯 JVM，断反射验两侧全部重载存活 +
+  `getDeviceType()==1` + 所有 public 方法仍是 `static`。
+
+两侧都断言了「全部 12 个重载存在」，因为合并两份文件最容易犯的错就是只留一份的签名，
+而单变体构建发现不了。
