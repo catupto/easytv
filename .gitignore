@@ -35,6 +35,8 @@ plans/
 .codebase-memory
 graphify-out/
 .codex/task-state/
+# 本地 AI 会话记忆，不进版本控制
+.workbuddy/
 ext/cores-build/
 ext/core-sources/
 # 分发用的外置内核包（体积大，见 ext/cores-build，随时可重新打包）
