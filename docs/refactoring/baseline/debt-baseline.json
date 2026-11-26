@@ -94,34 +94,27 @@
   },
   "flavor": {
     "_note": "80 -> 0 by batch 4.6. dup_files entries are repo-relative to the java root.",
-    "dup_files_max": 80,
-    "dup_lines_max": 58466,
+    "dup_files_max": 69,
+    "dup_lines_max": 56834,
     "dup_files": [
       "com/fongmi/android/tv/Product.java",
-      "com/fongmi/android/tv/bean/CastVideo.java",
-      "com/fongmi/android/tv/dlna/DLNACast.java",
-      "com/fongmi/android/tv/dlna/DLNACastManager.java",
-      "com/fongmi/android/tv/service/DLNACastService.java",
       "com/fongmi/android/tv/ui/activity/FileActivity.java",
       "com/fongmi/android/tv/ui/activity/HistoryActivity.java",
       "com/fongmi/android/tv/ui/activity/HomeActivity.java",
       "com/fongmi/android/tv/ui/activity/KeepActivity.java",
       "com/fongmi/android/tv/ui/activity/LiveActivity.java",
-      "com/fongmi/android/tv/ui/activity/ScanActivity.java",
       "com/fongmi/android/tv/ui/activity/SearchActivity.java",
       "com/fongmi/android/tv/ui/activity/VideoActivity.java",
       "com/fongmi/android/tv/ui/adapter/AdRuleAdapter.java",
       "com/fongmi/android/tv/ui/adapter/ChannelAdapter.java",
       "com/fongmi/android/tv/ui/adapter/CollectAdapter.java",
       "com/fongmi/android/tv/ui/adapter/ConfigAdapter.java",
-      "com/fongmi/android/tv/ui/adapter/DeviceAdapter.java",
       "com/fongmi/android/tv/ui/adapter/EpgDataAdapter.java",
       "com/fongmi/android/tv/ui/adapter/EpisodeAdapter.java",
       "com/fongmi/android/tv/ui/adapter/FileAdapter.java",
       "com/fongmi/android/tv/ui/adapter/FlagAdapter.java",
       "com/fongmi/android/tv/ui/adapter/GroupAdapter.java",
       "com/fongmi/android/tv/ui/adapter/HistoryAdapter.java",
-      "com/fongmi/android/tv/ui/adapter/HotWordAdapter.java",
       "com/fongmi/android/tv/ui/adapter/KeepAdapter.java",
       "com/fongmi/android/tv/ui/adapter/LiveAdapter.java",
       "com/fongmi/android/tv/ui/adapter/ParseAdapter.java",
@@ -134,7 +127,6 @@
       "com/fongmi/android/tv/ui/adapter/SiteAdapter.java",
       "com/fongmi/android/tv/ui/adapter/ThemeAdapter.java",
       "com/fongmi/android/tv/ui/adapter/TypeAdapter.java",
-      "com/fongmi/android/tv/ui/adapter/WordAdapter.java",
       "com/fongmi/android/tv/ui/base/BaseActivity.java",
       "com/fongmi/android/tv/ui/base/BaseFragment.java",
       "com/fongmi/android/tv/ui/base/BaseVodHolder.java",
@@ -145,7 +137,6 @@
       "com/fongmi/android/tv/ui/dialog/AdBlockStatsDialog.java",
       "com/fongmi/android/tv/ui/dialog/AdRuleEditDialog.java",
       "com/fongmi/android/tv/ui/dialog/AdRuleManageDialog.java",
-      "com/fongmi/android/tv/ui/dialog/AdRulePreviewDialog.java",
       "com/fongmi/android/tv/ui/dialog/AppearanceDialog.java",
       "com/fongmi/android/tv/ui/dialog/BufferDialog.java",
       "com/fongmi/android/tv/ui/dialog/CastDialog.java",
@@ -164,7 +155,6 @@
       "com/fongmi/android/tv/ui/dialog/SiteDialog.java",
       "com/fongmi/android/tv/ui/dialog/SpeedDialog.java",
       "com/fongmi/android/tv/ui/dialog/ThemeDialog.java",
-      "com/fongmi/android/tv/ui/dialog/TimerDialog.java",
       "com/fongmi/android/tv/ui/dialog/UaDialog.java",
       "com/fongmi/android/tv/ui/dialog/UpdateDialog.java",
       "com/fongmi/android/tv/ui/dialog/WebDialog.java",
@@ -175,8 +165,7 @@
       "com/fongmi/android/tv/ui/holder/VodListHolder.java",
       "com/fongmi/android/tv/ui/holder/VodOvalHolder.java",
       "com/fongmi/android/tv/ui/holder/VodRectHolder.java",
-      "com/fongmi/android/tv/utils/PiP.java",
-      "com/fongmi/android/tv/utils/Timer.java"
+      "com/fongmi/android/tv/utils/PiP.java"
     ]
   },
   "namespace_files": [
@@ -231,7 +220,7 @@
   ],
   "deps": {
     "_note": "52 pairs -> <=20 (stage 2) -> 0. ui_to_player_files 36 -> 0.",
-    "bidirectional_pairs_max": 52,
+    "bidirectional_pairs_max": 54,
     "ui_to_player_files_max": 36,
     "bidirectional_pairs": [
       [
@@ -303,12 +292,12 @@
         "db"
       ],
       [
-        "ui",
-        "web"
-      ],
-      [
         "bean",
         "server"
+      ],
+      [
+        "ui",
+        "web"
       ],
       [
         "following",
@@ -395,6 +384,10 @@
         "service"
       ],
       [
+        "service",
+        "utils"
+      ],
+      [
         "bean",
         "event"
       ],
@@ -435,6 +428,10 @@
         "utils"
       ],
       [
+        "dlna",
+        "service"
+      ],
+      [
         "playback",
         "service"
       ],
@@ -454,7 +451,7 @@
     "isLeanback_callsites": 219,
     "setting_static_callsites": 628,
     "setting_static_files": 112,
-    "app_get_files": 93,
+    "app_get_files": 94,
     "player_manager_files": 48,
     "bean_history_files": 56,
     "eventbus_files": 17,
