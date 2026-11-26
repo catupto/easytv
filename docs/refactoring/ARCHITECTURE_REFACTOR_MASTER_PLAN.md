@@ -3,11 +3,11 @@
 | 项 | 内容 |
 |---|---|
 | 文档状态 | 提案（Proposal），**本文档不授权任何代码改动** |
-| 最新修订 | **D2 已决策：放弃 leanback/mobile 双 flavor 双 APK，改为单 APK + 运行期设备形态自适应**（ADR-0002）。新增 §4.8 单包化设计、§6.11 ADR 清单、§8.5 单包化专项风险；§5 阶段 4 重排为"单包化 80→0"（4.1–4.6）；§1.3 / §7 的 flavor 双份与 `isLeanback()` 终态由 `≤8 / ≤40` 收紧为 `0 / 0`；新增 APK 体积与单包化 CI 门禁两行度量。**本轮仍只改本文件**，未动任何 `.java` / `.gradle` / 清单 / 资源。 |
+| 最新修订 | **2026-11-26 第四轮：4.1 / 4.2 已实施并验收**。4.1 = 依赖合并（commit `d2d3ad4`，autosize 例外见 §4.8.3）；4.2 = `device` 包 `DeviceModePolicy` 脚手架落地（4 文件 166 行，零调用点改动）。本文档同步订正：包名 `ui/kit` → `device`、取消"两个 flavor 实现"设计、4.1/4.2 批次行改为"已完成 + 实际验收口径"。**此前的 D2 决策记录**：放弃双 flavor 双 APK，改单 APK + 运行期自适应（ADR-0002），新增 §4.8 / §6.11 / §8.5，阶段 4 重排为"单包化 80→0"。 |
 | 适用仓库 | `E:/gitwork/easytv`（WebHTV，`master`） |
 | 治理范围 | 代码组织、模块边界、目录结构、flavor 双份实现、上帝类、度量与门禁、文档/仓库卫生 |
 | 基线采样时点 | HEAD `91cdb8c`；工作区**除本文件外**干净（`git status --porcelain` 仅 1 条：本文件未跟踪） |
-| 约束 | 本轮唯一写操作 = 创建并修订本文件。未修改任何 `.java` / `.gradle` / 资源 / lock 文件，未移动任何文件，未提交 git |
+| 约束 | 文档本身只做规划与记录。已授权的代码落地批次：**4.1**（`app/build.gradle` 依赖合并，已提交 `d2d3ad4`）、**4.2**（`device` 包 4 个新增文件，可整体删除回滚）。其余批次均未动代码。 |
 | 复现方式 | 见「附录 B：复现命令清单」，所有数字均可由命令行独立验证 |
 
 > **阅读顺序建议**：决策者读 §1；工程负责人读 §1、§5、§6、§9；执行者读 §2、§4、§5、§8。
@@ -831,11 +831,13 @@ app/src/
 
 ```
 app/src/main/java/.../ui/detail/          ← 公共实现（唯一一份）
-app/src/main/java/.../ui/kit/DeviceModePolicy.java  ← 策略接口（在 main）
-app/src/leanback/java/.../ui/kit/TvDeviceModePolicy.java   ← leanback 实现（≤150 行）
-app/src/mobile/java/.../ui/kit/MobileDeviceModePolicy.java ← mobile 实现（≤150 行）
+app/src/main/java/.../device/DeviceModePolicy.java        ← 策略接口（在 main，✅ 4.2 已落地）
+app/src/main/java/.../device/FlavorDeviceModePolicy.java  ← 阶段 3 实现：读 flavor 编译期常量（✅ 4.2 已落地）
+app/src/main/java/.../device/RuntimeDeviceModePolicy.java ← 阶段 4 实现：读系统能力（待落地，见 §4.8.2）
 app/src/leanback/res/layout/...           ← 仅保留真正不同的布局
 ```
+
+> **包名订正（4.2 实施时确定）**：接口原设计放在 `ui/kit`，实施时改为独立的 `com.fongmi.android.tv.device`。原因是 `player` 包后续也要消费该策略，放 `ui.kit` 会形成 `player → ui` 依赖，违反本方案 A3/A5 分层规则。同时**取消**"`TvDeviceModePolicy` / `MobileDeviceModePolicy` 两个 flavor 实现"的设计——阶段 3 仍双 flavor，一个读 `BuildConfig.FLAVOR_mode` 的 `main` 侧实现即可做到逐字节等价，没必要在 flavor 源集里各放一份（那正是本方案要消灭的双份模式）。
 
 关键点：**Activity/Fragment 只依赖 `DeviceModePolicy` 接口，不再 import `Util.isLeanback()`**。
 
@@ -994,10 +996,14 @@ import com.fongmi.android.tv.player.lut.MpvLutShader;           // MPV 专属实
 
 #### 4.8.2 `DeviceModePolicy` 接口（完整签名建议）
 
-放在 `main`（成为公共契约）；实现类分两阶段换骨（见下表）。**调用方只依赖接口，不再 import `Util.isLeanback()`**。
+放在 `main` 的 `com.fongmi.android.tv.device` 包（成为公共契约）；实现类分两阶段换骨（见下表）。**调用方只依赖接口，不再 import `Util.isLeanback()`**。
+
+> **✅ 4.2 已落地的实际范围（2026-11-26）**：接口只含 `mode()/isTv()/isPhone()/isTablet()/wantsFocusNavigation()/wantsTouchScroll()/isWideScreen(Context)/static current()` 八个成员，**不含**下表初稿里的 `gridColumnCount*` / `screenLayout` / `densityScale`——前者依赖两份签名不同的 `Product.java`（leanback `getColumn()` vs mobile `getColumn(Context)`），在 `main` 侧无法同时编译；后两者分别依赖 4.4 的 layout 三分法与 4.1 的 autosize 处置。提前定义只能写成 `throw new UnsupportedOperationException()`，会给后续批次留假接口。这三个方法随 4.2b（`Product` 合入 main）与 4.4 一并补齐。
+>
+> 文件：`device/DeviceMode.java`(16) + `device/DeviceModePolicy.java`(53) + `device/FlavorDeviceModePolicy.java`(36) + 契约测试(61)。
 
 ```java
-package com.fongmi.android.tv.ui.kit;
+package com.fongmi.android.tv.device;
 
 public enum DeviceMode { TV, PHONE, TABLET }
 
@@ -1472,8 +1478,8 @@ bash gradlew :app:assembleLeanbackArm64_v8aDebug
 
 | 批次 | 动作 | 退出判据 | 回滚 |
 |---|---|---|---|
-| **4.1**（**前移至阶段 3 前**） | **依赖合并**：`app/build.gradle:241-245` 的 5 行 `leanbackImplementation/mobileImplementation` 改为 4 条 `implementation`（`zxing` 去重）；确认 `main` 能编译 `androidx.leanback` 引用 | `bash gradlew :app:compileLeanbackArm64_v8aDebugJavaWithJavac` 与 `:app:compileMobileArm64_v8aDebugJavaWithJavac` 通过；`grep -c Implementation app/build.gradle` 相应变化 | 改回 5 行 |
-| **4.2**（**前移至阶段 3 前**） | **谓词上线**：新增 `ui/kit/DeviceMode.kt`(enum) + `DeviceModePolicy.java`(接口) + `DeviceModeResolver.java` + `FlavorDeviceModePolicy.java`（返回 flavor 常量）。**不改任何调用点** | 编译通过；`Util.isLeanback()` 行为不变（对照单测）；新增文件 ≤150 行/个 | 删除新增文件即可（零调用点改动） |
+| **4.1**（**前移至阶段 3 前**） | **依赖合并**（✅ 已完成 2026-11-26，commit `d2d3ad4`）：`app/build.gradle` 的 5 行 flavor 依赖改为 **3 条 `implementation`（`leanback` / `biometric` / `zxing` 去重）+ 1 条保留的 `leanbackImplementation libs.androidautosize`**——autosize 是例外，原因与处置见 §4.8.3「autosize 例外」 | 两变体 `assemble*Debug` 通过；mobile 合并清单 `autosize-init-provider`=0、leanback=1；mobile dex 中 `me/jessyan/autosize`=0 处；`mobile*CompileClasspath` 含 `androidx.leanback:1.2.0`；`testMobile*UnitTest` 通过数 ≥6,202 且 0 新增失败 | 改回 5 行 |
+| **4.2**（**前移至阶段 3 前**） | **谓词上线**（✅ 已完成 2026-11-26）：新增 `device/DeviceMode.java`(enum)、`device/DeviceModePolicy.java`(接口 + `static current()`)、`device/FlavorDeviceModePolicy.java`（读 flavor 常量）+ 契约测试。**未改任何调用点**，4 个类当前无调用方（预期死代码） | 双变体 `assemble*Debug` 通过；`testMobile*UnitTest --tests 'com.fongmi.android.tv.device.*'` 与 `testLeanback*UnitTest --tests '…device.*'` **两侧都跑**且 6/6 通过（只跑 mobile 会漏掉"`mode()` 恒返回 PHONE"这类单向错误）；`Util.isLeanback()` 源码未变 | 删除 4 个新增文件即可（零调用点改动） |
 | **4.3** | **232 调用点分批迁移**（§4.8.6）：4.3-a `ui/dialog`+`ui/adapter` → 4.3-b `ui/activity`+`ui/fragment` → 4.3-c `player`+`setting`+`Product.java`。每批把 `Util.isLeanback()` 换为注入的 `policy.isTv()`；`RuntimeDeviceModePolicy` 在 4.3-c 后替换 `FlavorDeviceModePolicy` | 每批后 `grep -rn isLeanback` 下降；双端截图对比；`VideoActivity` 两侧 `isLeanback()`=0 | 每批独立提交，`git revert` 单批；`policy` 实现可切回 `FlavorDeviceModePolicy` |
 | **4.4** | **85 组 layout 三分法**（§4.8.5）：①纯尺寸/朝向 → 合并 + `layout-land`/`layout-sw600dp` + `values-tv`/`values-phone`；②结构差异 → `xxx_tv.xml`/`xxx_phone.xml` + `DeviceModePolicy.screenLayout(key)`；③仅容器 → 合并 + `ViewStub`/`include` | 85 组全部归档到三分法；`res/layout` 无"同 ScreenKey 双同名"；每个 ScreenKey 的 `screenLayout()` 有测试 | 每对 layout 独立提交 |
 | **4.5** | **测试源集合并**（`testLeanback` 64 类 + `testMobile` 108 类 → `test`）：先处理包路径/类名冲突，再迁移 31 处测试内 `isLeanback()` 调用（改为对 `DeviceModePolicy` 注入假值）；同步 §2.9 的 218 类源码文本断言的 A/B/C 处置 | `test` 单源集可编译；用例总数 ≥ 合并前（64+108 的类不丢失）；单测通过数 ≥ 6,202 | 逐目录 `git mv` 迁回原源集 |
