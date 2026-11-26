@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.utils.ImgUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class TmdbPersonPhotoAdapter extends RecyclerView.Adapter<TmdbPersonPhoto
 
         ViewHolder(View view, boolean legacyMode) {
             super(view);
-            if (!legacyMode && !Util.isLeanback()) {
+            if (!legacyMode && !DeviceModePolicy.current().isTv()) {
                 itemView.setFocusable(false);
                 itemView.setFocusableInTouchMode(false);
             }

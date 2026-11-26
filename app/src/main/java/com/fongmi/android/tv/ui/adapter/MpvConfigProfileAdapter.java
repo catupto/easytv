@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fongmi.android.tv.databinding.AdapterMpvConfigProfileBinding;
 import com.fongmi.android.tv.R;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.fongmi.android.tv.player.mpv.MpvConfigStore;
-import com.fongmi.android.tv.utils.Util;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -74,9 +74,9 @@ public class MpvConfigProfileAdapter extends RecyclerView.Adapter<MpvConfigProfi
                 ? R.drawable.selector_mpv_script_disabled_card : R.drawable.selector_mpv_profile_card);
         holder.binding.root.setSelected(!scripts && profile.active);
         holder.binding.root.setFocusable(true);
-        holder.binding.root.setFocusableInTouchMode(Util.isLeanback());
+        holder.binding.root.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         holder.binding.more.setFocusable(true);
-        holder.binding.more.setFocusableInTouchMode(Util.isLeanback());
+        holder.binding.more.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         holder.binding.root.setOnClickListener(view -> listener.onSelect(profile));
         holder.binding.more.setOnClickListener(view -> listener.onMore(view, profile));
         holder.binding.root.setOnKeyListener((view, keyCode, event) -> {

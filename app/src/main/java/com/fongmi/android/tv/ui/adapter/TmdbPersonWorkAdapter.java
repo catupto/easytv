@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.bean.TmdbItem;
 import com.fongmi.android.tv.utils.ImgUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -154,7 +154,7 @@ public class TmdbPersonWorkAdapter extends RecyclerView.Adapter<TmdbPersonWorkAd
 
         ViewHolder(View view) {
             super(view);
-            if (!Util.isLeanback()) {
+            if (!DeviceModePolicy.current().isTv()) {
                 itemView.setFocusable(false);
                 itemView.setFocusableInTouchMode(false);
             }

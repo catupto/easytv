@@ -122,6 +122,32 @@ public class Product {
         return style.isLand() ? getColumn(context) - 1 : getColumn(context);
     }
 
+    // ------------------------------------------------------------ 列数（具名入口）
+    //
+    // 「网格列数」原先只有 getColumn 系列这一个名字，而它同时被用来算列数、算 item 间距、
+    // 传进 FocusRestorer。4.3 迁移 isLeanback() 时需要一个语义明确的名字来承接
+    // 「TV 与触屏列数不同」这件事，因此补两个具名入口。
+    //
+    // 它们是 getColumn 的**别名而非新逻辑**：实现直接转发，避免出现第二套计算。
+
+    /**
+     * 当前设备形态下的网格列数（自动选择 TV / 触屏算法）。
+     *
+     * <p>与 {@link #getColumn()}（TV 专用）和 {@link #getColumn(Context)}（触屏专用）的区别：
+     * 本方法接受 {@code null} 并在 null 时回落到 TV 算法，因为 4.3 的迁移点里有相当一部分
+     * 拿不到可靠的 {@code Context}（构造期、静态初始化、被回收的 View）。**不要**用它替代
+     * 已知形态的调用点——那会把编译期可判定的分支变成运行期查询。
+     */
+    public static int gridColumnCount(Context context) {
+        if (context == null) return getColumn();
+        return DeviceModePolicy.current().isTv() ? getColumn() : getColumn(context);
+    }
+
+    /** {@link #gridColumnCount(Context)} 的样式重载：横屏少一列。 */
+    public static int gridColumnCount(Context context, Style style) {
+        return style.isLand() ? gridColumnCount(context) - 1 : gridColumnCount(context);
+    }
+
     public static int[] getSpec(Context context) {
         return getSpec(context, Style.rect());
     }

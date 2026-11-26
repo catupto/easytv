@@ -16,7 +16,7 @@ import com.fongmi.android.tv.ui.helper.TmdbRatingFormatter;
 import com.fongmi.android.tv.ui.helper.TmdbRecommendationRows;
 import com.fongmi.android.tv.utils.ImgUtil;
 import com.fongmi.android.tv.utils.TmdbImageSelector;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -175,7 +175,7 @@ public class TmdbRecommendationAdapter extends RecyclerView.Adapter<TmdbRecommen
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            if (!Util.isLeanback()) {
+            if (!DeviceModePolicy.current().isTv()) {
                 itemView.setFocusable(false);
                 itemView.setFocusableInTouchMode(false);
             }

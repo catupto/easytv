@@ -2270,10 +2270,10 @@ public class TmdbDetailActivityLayoutTest {
         assertTrue(adapterPath + " is missing the shared photo holder", holderConstructor >= 0 && bind > holderConstructor);
         String holderBody = adapter.substring(holderConstructor, bind);
         assertTrue("mobile legacy photo cards must bypass first-tap focus while TV keeps layout focus",
-                holderBody.contains("if (!Util.isLeanback()) {")
+                holderBody.contains("if (!DeviceModePolicy.current().isTv()) {")
                         && holderBody.contains("itemView.setFocusable(false);")
                         && holderBody.contains("itemView.setFocusableInTouchMode(false);")
-                        && !holderBody.contains("!legacyMode && !Util.isLeanback()"));
+                        && !holderBody.contains("!legacyMode && !DeviceModePolicy.current().isTv()"));
         assertTrue("main photos plus movie and episode detail dialogs must share the corrected photo adapter",
                 activity.contains("episodePhotoAdapter = new TmdbPhotoAdapter(this::showPhotoDialog);")
                         && activity.contains("new TmdbPhotoAdapter((position, url) -> showPhotoDialog(position, url, new ArrayList<>()))")

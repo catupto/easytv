@@ -11,7 +11,7 @@ import com.fongmi.android.tv.bean.TmdbItem;
 import com.fongmi.android.tv.databinding.AdapterTmdbItemBinding;
 import com.fongmi.android.tv.ui.helper.TmdbRecommendationRows;
 import com.fongmi.android.tv.utils.ImgUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +94,7 @@ public class TmdbAdapter extends RecyclerView.Adapter<TmdbAdapter.ViewHolder> {
         ViewHolder(@NonNull AdapterTmdbItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            if (!Util.isLeanback()) {
+            if (!DeviceModePolicy.current().isTv()) {
                 itemView.setFocusable(false);
                 itemView.setFocusableInTouchMode(false);
             }

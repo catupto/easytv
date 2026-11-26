@@ -15,7 +15,7 @@ import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.bean.TmdbPerson;
 import com.fongmi.android.tv.ui.helper.TmdbCinemaTheme;
 import com.fongmi.android.tv.utils.ImgUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class TmdbCastAdapter extends RecyclerView.Adapter<TmdbCastAdapter.ViewHo
 
         public ViewHolder(@NonNull android.view.View itemView) {
             super(itemView);
-            if (!Util.isLeanback()) {
+            if (!DeviceModePolicy.current().isTv()) {
                 itemView.setFocusable(false);
                 itemView.setFocusableInTouchMode(false);
             }

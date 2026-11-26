@@ -24,6 +24,7 @@ import com.fongmi.android.tv.utils.EpisodeTitleFormatter;
 import com.fongmi.android.tv.utils.ImgUtil;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -516,7 +517,7 @@ public class TmdbEpisodeAdapter extends RecyclerView.Adapter<TmdbEpisodeAdapter.
     }
 
     private void setMarquee(ViewHolder holder, boolean activated, boolean focused) {
-        boolean active = !Util.isLeanback() || activated || focused;
+        boolean active = !DeviceModePolicy.current().isTv() || activated || focused;
         holder.binding.index.setSelected(active);
         holder.binding.date.setSelected(active);
         holder.binding.badge.setSelected(active);
