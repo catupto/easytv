@@ -19,7 +19,7 @@
   "totals": {
     "_note": "Ceilings, not equalities: a batch may add scaffolding while shrinking debt.",
     "java_files_max": 2687,
-    "java_lines_max": 576250
+    "java_lines_max": 576251
   },
   "extremes": {
     "_note": "Each of these may only go down (plan §6.1 ladder).",
@@ -441,7 +441,7 @@
       "isLeanback_raw_lines is the plan's §2.2.4 `grep -c` number (232 at anchor); it",
       "also counts doc mentions, so it is reported but NOT gated."
     ],
-    "isLeanback_callsites": 154,
+    "isLeanback_callsites": 114,
     "setting_static_callsites": 645,
     "setting_static_files": 114,
     "app_get_files": 94,

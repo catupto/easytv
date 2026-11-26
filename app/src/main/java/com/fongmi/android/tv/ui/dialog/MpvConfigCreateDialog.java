@@ -26,7 +26,7 @@ import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.utils.FileChooser;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -139,14 +139,14 @@ public class MpvConfigCreateDialog extends BaseAlertDialog {
             return true;
         });
         binding.name.setOnEditorActionListener((view, actionId, event) -> {
-            if (!Util.isLeanback()) return false;
+            if (!DeviceModePolicy.current().isTv()) return false;
             binding.textOption.requestFocus();
             return true;
         });
     }
 
     private void setupTvFocus() {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         tvFocusable(binding.close);
         tvFocusable(binding.name);
         tvFocusable(binding.textOption);
@@ -208,7 +208,7 @@ public class MpvConfigCreateDialog extends BaseAlertDialog {
         binding.scriptCode.setText(shortCode);
         binding.scriptCode.setSelection(binding.scriptCode.length());
         updateScriptStats(shortCode);
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             tvFocusable(binding.close);
             tvFocusable(binding.name);
             tvFocusable(binding.buttonEnabled);
@@ -258,7 +258,7 @@ public class MpvConfigCreateDialog extends BaseAlertDialog {
         triggerId = triggerIdFor(MpvConfigStore.normalizeScriptTrigger(binding.buttonEnabled.isChecked(),
                 sourceButton == null ? null : sourceButton.trigger));
         binding.triggerGroup.check(triggerId);
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             tvFocusable(binding.close);
             tvFocusable(binding.name);
             tvFocusable(binding.scriptEnabled);
@@ -366,7 +366,7 @@ public class MpvConfigCreateDialog extends BaseAlertDialog {
     }
 
     private void updateScriptTriggerFocus() {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         boolean enabled = binding.buttonEnabled.isChecked();
         binding.triggerClick.setFocusable(enabled);
         binding.triggerLong.setFocusable(enabled);
@@ -542,7 +542,7 @@ public class MpvConfigCreateDialog extends BaseAlertDialog {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         window.setAttributes(params);
         window.setLayout(params.width, WindowManager.LayoutParams.WRAP_CONTENT);
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             if (scriptButtonMode || scriptSettingsMode) binding.name.post(() -> binding.name.requestFocus());
             else binding.textOption.post(() -> binding.textOption.requestFocus());
         }

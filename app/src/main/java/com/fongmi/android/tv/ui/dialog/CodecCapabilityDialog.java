@@ -31,7 +31,7 @@ import com.fongmi.android.tv.player.PlayerManager;
 import com.fongmi.android.tv.player.codec.CodecCapabilityInspector;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -159,7 +159,7 @@ public final class CodecCapabilityDialog {
         button.setPadding(ResUtil.dp2px(4), 0, ResUtil.dp2px(4), 0);
         button.setCornerRadius(ResUtil.dp2px(6));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setOnFocusChangeListener((view, hasFocus) -> styleTab(button, button.isSelected()));
         button.setOnClickListener(listener);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
@@ -190,7 +190,7 @@ public final class CodecCapabilityDialog {
 
     private int getReportHeight() {
         int screen = DialogSafeArea.height(activity);
-        if (Util.isLeanback()) return Math.min(ResUtil.dp2px(430), Math.round(screen * 0.58f));
+        if (DeviceModePolicy.current().isTv()) return Math.min(ResUtil.dp2px(430), Math.round(screen * 0.58f));
         return Math.min(ResUtil.dp2px(330), Math.round(screen * (ResUtil.isLand(activity) ? 0.44f : 0.36f)));
     }
 
@@ -250,7 +250,7 @@ public final class CodecCapabilityDialog {
         if (scroll == null || list == null) return;
         scroll.post(() -> {
             scroll.scrollTo(0, 0);
-            if (!Util.isLeanback()) return;
+            if (!DeviceModePolicy.current().isTv()) return;
             View first = firstFocusableItem();
             if (first != null) first.requestFocus();
             else scroll.requestFocus();
@@ -282,19 +282,19 @@ public final class CodecCapabilityDialog {
         item.setAllCaps(false);
         item.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
         item.setText(text);
-        item.setTextSize(Util.isLeanback() ? 14 : 12);
+        item.setTextSize(DeviceModePolicy.current().isTv() ? 14 : 12);
         item.setTypeface(Typeface.MONOSPACE);
         item.setSingleLine(false);
         item.setMaxLines(Integer.MAX_VALUE);
         item.setMinWidth(0);
         item.setMinimumWidth(0);
-        item.setMinHeight(ResUtil.dp2px(Util.isLeanback() ? 72 : 58));
+        item.setMinHeight(ResUtil.dp2px(DeviceModePolicy.current().isTv() ? 72 : 58));
         item.setInsetTop(0);
         item.setInsetBottom(0);
         item.setPadding(ResUtil.dp2px(12), ResUtil.dp2px(8), ResUtil.dp2px(12), ResUtil.dp2px(8));
         item.setCornerRadius(ResUtil.dp2px(6));
         item.setFocusable(true);
-        item.setFocusableInTouchMode(Util.isLeanback());
+        item.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         item.setOnFocusChangeListener((view, hasFocus) -> styleItem(item, selected, matched, risk, hasFocus));
         item.setOnKeyListener((view, keyCode, event) -> onScrollKey(keyCode, event));
         item.setOnClickListener(view -> copyText(text));

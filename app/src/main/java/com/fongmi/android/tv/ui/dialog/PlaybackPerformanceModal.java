@@ -16,7 +16,7 @@ import android.widget.ScrollView;
 
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -186,7 +186,7 @@ final class PlaybackPerformanceModal {
         button.setInsetBottom(0);
         button.setCornerRadius(dp(context, 6));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         styleListButton(button, selected, false);
         button.setOnFocusChangeListener((view, focused) ->
                 styleListButton(button, selected, focused));
@@ -250,7 +250,7 @@ final class PlaybackPerformanceModal {
         button.setInsetTop(0);
         button.setInsetBottom(0);
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setCornerRadius(dp(context, 6));
         styleActionButton(button, primary, false);
         button.setOnFocusChangeListener((view, focused) ->
@@ -291,7 +291,7 @@ final class PlaybackPerformanceModal {
         button.setInsetTop(0);
         button.setInsetBottom(0);
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setCornerRadius(dp(context, 6));
         styleCloseButton(button, false);
         button.setOnFocusChangeListener((view, focused) ->

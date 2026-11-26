@@ -34,7 +34,7 @@ import com.fongmi.android.tv.theme.ThemeEditorUi;
 import com.fongmi.android.tv.theme.ThemeTokens;
 import com.fongmi.android.tv.ui.helper.TmdbSeasonResolver;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -265,7 +265,7 @@ public final class ChoiceDialog extends DialogFragment {
         window.setLayout(params.width, params.height);
         window.getDecorView().post(() -> {
             adaptListHeight(window);
-            if (Util.isLeanback()) window.getDecorView().post(this::focusSelectedItem);
+            if (DeviceModePolicy.current().isTv()) window.getDecorView().post(this::focusSelectedItem);
         });
     }
 
@@ -455,11 +455,11 @@ public final class ChoiceDialog extends DialogFragment {
         styleItem(button, position);
         button.setOnFocusChangeListener((view, hasFocus) -> {
             styleItem(button, position);
-            if (hasFocus && Util.isLeanback()) button.post(() -> ensureItemVisible(button));
+            if (hasFocus && DeviceModePolicy.current().isTv()) button.post(() -> ensureItemVisible(button));
         });
         button.setOnClickListener(view -> onItemClick(position));
         button.setOnKeyListener((view, keyCode, event) -> {
-            if (!Util.isLeanback() || event == null || event.getAction() != KeyEvent.ACTION_DOWN) return false;
+            if (!DeviceModePolicy.current().isTv() || event == null || event.getAction() != KeyEvent.ACTION_DOWN) return false;
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) return focusAdjacentItem(position, 1);
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) return focusAdjacentItem(position, -1);
             return false;
@@ -486,7 +486,7 @@ public final class ChoiceDialog extends DialogFragment {
         boolean enabled = itemEnabled(position);
         button.setEnabled(enabled);
         button.setFocusable(enabled);
-        button.setFocusableInTouchMode(enabled && Util.isLeanback());
+        button.setFocusableInTouchMode(enabled && DeviceModePolicy.current().isTv());
     }
 
     private void styleItem(MaterialButton button, int position) {
@@ -588,7 +588,7 @@ public final class ChoiceDialog extends DialogFragment {
         button.setInsetBottom(0);
         button.setCornerRadius(dp(6));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setTextColor(ContextCompat.getColorStateList(requireContext(), primary ? R.color.dialog_primary_button_text : R.color.dialog_outlined_button_text));
         button.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), primary ? R.color.dialog_primary_button_bg : R.color.dialog_outlined_button_bg));
         button.setStrokeColor(ContextCompat.getColorStateList(requireContext(), R.color.dialog_outlined_button_stroke));

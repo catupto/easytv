@@ -31,7 +31,7 @@ import com.fongmi.android.tv.ui.adapter.MpvConfigProfileAdapter;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -110,7 +110,7 @@ public class MpvConfigDialog extends BaseAlertDialog implements MpvConfigProfile
     }
 
     private void setupTvFocus() {
-        if (!Util.isLeanback()) return;
+        if (!DeviceModePolicy.current().isTv()) return;
         tvFocusable(binding.create);
         tvFocusable(binding.close);
         binding.recycler.setFocusable(false);
@@ -126,7 +126,7 @@ public class MpvConfigDialog extends BaseAlertDialog implements MpvConfigProfile
     }
 
     private void configureTabFocus() {
-        if (!Util.isLeanback() || binding == null || binding.tabs.getChildCount() == 0) return;
+        if (!DeviceModePolicy.current().isTv() || binding == null || binding.tabs.getChildCount() == 0) return;
         View strip = binding.tabs.getChildAt(0);
         if (!(strip instanceof ViewGroup)) return;
         ViewGroup tabs = (ViewGroup) strip;
@@ -255,7 +255,7 @@ public class MpvConfigDialog extends BaseAlertDialog implements MpvConfigProfile
         item.setBackgroundResource(value.resourceId);
         item.setClickable(true);
         item.setFocusable(true);
-        item.setFocusableInTouchMode(Util.isLeanback());
+        item.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         item.setOnClickListener(view -> action.run());
         item.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ResUtil.dp2px(48)));
         return item;
@@ -391,7 +391,7 @@ public class MpvConfigDialog extends BaseAlertDialog implements MpvConfigProfile
         if (window == null) return;
         boolean land = ResUtil.isLand(requireContext());
         WindowManager.LayoutParams params = window.getAttributes();
-        float width = Util.isLeanback() ? 0.68f : land ? 0.62f : 0.94f;
+        float width = DeviceModePolicy.current().isTv() ? 0.68f : land ? 0.62f : 0.94f;
         params.width = Math.min((int) (DialogSafeArea.width(requireActivity(), window) * width), ResUtil.dp2px(760));
         params.height = (int) (DialogSafeArea.height(requireActivity(), window) * (land ? 0.88f : 0.82f));
         params.dimAmount = 0.58f;
@@ -406,7 +406,7 @@ public class MpvConfigDialog extends BaseAlertDialog implements MpvConfigProfile
             binding.getRoot().setLayoutParams(rootParams);
         }
         binding.getRoot().post(() -> window.setLayout(params.width, params.height));
-        if (Util.isLeanback()) binding.create.post(() -> binding.create.requestFocus());
+        if (DeviceModePolicy.current().isTv()) binding.create.post(() -> binding.create.requestFocus());
     }
 
     private interface ThrowingSupplier<T> {

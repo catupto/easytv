@@ -33,7 +33,7 @@ import com.fongmi.android.tv.player.mpv.MpvConfigStore;
 import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -103,7 +103,7 @@ public class MpvCustomButtonDialog extends DialogFragment {
         row.setMinimumHeight(ResUtil.dp2px(72));
         row.setPadding(ResUtil.dp2px(6), ResUtil.dp2px(6), ResUtil.dp2px(6), ResUtil.dp2px(6));
         row.setFocusable(true);
-        row.setFocusableInTouchMode(Util.isLeanback());
+        row.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         if (item != null) row.setBackgroundResource(R.drawable.selector_mpv_profile_card);
 
         TextView badge = text(requireContext(), slot, 12, false);
@@ -265,8 +265,8 @@ public class MpvCustomButtonDialog extends DialogFragment {
         Window window = dialog == null ? null : dialog.getWindow();
         if (window == null) return;
         WindowManager.LayoutParams params = window.getAttributes();
-        params.width = Math.min((int) (DialogSafeArea.width(requireActivity(), window) * (Util.isLeanback() ? 0.68f : 0.94f)), ResUtil.dp2px(760));
-        params.height = (int) (DialogSafeArea.height(requireActivity(), window) * (Util.isLeanback() ? 0.88f : 0.9f));
+        params.width = Math.min((int) (DialogSafeArea.width(requireActivity(), window) * (DeviceModePolicy.current().isTv() ? 0.68f : 0.94f)), ResUtil.dp2px(760));
+        params.height = (int) (DialogSafeArea.height(requireActivity(), window) * (DeviceModePolicy.current().isTv() ? 0.88f : 0.9f));
         params.dimAmount = 0.58f;
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -439,8 +439,8 @@ public class MpvCustomButtonDialog extends DialogFragment {
             Window window = dialog == null ? null : dialog.getWindow();
             if (window == null) return;
             WindowManager.LayoutParams params = window.getAttributes();
-            params.width = Math.min((int) (DialogSafeArea.width(requireActivity(), window) * (Util.isLeanback() ? 0.68f : 0.94f)), ResUtil.dp2px(760));
-            params.height = (int) (DialogSafeArea.height(requireActivity(), window) * (Util.isLeanback() ? 0.9f : 0.92f));
+            params.width = Math.min((int) (DialogSafeArea.width(requireActivity(), window) * (DeviceModePolicy.current().isTv() ? 0.68f : 0.94f)), ResUtil.dp2px(760));
+            params.height = (int) (DialogSafeArea.height(requireActivity(), window) * (DeviceModePolicy.current().isTv() ? 0.9f : 0.92f));
             params.dimAmount = 0.58f;
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.getDecorView().setPadding(0, 0, 0, 0);

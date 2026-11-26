@@ -23,6 +23,7 @@ import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.ui.adapter.TmdbAdapter;
 import com.fongmi.android.tv.utils.KeyUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 
 import java.util.Collections;
 import java.util.List;
@@ -138,7 +139,7 @@ public class TmdbSearchDialog {
     private void configureWindow() {
         DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
         boolean landscape = metrics.widthPixels > metrics.heightPixels;
-        boolean leanback = Util.isLeanback();
+        boolean leanback = DeviceModePolicy.current().isTv();
         int chromeHeight = dp(searchListener != null ? (leanback ? 300 : 250) : (leanback ? 220 : 180));
         int availableListHeight = Math.max(1, metrics.heightPixels - chromeHeight);
         int minimumListHeight = Math.min(dp(leanback ? 240 : 180), availableListHeight);
@@ -190,7 +191,7 @@ public class TmdbSearchDialog {
         });
         binding.query.setOnKeyListener((view, keyCode, event) -> {
             if (!KeyUtil.isActionDown(event)) return false;
-            if (Util.isLeanback() && keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+            if (DeviceModePolicy.current().isTv() && keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
                 showKeyboard();
                 return true;
             }
@@ -200,7 +201,7 @@ public class TmdbSearchDialog {
             }
             if (KeyUtil.isRightKey(event) && isCursorAtEnd()) return binding.querySearch.requestFocus();
             if (KeyUtil.isDownKey(event)) return focusPreferredResult();
-            if (Util.isLeanback()) return false;
+            if (DeviceModePolicy.current().isTv()) return false;
             return false;
         });
     }

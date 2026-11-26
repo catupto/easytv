@@ -39,7 +39,7 @@ import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ImgUtil;
 import com.fongmi.android.tv.utils.Task;
 import com.fongmi.android.tv.utils.TmdbImageSaver;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.card.MaterialCardView;
@@ -197,7 +197,7 @@ public class TmdbPersonDialog {
         });
 
         // 关闭按钮（TV版隐藏，遥控器无法获取焦点）
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             closeBtn.setVisibility(View.GONE);
         } else {
             closeBtn.setOnClickListener(v -> dialog.dismiss());
@@ -321,7 +321,7 @@ public class TmdbPersonDialog {
             chip.setOnCheckedChangeListener((button, checked) -> applyChipStyle(chip, checked, chip.hasFocus()));
             chip.setOnFocusChangeListener((view, focused) -> applyChipStyle(chip, chip.isChecked(), focused));
             applyChipStyle(chip, chip.isChecked(), false);
-            if (Util.isLeanback()) {
+            if (DeviceModePolicy.current().isTv()) {
                 chip.setFocusable(true);
                 chip.setChipStrokeWidth(2f);
             }
@@ -436,7 +436,7 @@ public class TmdbPersonDialog {
     }
 
     private void requestInitialFocus() {
-        if (!Util.isLeanback() || initialFocusDone || dialog == null || !dialog.isShowing()) return;
+        if (!DeviceModePolicy.current().isTv() || initialFocusDone || dialog == null || !dialog.isShowing()) return;
         View panel = dialog.findViewById(R.id.panel);
         View root = dialog.findViewById(R.id.root);
         View target = panel != null ? panel : root;
@@ -448,7 +448,7 @@ public class TmdbPersonDialog {
     }
 
     private void keepTopPositionDuringInitialRender() {
-        if (!Util.isLeanback() || contentScroll == null || dialog == null || !dialog.isShowing()) return;
+        if (!DeviceModePolicy.current().isTv() || contentScroll == null || dialog == null || !dialog.isShowing()) return;
         bringDialogToFront();
         contentScroll.scrollTo(0, 0);
         contentScroll.post(() -> contentScroll.scrollTo(0, 0));

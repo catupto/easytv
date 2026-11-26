@@ -16,7 +16,7 @@ import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
 import com.fongmi.android.tv.ui.adapter.MpvConfigHistoryAdapter;
 import com.fongmi.android.tv.ui.custom.SpaceItemDecoration;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MpvConfigHistoryDialog extends BaseAlertDialog implements MpvConfigHistoryAdapter.OnClickListener {
@@ -47,7 +47,7 @@ public class MpvConfigHistoryDialog extends BaseAlertDialog implements MpvConfig
 
     @Override
     protected MaterialAlertDialogBuilder getBuilder() {
-        MaterialAlertDialogBuilder builder = Util.isLeanback() ? builder() : new WebHtvAlertDialogBuilder(requireActivity(), R.style.ThemeOverlay_WebHTV_Dialog);
+        MaterialAlertDialogBuilder builder = DeviceModePolicy.current().isTv() ? builder() : new WebHtvAlertDialogBuilder(requireActivity(), R.style.ThemeOverlay_WebHTV_Dialog);
         return builder.setView(getBinding().getRoot());
     }
 
@@ -56,7 +56,7 @@ public class MpvConfigHistoryDialog extends BaseAlertDialog implements MpvConfig
         adapter = new MpvConfigHistoryAdapter(MpvConfigStore.historyLabels(target), this);
         binding.recycler.setItemAnimator(null);
         binding.recycler.setHasFixedSize(false);
-        binding.recycler.addItemDecoration(new SpaceItemDecoration(1, Util.isLeanback() ? 16 : 8));
+        binding.recycler.addItemDecoration(new SpaceItemDecoration(1, DeviceModePolicy.current().isTv() ? 16 : 8));
         binding.recycler.setAdapter(adapter);
     }
 
@@ -79,7 +79,7 @@ public class MpvConfigHistoryDialog extends BaseAlertDialog implements MpvConfig
         super.onStart();
         if (adapter.getItemCount() == 0) {
             dismiss();
-        } else if (Util.isLeanback()) {
+        } else if (DeviceModePolicy.current().isTv()) {
             setWidth(0.4f);
         } else {
             configureWindow();

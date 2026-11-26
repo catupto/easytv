@@ -42,7 +42,7 @@ import com.fongmi.android.tv.setting.PlayerSetting;
 import com.fongmi.android.tv.setting.PreloadSetting;
 import com.fongmi.android.tv.utils.FileUtil;
 import com.fongmi.android.tv.utils.ResUtil;
-import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -299,7 +299,7 @@ public final class PlaybackPerformanceDialog extends DialogFragment {
         button.setInsetTop(0);
         button.setInsetBottom(0);
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setCornerRadius(dp(6));
         button.setTextColor(ColorStateList.valueOf(ThemeController.current().colorPrimary()));
         button.setBackgroundTintList(ColorStateList.valueOf(ThemeController.current().colorSurfaceContainerLowest()));
@@ -325,7 +325,7 @@ public final class PlaybackPerformanceDialog extends DialogFragment {
         button.setInsetTop(0);
         button.setInsetBottom(0);
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.dialog_outlined_button_bg));
         button.setTextColor(ThemeController.current().colorOnSurfaceVariant());
         button.setOnClickListener(listener);
@@ -393,7 +393,7 @@ public final class PlaybackPerformanceDialog extends DialogFragment {
     }
 
     private void configureProfileTabFocus(TabLayout tabs) {
-        if (!Util.isLeanback() || tabs.getChildCount() == 0) return;
+        if (!DeviceModePolicy.current().isTv() || tabs.getChildCount() == 0) return;
         View strip = tabs.getChildAt(0);
         if (!(strip instanceof ViewGroup tabStrip)) return;
         for (int i = 0; i < tabStrip.getChildCount(); i++) {
@@ -836,7 +836,7 @@ public final class PlaybackPerformanceDialog extends DialogFragment {
                 ? ThemeController.current().colorPrimary() : ThemeController.current().colorOutlineVariant()));
         button.setStrokeWidth(dp(1));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setEnabled(action != null);
         button.setOnFocusChangeListener((view, hasFocus) ->
                 styleRow(button, action != null, overridden, hasFocus));
