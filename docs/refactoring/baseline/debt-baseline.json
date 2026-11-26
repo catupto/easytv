@@ -18,8 +18,8 @@
   "metric_counter": "regex-v1",
   "totals": {
     "_note": "Ceilings, not equalities: a batch may add scaffolding while shrinking debt.",
-    "java_files_max": 2691,
-    "java_lines_max": 576608
+    "java_files_max": 2692,
+    "java_lines_max": 576733
   },
   "extremes": {
     "_note": "Each of these may only go down (plan §6.1 ladder).",
@@ -214,13 +214,9 @@
   ],
   "deps": {
     "_note": "52 pairs -> <=20 (stage 2) -> 0. ui_to_player_files 36 -> 0.",
-    "bidirectional_pairs_max": 53,
+    "bidirectional_pairs_max": 52,
     "ui_to_player_files_max": 36,
     "bidirectional_pairs": [
-      [
-        "ui",
-        "utils"
-      ],
       [
         "bean",
         "ui"

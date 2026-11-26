@@ -7,7 +7,6 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.fongmi.android.tv.ui.activity.CrashActivity;
 import com.github.catvod.crawler.DebugLogStore;
 
 import java.io.ByteArrayOutputStream;
@@ -69,8 +68,26 @@ public final class CrashReport {
         }
     }
 
+    /**
+     * 崩溃恢复页的类名（批次 2.3 剪环）。
+     *
+     * <p><b>为什么这里用类名字符串而不是 {@code CrashActivity.class}。</b>
+     * {@code CrashReport} 在 {@code utils} 包，{@code CrashActivity} 在 {@code ui.activity} 包；
+     * 直接引用类字面量会让 {@code utils → ui} 成为一条编译期硬边，而 {@code ui → utils}
+     * 有 309 处调用 —— 两者互指构成 {@code ui ↔ utils} 双向依赖（本仓最大的一对）。
+     * 剪环的代价是丢失编译期校验，所以：
+     * <ol>
+     *   <li>类名抽成常量，只在这一处出现；</li>
+     *   <li>由 {@code CrashRecoveryTargetContractTest} 断言该常量确实指向一个存在的
+     *       {@code CrashActivity}，且该 Activity 在 manifest 中已声明 —— 把编译期校验
+     *       换成一条会失败的测试，而不是无声地留一个字符串。</li>
+     * </ol>
+     */
+    public static final String CRASH_ACTIVITY_CLASS = "com.fongmi.android.tv.ui.activity.CrashActivity";
+
     private static void launchRecovery(Context context, Throwable error) {
-        Intent intent = new Intent(context, CrashActivity.class)
+        Intent intent = new Intent()
+                .setClassName(context, CRASH_ACTIVITY_CLASS)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         String details = "Java fatal exception (details unavailable)";
         try {

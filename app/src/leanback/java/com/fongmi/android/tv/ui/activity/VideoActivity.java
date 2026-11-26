@@ -178,7 +178,7 @@ import com.fongmi.android.tv.utils.BrightnessPolicy;
 import com.fongmi.android.tv.utils.Clock;
 import com.fongmi.android.tv.utils.EpisodeHistoryTitleResolver;
 import com.fongmi.android.tv.utils.EpisodeTitleFormatter;
-import com.fongmi.android.tv.utils.FileChooser;
+import com.fongmi.android.tv.ui.helper.FileChooser;
 import com.fongmi.android.tv.utils.ImgUtil;
 import com.fongmi.android.tv.utils.KeyUtil;
 import com.fongmi.android.tv.utils.Notify;

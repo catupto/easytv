@@ -42,7 +42,7 @@ import com.fongmi.android.tv.subtitle.translate.SubtitleTranslationRequest;
 import com.fongmi.android.tv.subtitle.translate.SubtitleTranslationResult;
 import com.fongmi.android.tv.ui.adapter.TrackAdapter;
 import com.fongmi.android.tv.ui.custom.SpaceItemDecoration;
-import com.fongmi.android.tv.utils.FileChooser;
+import com.fongmi.android.tv.ui.helper.FileChooser;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Task;

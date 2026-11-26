@@ -1,4 +1,4 @@
-package com.fongmi.android.tv.utils;
+package com.fongmi.android.tv.ui.helper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

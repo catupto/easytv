@@ -55,7 +55,7 @@ import com.fongmi.android.tv.ui.fragment.SettingSubtitleFragment;
 import com.fongmi.android.tv.ui.fragment.VodFragment;
 import com.fongmi.android.tv.utils.CrashRestartMode;
 import com.fongmi.android.tv.utils.PreviousProcessCrashRecovery;
-import com.fongmi.android.tv.utils.FileChooser;
+import com.fongmi.android.tv.ui.helper.FileChooser;
 import com.fongmi.android.tv.utils.MobileWindow;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.PermissionUtil;

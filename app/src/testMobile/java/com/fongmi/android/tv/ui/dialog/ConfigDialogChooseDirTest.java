@@ -68,7 +68,7 @@ public class ConfigDialogChooseDirTest {
      */
     @Test
     public void configImportUsesPersistentDirectory() throws Exception {
-        String chooser = read("app/src/main/java/com/fongmi/android/tv/utils/FileChooser.java");
+        String chooser = read("app/src/main/java/com/fongmi/android/tv/ui/helper/FileChooser.java");
         assertTrue("配置导入必须使用持久化 URI 路径，不能落到可清理 cache",
                 chooser.contains("public static String getPersistentPathFromUri(Uri uri)")
                         && chooser.contains("Path.files(\"cat_source_imports\")"));

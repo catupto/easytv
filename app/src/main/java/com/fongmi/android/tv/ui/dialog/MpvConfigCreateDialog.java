@@ -23,7 +23,7 @@ import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.databinding.DialogMpvConfigCreateBinding;
 import com.fongmi.android.tv.player.mpv.MpvConfigStore;
 import com.fongmi.android.tv.theme.WebHtvAlertDialogBuilder;
-import com.fongmi.android.tv.utils.FileChooser;
+import com.fongmi.android.tv.ui.helper.FileChooser;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.device.DeviceModePolicy;

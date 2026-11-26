@@ -24,7 +24,7 @@ import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
 import com.fongmi.android.tv.R;
-import com.fongmi.android.tv.utils.FileChooser;
+import com.fongmi.android.tv.ui.helper.FileChooser;
 import com.github.catvod.crawler.SpiderDebug;
 
 import java.io.File;

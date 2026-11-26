@@ -1,4 +1,4 @@
-package com.fongmi.android.tv.utils;
+package com.fongmi.android.tv.ui.helper;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
