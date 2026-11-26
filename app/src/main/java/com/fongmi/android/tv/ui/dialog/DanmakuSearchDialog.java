@@ -51,6 +51,7 @@ import com.fongmi.android.tv.utils.KeyUtil;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.github.catvod.crawler.SpiderDebug;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
@@ -180,7 +181,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         boolean landscape = metrics.widthPixels > metrics.heightPixels;
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         params.copyFrom(window.getAttributes());
-        params.width = landscape || Util.isLeanback() ? Math.min((int) (metrics.widthPixels * 0.76f), dp(920)) : Math.min(metrics.widthPixels - dp(32), dp(560));
+        params.width = landscape || DeviceModePolicy.current().isTv() ? Math.min((int) (metrics.widthPixels * 0.76f), dp(920)) : Math.min(metrics.widthPixels - dp(32), dp(560));
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
     }
@@ -223,7 +224,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         orderButton.setAllCaps(false);
         orderButton.setSingleLine(true);
         orderButton.setTextColor(Color.WHITE);
-        orderButton.setTextSize(Util.isLeanback() ? 16 : 14);
+        orderButton.setTextSize(DeviceModePolicy.current().isTv() ? 16 : 14);
         orderButton.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         orderButton.setPadding(dp(8), 0, dp(8), 0);
         orderButton.setSupportBackgroundTintList(null);
@@ -247,7 +248,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         MaterialTextView title = new MaterialTextView(requireContext());
         title.setText(getString(R.string.danmaku) + getString(R.string.play_search));
         title.setTextColor(Color.WHITE);
-        title.setTextSize(Util.isLeanback() ? 20 : 18);
+        title.setTextSize(DeviceModePolicy.current().isTv() ? 20 : 18);
         title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         title.setGravity(Gravity.CENTER_VERTICAL);
         return title;
@@ -266,10 +267,10 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         LinearLayout row = new LinearLayout(requireContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
-        LinearLayout.LayoutParams keywordParams = new LinearLayout.LayoutParams(0, dp(Util.isLeanback() ? 48 : 44), 1);
+        LinearLayout.LayoutParams keywordParams = new LinearLayout.LayoutParams(0, dp(DeviceModePolicy.current().isTv() ? 48 : 44), 1);
         row.addView(keywordView, keywordParams);
-        LinearLayout.LayoutParams actionParams = new LinearLayout.LayoutParams(dp(Util.isLeanback() ? 112 : 92), dp(Util.isLeanback() ? 48 : 44));
-        actionParams.setMarginStart(dp(Util.isLeanback() ? 14 : 10));
+        LinearLayout.LayoutParams actionParams = new LinearLayout.LayoutParams(dp(DeviceModePolicy.current().isTv() ? 112 : 92), dp(DeviceModePolicy.current().isTv() ? 48 : 44));
+        actionParams.setMarginStart(dp(DeviceModePolicy.current().isTv() ? 14 : 10));
         row.addView(searchView, actionParams);
         return searchRow = row;
     }
@@ -282,7 +283,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         edit.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         edit.setTextColor(Color.WHITE);
         edit.setHintTextColor(Color.parseColor("#99FFFFFF"));
-        edit.setTextSize(Util.isLeanback() ? 16 : 14);
+        edit.setTextSize(DeviceModePolicy.current().isTv() ? 16 : 14);
         edit.setHint(R.string.search_keyword);
         edit.setPadding(dp(14), 0, dp(14), 0);
         edit.setBackground(round(Color.parseColor("#263A3C41"), 9, Color.parseColor("#33FFFFFF")));
@@ -293,7 +294,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         MaterialTextView view = new MaterialTextView(requireContext());
         view.setText(R.string.play_search);
         view.setTextColor(Color.WHITE);
-        view.setTextSize(Util.isLeanback() ? 16 : 14);
+        view.setTextSize(DeviceModePolicy.current().isTv() ? 16 : 14);
         view.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         view.setGravity(Gravity.CENTER);
         view.setClickable(true);
@@ -328,8 +329,8 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         progress = new CircularProgressIndicator(requireContext());
         progress.setIndeterminate(true);
         progress.setIndicatorColor(Color.parseColor("#E6FFFFFF"));
-        progress.setIndicatorSize(dp(Util.isLeanback() ? 36 : 32));
-        progress.setTrackThickness(dp(Util.isLeanback() ? 3 : 2));
+        progress.setIndicatorSize(dp(DeviceModePolicy.current().isTv() ? 36 : 32));
+        progress.setTrackThickness(dp(DeviceModePolicy.current().isTv() ? 3 : 2));
         progress.setVisibility(GONE);
         FrameLayout.LayoutParams progressParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
         progressParams.setMargins(0, dp(24), 0, dp(24));
@@ -339,15 +340,15 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         empty.setGravity(Gravity.CENTER);
         empty.setText(R.string.error_empty);
         empty.setTextColor(Color.parseColor("#99FFFFFF"));
-        empty.setTextSize(Util.isLeanback() ? 16 : 14);
+        empty.setTextSize(DeviceModePolicy.current().isTv() ? 16 : 14);
         empty.setVisibility(GONE);
-        frame.addView(empty, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, dp(Util.isLeanback() ? 96 : 72), Gravity.CENTER));
+        frame.addView(empty, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, dp(DeviceModePolicy.current().isTv() ? 96 : 72), Gravity.CENTER));
 
         recycler = new CustomRecyclerView(requireContext());
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setItemAnimator(null);
         recycler.setHasFixedSize(false);
-        recycler.setMaxHeight(dp(Util.isLeanback() ? 312 : 260));
+        recycler.setMaxHeight(dp(DeviceModePolicy.current().isTv() ? 312 : 260));
         recycler.setAdapter(adapter);
         recycler.setVisibility(GONE);
         recycler.setClipChildren(false);
@@ -371,7 +372,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
             return true;
         });
         keywordView.setOnKeyListener((view, keyCode, event) -> {
-            if (Util.isLeanback() && KeyUtil.isActionDown(event) && KeyUtil.isUpKey(event) && orderView.getVisibility() == VISIBLE) return orderView.requestFocus();
+            if (DeviceModePolicy.current().isTv() && KeyUtil.isActionDown(event) && KeyUtil.isUpKey(event) && orderView.getVisibility() == VISIBLE) return orderView.requestFocus();
             if (KeyUtil.isActionDown(event) && KeyUtil.isDownKey(event) && recycler.getVisibility() == VISIBLE) return focusResultGroup();
             return false;
         });
@@ -523,9 +524,9 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
     }
 
     private LinearLayout.LayoutParams createSourceParams(int count, int index) {
-        int height = dp(Util.isLeanback() ? 42 : 36);
-        LinearLayout.LayoutParams params = count <= 3 ? new LinearLayout.LayoutParams(0, height, 1) : new LinearLayout.LayoutParams(dp(Util.isLeanback() ? 150 : 112), height);
-        if (index > 0) params.setMarginStart(dp(Util.isLeanback() ? 10 : 8));
+        int height = dp(DeviceModePolicy.current().isTv() ? 42 : 36);
+        LinearLayout.LayoutParams params = count <= 3 ? new LinearLayout.LayoutParams(0, height, 1) : new LinearLayout.LayoutParams(dp(DeviceModePolicy.current().isTv() ? 150 : 112), height);
+        if (index > 0) params.setMarginStart(dp(DeviceModePolicy.current().isTv() ? 10 : 8));
         return params;
     }
 
@@ -537,7 +538,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         view.setSingleLine(true);
         view.setEllipsize(TextUtils.TruncateAt.END);
         view.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        view.setTextSize(Util.isLeanback() ? 15 : 13);
+        view.setTextSize(DeviceModePolicy.current().isTv() ? 15 : 13);
         view.setTextColor(sourceTextColor());
         view.setBackground(sourceBackground());
         view.setClickable(true);
@@ -553,7 +554,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         updateSourceTabs();
         showSourceItems();
         recycler.scrollToPosition(0);
-        if (Util.isLeanback()) view.requestFocus();
+        if (DeviceModePolicy.current().isTv()) view.requestFocus();
     }
 
     private void updateSourceTabs() {
@@ -567,7 +568,7 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
     }
 
     private boolean focusResultGroup() {
-        if (Util.isLeanback() && sourceScroller.getVisibility() == VISIBLE && !sourceViews.isEmpty()) {
+        if (DeviceModePolicy.current().isTv() && sourceScroller.getVisibility() == VISIBLE && !sourceViews.isEmpty()) {
             for (MaterialTextView view : sourceViews) if (view.isSelected()) return view.requestFocus();
             return sourceViews.get(0).requestFocus();
         }
@@ -745,8 +746,8 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             MaterialTextView view = new MaterialTextView(parent.getContext());
-            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(parent.getContext(), Util.isLeanback() ? 52 : 48));
-            params.setMargins(0, 0, 0, dp(parent.getContext(), Util.isLeanback() ? 12 : 10));
+            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(parent.getContext(), DeviceModePolicy.current().isTv() ? 52 : 48));
+            params.setMargins(0, 0, 0, dp(parent.getContext(), DeviceModePolicy.current().isTv() ? 12 : 10));
             view.setLayoutParams(params);
             return viewType == TYPE_HEADER ? new HeaderHolder(view) : new ItemHolder(view);
         }
@@ -810,10 +811,10 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
                 super(text);
                 this.text = text;
                 this.text.setGravity(Gravity.CENTER_VERTICAL);
-                this.text.setPadding(dp(text.getContext(), Util.isLeanback() ? 18 : 12), 0, dp(text.getContext(), Util.isLeanback() ? 18 : 12), 0);
+                this.text.setPadding(dp(text.getContext(), DeviceModePolicy.current().isTv() ? 18 : 12), 0, dp(text.getContext(), DeviceModePolicy.current().isTv() ? 18 : 12), 0);
                 this.text.setSingleLine(true);
                 this.text.setEllipsize(TextUtils.TruncateAt.END);
-                this.text.setTextSize(Util.isLeanback() ? 16 : 14);
+                this.text.setTextSize(DeviceModePolicy.current().isTv() ? 16 : 14);
                 this.text.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                 this.text.setTextColor(Color.WHITE);
                 this.text.setClickable(true);
@@ -843,10 +844,10 @@ public final class DanmakuSearchDialog extends DialogFragment implements Callbac
                 super(text);
                 this.text = text;
                 this.text.setGravity(Gravity.CENTER_VERTICAL);
-                this.text.setPadding(dp(text.getContext(), Util.isLeanback() ? 18 : 12), 0, dp(text.getContext(), Util.isLeanback() ? 18 : 12), 0);
+                this.text.setPadding(dp(text.getContext(), DeviceModePolicy.current().isTv() ? 18 : 12), 0, dp(text.getContext(), DeviceModePolicy.current().isTv() ? 18 : 12), 0);
                 this.text.setSingleLine(true);
                 this.text.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                this.text.setTextSize(Util.isLeanback() ? 16 : 14);
+                this.text.setTextSize(DeviceModePolicy.current().isTv() ? 16 : 14);
                 this.text.setTextColor(Color.parseColor("#E6FFFFFF"));
                 this.text.setClickable(true);
                 this.text.setFocusable(true);

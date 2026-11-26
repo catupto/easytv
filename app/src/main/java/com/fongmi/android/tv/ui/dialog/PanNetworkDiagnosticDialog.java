@@ -44,6 +44,7 @@ import com.fongmi.android.tv.ui.helper.TvFocusScale;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.ResUtil;
 import com.fongmi.android.tv.utils.Util;
+import com.fongmi.android.tv.device.DeviceModePolicy;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -115,7 +116,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         runner = new PanNetworkDiagnosticRunner();
         root = vertical(0);
-        root.setPadding(dp(Util.isLeanback() ? 24 : 18), dp(Util.isLeanback() ? 20 : 16), dp(Util.isLeanback() ? 24 : 18), dp(Util.isLeanback() ? 18 : 14));
+        root.setPadding(dp(DeviceModePolicy.current().isTv() ? 24 : 18), dp(DeviceModePolicy.current().isTv() ? 20 : 16), dp(DeviceModePolicy.current().isTv() ? 24 : 18), dp(DeviceModePolicy.current().isTv() ? 18 : 14));
         root.setBackground(round(Color.WHITE, 18, 0, Color.TRANSPARENT));
         addHeader();
         contentScroll = new ScrollView(requireContext());
@@ -124,7 +125,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         content = vertical(0);
         contentScroll.addView(content, new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         int screenHeight = DialogSafeArea.height(requireContext());
-        int contentHeight = Util.isLeanback()
+        int contentHeight = DeviceModePolicy.current().isTv()
                 ? Math.min(dp(460), Math.max(dp(400), screenHeight - dp(300)))
                 : Math.min(dp(560), Math.max(dp(350), screenHeight * 5 / 8));
         LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, contentHeight);
@@ -147,7 +148,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         Window window = getDialog() == null ? null : getDialog().getWindow();
         if (window == null) return;
         int screen = ResUtil.getScreenWidth(requireContext());
-        int width = Util.isLeanback()
+        int width = DeviceModePolicy.current().isTv()
                 ? Math.min(dp(1320), Math.round(screen * 0.84f))
                 : ResUtil.isLand(requireContext()) ? Math.min(dp(780), Math.round(screen * 0.68f)) : Math.round(screen * 0.94f);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -211,7 +212,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
             @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
         modeTabs.selectTab(modeTabs.getTabAt(mode == PanBenchmarkPlan.Mode.DEEP ? 2 : mode == PanBenchmarkPlan.Mode.STANDARD ? 1 : 0));
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             LinearLayout options = horizontal(Gravity.TOP);
             LinearLayout strengthColumn = vertical(0);
             strengthColumn.addView(text("测试强度", 14, TEXT, true), matchWrap(0, 5));
@@ -232,13 +233,13 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
             addThreadSelector(null);
         }
 
-        estimate = text("", Util.isLeanback() ? 12 : 13, TEXT, false);
-        estimate.setPadding(dp(14), dp(Util.isLeanback() ? 9 : 12), dp(14), dp(Util.isLeanback() ? 9 : 12));
+        estimate = text("", DeviceModePolicy.current().isTv() ? 12 : 13, TEXT, false);
+        estimate.setPadding(dp(14), dp(DeviceModePolicy.current().isTv() ? 9 : 12), dp(14), dp(DeviceModePolicy.current().isTv() ? 9 : 12));
         estimate.setBackground(round(SURFACE, 10, 1, BORDER));
         content.addView(estimate, matchWrap(10, 0));
         updateEstimate();
 
-        if (!Util.isLeanback()) {
+        if (!DeviceModePolicy.current().isTv()) {
             TextView notice = text("为避免播放器与测速争抢同一链路，开始后会暂停播放；结束、取消或失败时自动恢复。请求强制直连，不使用系统代理或电脑翻墙代理。", 12, SECONDARY, false);
             notice.setLineSpacing(dp(2), 1f);
             content.addView(notice, matchWrap(8, 0));
@@ -246,11 +247,11 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
 
         startButton = button(endpoint == null ? "当前资源不支持诊断" : "开始诊断", true, v -> startTest());
         updateStartEnabled();
-        content.addView(startButton, matchHeight(10, 0, Util.isLeanback() ? 50 : 48));
+        content.addView(startButton, matchHeight(10, 0, DeviceModePolicy.current().isTv() ? 50 : 48));
         startButton.postDelayed(() -> {
             updateStartEnabled();
             startButton.requestFocus();
-        }, Util.isLeanback() ? 80 : 550);
+        }, DeviceModePolicy.current().isTv() ? 80 : 550);
         scrollToTop();
     }
 
@@ -267,13 +268,13 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
 
         singleThreadPanel = vertical(0);
         LinearLayout singleRow = horizontal(Gravity.CENTER_VERTICAL);
-        TextView singleLabel = text(Util.isLeanback() ? "线程数（1～256）" : "线程数", 13, TEXT, true);
+        TextView singleLabel = text(DeviceModePolicy.current().isTv() ? "线程数（1～256）" : "线程数", 13, TEXT, true);
         singleRow.addView(singleLabel, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         singleThreadInput = numberInput(String.valueOf(defaultThreads()), "单线程测试值，范围1到256");
         singleThreadInput.addTextChangedListener(new SimpleTextWatcher(this::updateEstimate));
-        singleRow.addView(singleThreadInput, new LinearLayout.LayoutParams(dp(160), dp(Util.isLeanback() ? 44 : 48)));
-        singleThreadPanel.addView(singleRow, matchWrap(Util.isLeanback() ? 2 : 5, 0));
-        if (!Util.isLeanback()) singleThreadPanel.addView(text("默认只执行这一种线程；可直接输入任意 1～256。", 12, SECONDARY, false), matchWrap(4, 0));
+        singleRow.addView(singleThreadInput, new LinearLayout.LayoutParams(dp(160), dp(DeviceModePolicy.current().isTv() ? 44 : 48)));
+        singleThreadPanel.addView(singleRow, matchWrap(DeviceModePolicy.current().isTv() ? 2 : 5, 0));
+        if (!DeviceModePolicy.current().isTv()) singleThreadPanel.addView(text("默认只执行这一种线程；可直接输入任意 1～256。", 12, SECONDARY, false), matchWrap(4, 0));
         content.addView(singleThreadPanel, matchWrap(0, 0));
 
         multiThreadPanel = vertical(0);
@@ -287,12 +288,12 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         if (selectedThreadValues.isEmpty()) selectedThreadValues.add(defaultThreads());
         for (int value : new int[]{1, 2, 4, 8, 16, 32, 64, 128, 256}) addThreadChip(value, selectedThreadValues.contains(value));
         for (int value : new ArrayList<>(selectedThreadValues)) if (!threadChipMap.containsKey(value)) addThreadChip(value, true);
-        multiThreadPanel.addView(threadChips, matchWrap(Util.isLeanback() ? 4 : 8, 0));
+        multiThreadPanel.addView(threadChips, matchWrap(DeviceModePolicy.current().isTv() ? 4 : 8, 0));
 
         customThreadInput = numberInput("", "添加自定义线程，范围1到256");
         customThreadInput.setHint("自定义 1～256");
         MaterialButton add = button("添加", false, v -> addCustomThread());
-        if (Util.isLeanback()) {
+        if (DeviceModePolicy.current().isTv()) {
             LinearLayout tools = horizontal(Gravity.CENTER_VERTICAL);
             tools.addView(customThreadInput, new LinearLayout.LayoutParams(0, dp(44), 3));
             LinearLayout.LayoutParams addParams = new LinearLayout.LayoutParams(dp(82), dp(44));
@@ -318,7 +319,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
             addShortcut(shortcuts, "清空", () -> selectThreads(List.of()));
             multiThreadPanel.addView(shortcuts, matchWrap(8, 0));
         }
-        if (!Util.isLeanback()) multiThreadPanel.addView(text("只测试已勾选项；系统不会自动追加 1/2/4/8。", 12, SECONDARY, false), matchWrap(7, 0));
+        if (!DeviceModePolicy.current().isTv()) multiThreadPanel.addView(text("只测试已勾选项；系统不会自动追加 1/2/4/8。", 12, SECONDARY, false), matchWrap(7, 0));
         content.addView(multiThreadPanel, matchWrap(0, 0));
 
         selectorTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -357,10 +358,10 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         chip.setText(String.valueOf(value));
         chip.setCheckable(true);
         chip.setChecked(checked);
-        chip.setEnsureMinTouchTargetSize(!Util.isLeanback());
-        chip.setMinHeight(dp(Util.isLeanback() ? 40 : 48));
-        chip.setMinimumHeight(dp(Util.isLeanback() ? 40 : 48));
-        chip.setTextSize(Util.isLeanback() ? 13 : 14);
+        chip.setEnsureMinTouchTargetSize(!DeviceModePolicy.current().isTv());
+        chip.setMinHeight(dp(DeviceModePolicy.current().isTv() ? 40 : 48));
+        chip.setMinimumHeight(dp(DeviceModePolicy.current().isTv() ? 40 : 48));
+        chip.setTextSize(DeviceModePolicy.current().isTv() ? 13 : 14);
         chip.setTextColor(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked}, new int[]{}}, new int[]{Color.WHITE, BLUE_DARK}));
         chip.setChipBackgroundColor(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked}, new int[]{}}, new int[]{BLUE, Color.WHITE}));
         chip.setChipStrokeColor(ColorStateList.valueOf(Color.rgb(138, 180, 248)));
@@ -405,8 +406,8 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
     }
 
     private void addSummaryCard() {
-        LinearLayout card = vertical(Util.isLeanback() ? 3 : 7);
-        card.setPadding(dp(13), dp(Util.isLeanback() ? 8 : 10), dp(13), dp(Util.isLeanback() ? 8 : 10));
+        LinearLayout card = vertical(DeviceModePolicy.current().isTv() ? 3 : 7);
+        card.setPadding(dp(13), dp(DeviceModePolicy.current().isTv() ? 8 : 10), dp(13), dp(DeviceModePolicy.current().isTv() ? 8 : 10));
         card.setBackground(round(Color.rgb(232, 240, 254), 12, 0, Color.TRANSPARENT));
         if (endpoint == null) {
             card.addView(text("未识别到可诊断的 HTTP 播放地址", 15, WARNING, true));
@@ -414,7 +415,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         } else {
             card.addView(text(endpoint.provider().label() + " · " + player.getPlayerText(), 16, BLUE_DARK, true));
             String route = endpoint.hasDirectUpstream() ? endpoint.playbackHost() + " → " + endpoint.upstreamHost() : endpoint.playbackHost() + "（直链）";
-            if (Util.isLeanback()) {
+            if (DeviceModePolicy.current().isTv()) {
                 card.addView(text("链路 " + route + "    ·    资源需求 " + requiredText() + "    ·    Go线程 " + configuredThreadsText(), 13, SECONDARY, false));
             } else {
                 card.addView(text("链路  " + route, 13, SECONDARY, false));
@@ -694,7 +695,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         long seconds = 5 + rounds * PanBenchmarkPlan.roundTimeLimitMs(mode) / 1000L;
         String action = values.size() == 1 ? "将测试 " + values.get(0) + " 线程" : "将对比 " + join(values) + " 线程";
         String directLimit = maxThreads > PanBenchmarkPlan.MAX_DIRECT_CONCURRENCY ? "；直链并发基准安全封顶" + PanBenchmarkPlan.MAX_DIRECT_CONCURRENCY + "路" : "";
-        String safety = Util.isLeanback() ? " · 开始后暂停播放，结束自动恢复；不使用系统代理" : "";
+        String safety = DeviceModePolicy.current().isTv() ? " · 开始后暂停播放，结束自动恢复；不使用系统代理" : "";
         estimate.setText(action + " · " + repeats + "轮取中位数" + directLimit + "\n预计流量上限约 " + PanNetworkDiagnosticRunner.formatBytes(bytes)
                 + " · 基础耗时约 " + formatTime(seconds) + "（单轮 " + formatTime(PanBenchmarkPlan.roundTimeLimitMs(mode) / 1000L) + "，断流重试可能增加耗时）" + safety);
     }
@@ -883,7 +884,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
 
     private void addSectionTitle(String value) {
         TextView title = text(value, 14, TEXT, true);
-        content.addView(title, matchWrap(Util.isLeanback() ? 8 : 12, Util.isLeanback() ? 3 : 5));
+        content.addView(title, matchWrap(DeviceModePolicy.current().isTv() ? 8 : 12, DeviceModePolicy.current().isTv() ? 3 : 5));
     }
 
     private void addResultSectionTitle(String value) {
@@ -909,7 +910,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
         button.setInsetRight(0);
         button.setCornerRadius(dp(9));
         button.setFocusable(true);
-        button.setFocusableInTouchMode(Util.isLeanback());
+        button.setFocusableInTouchMode(DeviceModePolicy.current().isTv());
         button.setTextColor(ColorStateList.valueOf(primary ? Color.WHITE : BLUE_DARK));
         button.setBackgroundTintList(ColorStateList.valueOf(primary ? BLUE : Color.WHITE));
         button.setStrokeColor(ColorStateList.valueOf(primary ? BLUE : Color.rgb(138, 180, 248)));
@@ -959,7 +960,7 @@ public final class PanNetworkDiagnosticDialog extends DialogFragment implements 
     private void styleTabs(TabLayout tabs) {
         tabs.setSelectedTabIndicatorColor(BLUE);
         tabs.setTabTextColors(SECONDARY, BLUE);
-        if (Util.isLeanback()) tabs.setBackground(round(SURFACE, 9, 1, BORDER));
+        if (DeviceModePolicy.current().isTv()) tabs.setBackground(round(SURFACE, 9, 1, BORDER));
     }
 
     private LinearLayout.LayoutParams matchWrap(int top, int bottom) {
