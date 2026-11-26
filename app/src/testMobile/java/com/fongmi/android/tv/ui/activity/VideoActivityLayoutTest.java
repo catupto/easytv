@@ -4,6 +4,9 @@ import com.fongmi.android.tv.bean.Episode;
 import com.fongmi.android.tv.ui.helper.EpisodeDisplayPolicy;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.fongmi.android.tv.testing.SourceTextAssertion;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -31,6 +34,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+// Text-only assertions (plan §2.9.4): see SourceTextAssertion for why this is tagged.
+@Category(SourceTextAssertion.class)
 public class VideoActivityLayoutTest {
 
     private static final List<String> REQUIRED_EPISODE_IDS = Arrays.asList(

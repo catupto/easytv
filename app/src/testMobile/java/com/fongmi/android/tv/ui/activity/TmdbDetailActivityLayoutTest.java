@@ -1,6 +1,9 @@
 package com.fongmi.android.tv.ui.activity;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.fongmi.android.tv.testing.SourceTextAssertion;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -13,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+// Text-only assertions (plan §2.9.4): see SourceTextAssertion for why this is tagged.
+@Category(SourceTextAssertion.class)
 public class TmdbDetailActivityLayoutTest {
 
     @Test

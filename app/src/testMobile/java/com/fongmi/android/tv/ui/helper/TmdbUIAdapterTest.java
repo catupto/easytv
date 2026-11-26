@@ -12,6 +12,9 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.fongmi.android.tv.testing.SourceTextAssertion;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -33,6 +36,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+// Text-only assertions (plan §2.9.4): see SourceTextAssertion for why this is tagged.
+@Category(SourceTextAssertion.class)
 public class TmdbUIAdapterTest {
 
     @Test

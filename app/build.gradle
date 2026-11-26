@@ -92,6 +92,16 @@ android {
 
     testOptions {
         unitTests.includeAndroidResources = true
+        unitTests.all {
+            // Transition switch for the source-text assertion classes (plan §2.9 / §5 1.4).
+            // JUnit4 @Category is used on purpose: useJUnitPlatform{} would drop the JUnit4
+            // features the rest of the suite relies on.
+            if (project.hasProperty('excludeSourceTextTests')) {
+                useJUnit {
+                    excludeCategories 'com.fongmi.android.tv.testing.SourceTextAssertion'
+                }
+            }
+        }
     }
 
     // PLUGIN-05: heavy native cores shipped as external packages, not in the APK.

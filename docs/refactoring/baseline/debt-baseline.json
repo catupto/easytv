@@ -41,8 +41,8 @@
     "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11976,
     "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9819,
     "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java": 6667,
-    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4182,
-    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java": 3935,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4187,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java": 3940,
     "app/src/main/java/com/fongmi/android/tv/ui/dialog/RemoteTrustDialog.java": 3515,
     "app/src/main/java/com/fongmi/android/tv/ui/dialog/GitCloudDialog.java": 2894,
     "app/src/main/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapter.java": 2742,
@@ -63,7 +63,7 @@
     "app/src/main/java/com/fongmi/android/tv/utils/LoginStateSync.java": 1557,
     "app/src/main/java/com/fongmi/android/tv/ui/custom/AudioPlayerBackgroundDrawable.java": 1544,
     "app/src/main/java/com/fongmi/android/tv/bean/History.java": 1501,
-    "app/src/testLeanback/java/com/fongmi/android/tv/ui/activity/TvFocusRingContractTest.java": 1499,
+    "app/src/testLeanback/java/com/fongmi/android/tv/ui/activity/TvFocusRingContractTest.java": 1504,
     "app/src/leanback/java/com/fongmi/android/tv/ui/activity/LiveActivity.java": 1479,
     "app/src/main/java/com/fongmi/android/tv/ui/activity/AudioActivity.java": 1474,
     "app/src/main/java/com/fongmi/android/tv/player/karaoke/KaraokePitchTrackGenerator.java": 1468,
@@ -73,7 +73,7 @@
     "app/src/main/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicy.java": 1426,
     "app/src/main/java/com/fongmi/android/tv/setting/CustomCspSetting.java": 1416,
     "app/src/main/java/com/fongmi/android/tv/player/engine/ExoPlayerEngine.java": 1396,
-    "app/src/testMobile/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapterTest.java": 1335,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapterTest.java": 1340,
     "app/src/main/java/com/fongmi/android/tv/service/TmdbService.java": 1325,
     "app/src/main/java/com/fongmi/android/tv/player/exo/PreCache.java": 1273,
     "app/src/main/java/com/fongmi/android/tv/player/ijk/IjkRuntimeProfileController.java": 1262,
@@ -578,6 +578,7 @@
       "test": 144,
       "testMobile": 48,
       "testLeanback": 26
-    }
+    },
+    "_source_text_category_note": "Batch 1.4 tagged the 4 heavy classes with @Category(SourceTextAssertion.class) so the transition switch -PexcludeSourceTextTests can separate real regressions from text drift. That is +5 lines each (2 imports, 1 comment, 1 annotation, 1 blank). The 4 large_files entries above were raised by exactly that amount; they may only go DOWN from here, and the tags are removed as each class is migrated/deleted per §2.9.4."
   }
 }

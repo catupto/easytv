@@ -3,6 +3,9 @@ package com.fongmi.android.tv.ui.activity;
 import com.fongmi.android.tv.theme.ThemeTokens;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.fongmi.android.tv.testing.SourceTextAssertion;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -44,6 +47,8 @@ import static org.junit.Assert.assertTrue;
  * - R3 焦点环色必须受主题色板控制（FOCUS 用户槽 / 填充的配对 on-色），不得写死。
  * - R4 主按钮聚焦态填充必须与默认填充可分辨（不能只靠环这一个线索）。
  */
+// Text-only assertions (plan §2.9.4): see SourceTextAssertion for why this is tagged.
+@Category(SourceTextAssertion.class)
 public class TvFocusRingContractTest {
 
     private static final String COLORS = "app/src/main/res/values/colors.xml";
