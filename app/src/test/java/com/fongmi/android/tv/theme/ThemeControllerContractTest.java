@@ -39,12 +39,12 @@ public class ThemeControllerContractTest {
         assertTrue(controller.contains("AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM"));
         assertTrue(controller.contains("ThemeMode themeMode = currentThemeMode();"));
         assertTrue(read("src/main/java/com/fongmi/android/tv/App.java").contains("ThemeController.applyNightModeToApp();"));
-        for (String flavour : new String[]{"mobile", "leanback"}) {
-            String dialog = read("src/" + flavour + "/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java");
-            assertTrue(dialog.contains("setting_theme_mode"));
-            assertTrue(dialog.contains("Setting.putThemeMode(mode);"));
-            assertTrue(dialog.contains("ThemeController.applyNightModeToApp();"));
-        }
+        // AppearanceDialog merged into main in batch 1.3: the two flavor copies asserted
+        // exactly the same three strings below, so one read of the merged file covers both.
+        String dialog = read("src/main/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java");
+        assertTrue(dialog.contains("setting_theme_mode"));
+        assertTrue(dialog.contains("Setting.putThemeMode(mode);"));
+        assertTrue(dialog.contains("ThemeController.applyNightModeToApp();"));
         assertTrue(read("src/main/java/com/fongmi/android/tv/setting/Setting.java").contains("public static int getThemeMode()"));
     }
 
@@ -86,7 +86,7 @@ public class ThemeControllerContractTest {
         assertTrue(card.contains("STROKE_NORMAL"));
         String video = read("src/leanback/java/com/fongmi/android/tv/ui/presenter/TmdbVideoPresenter.java");
         assertTrue(video.contains("selector_tmdb_media_focus"));
-        String dialog = read("src/mobile/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java");
+        String dialog = read("src/main/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java");
         // 行的底色/描边与两个文字色必须来自同一个调色板：此前行底是固定浅色
         // selector_git_cloud_card，而文字已跟随 ThemeController.current()，在 TV 深色表上
         // 实测 1.16:1 / 1.36:1。现在两者都经由 AppearanceRowTheme 取当前 token。

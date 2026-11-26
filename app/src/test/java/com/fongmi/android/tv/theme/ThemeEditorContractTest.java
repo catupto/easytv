@@ -182,9 +182,11 @@ public class ThemeEditorContractTest {
             assertTrue(flavour, dialog.contains("editor.apply()"));
             assertTrue(flavour, dialog.contains("editor.reset()"));
             assertFalse("the old 14-swatch dialog must be gone", dialog.contains("private static final int[] COLORS"));
-            String appearance = read("src/" + flavour + "/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java");
-            assertFalse(flavour + " must not write theme_color directly", appearance.contains("Setting.putThemeColor("));
         }
+        // AppearanceDialog merged into main in batch 1.3, so it is asserted once instead of
+        // once per flavor (see ADR-0010: ThemeDialog itself stays split, hence the loop above).
+        String appearance = read("src/main/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java");
+        assertFalse("must not write theme_color directly", appearance.contains("Setting.putThemeColor("));
     }
 
     @Test

@@ -83,18 +83,26 @@ public class AppearanceRowThemeTest {
 
     @Test
     public void bothFlavoursRouteTheRowThroughTheSharedPalette() throws Exception {
-        for (String flavour : new String[]{"mobile", "leanback"}) {
-            String dialog = codeOnly(read("src/" + flavour + "/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java"));
-            assertTrue(flavour + " must paint the row from the active palette",
-                    dialog.contains("AppearanceRowTheme.apply(row, title, summary, ThemeController.current());"));
-            assertFalse(flavour + " must not keep the fixed light row selector",
-                    dialog.contains("selector_git_cloud_card"));
-            assertFalse(flavour + " must not colour row text inline any more",
-                    dialog.contains("setTextColor(ThemeController.current()"));
-            // A profile applied while the dialog is open must reach the rows.
-            assertTrue(flavour + " must re-apply the palette on show",
-                    dialog.contains("applyRowTheme();"));
-        }
+        // AppearanceDialog was merged into main in batch 1.3: the two flavor copies were
+        // byte-identical for every assertion below (the only difference was an extra
+        // show(FragmentActivity) overload on leanback, which the merged file keeps).
+        // Reading main once asserts the same invariants the two-iteration loop asserted,
+        // without checking identical bytes twice.
+        String dialog = codeOnly(read("src/main/java/com/fongmi/android/tv/ui/dialog/AppearanceDialog.java"));
+        assertTrue("must paint the row from the active palette",
+                dialog.contains("AppearanceRowTheme.apply(row, title, summary, ThemeController.current());"));
+        assertFalse("must not keep the fixed light row selector",
+                dialog.contains("selector_git_cloud_card"));
+        assertFalse("must not colour row text inline any more",
+                dialog.contains("setTextColor(ThemeController.current()"));
+        // A profile applied while the dialog is open must reach the rows.
+        assertTrue("must re-apply the palette on show",
+                dialog.contains("applyRowTheme();"));
+        // The merged file serves both flavors, so it must keep BOTH entry points.
+        assertTrue("must keep the Fragment entry point used by phone settings",
+                dialog.contains("public static void show(Fragment fragment)"));
+        assertTrue("must keep the FragmentActivity entry point used by TV settings",
+                dialog.contains("public static void show(FragmentActivity activity)"));
     }
 
     @Test

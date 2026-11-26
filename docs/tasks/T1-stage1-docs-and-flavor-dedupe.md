@@ -104,6 +104,45 @@ git show 1e1921d:.../service/DLNACastService.java
 - 后续任何批次**只允许继续下调**，不允许因便利再上调
 - 已在此文件与 `debt-baseline.json` 的 `_note` 留痕
 
+## 批次 1.3 · 合并 6 个近重复
+
+方案 §5 1.3 要求合并 1 个行集合相同 + 4 个 0.95–1.0 + 1 个 0.90–0.95。**逐文件 `diff -u` 后实际合并 5 个，保留 1 个真差异**（见 ADR-0010）。
+
+| 文件 | Jaccard | 实际差异 | 处置 |
+|---|---:|---|---|
+| `ui/adapter/QualityAdapter.java` | 1.0000 | 仅 `addAll()` 方法位置不同 | 合并（取 mobile，等价） |
+| `ui/adapter/LiveAdapter.java` | 0.9608 | 仅构造器 `public` vs 包私有 | 合并（取 mobile，更严格可见性） |
+| `ui/dialog/CastDialog.java` | 0.9858 | mobile 多 `instanceof` 保护（更安全） | 合并（取 mobile） |
+| `ui/dialog/AppearanceDialog.java` | 0.9784 | leanback 多 `show(FragmentActivity)` 重载 | 合并（取 leanback 超集，两个重载都保留） |
+| `ui/adapter/RecordAdapter.java` | 0.9298 | 上限 9 vs **10**；mobile 额外 `Setting.putKeyword()` 持久化 | 合并（取 mobile：10 条 + 持久化，被 `AiRecommendationService` 等消费） |
+| `ui/dialog/ThemeDialog.java` | 0.9553 | **主题模式保存流程整套不同** | **不合并**，记 ADR-0010 |
+
+### `ThemeDialog` 为什么不能合并（真差异）
+
+| 行为 | leanback | mobile |
+|---|---|---|
+| 保存主题模式 | `Setting.putThemeMode(dark ? 1 : 0)` | 不保存 |
+| 应用夜间模式 | `ThemeController.applyNightModeToApp()` | 不应用 |
+| 点按钮副作用 | `selectMode()` → 写 `ThemeProfile` + 保存 + 应用 | `dark = x; render()` 纯预览 |
+
+该差异被 `ThemeInlinePreviewContractTest` **双向断言锁定**：TV 必须含 `putThemeMode`，mobile 必须不含 `editor.setMode(...)`。主题模式的真正保存入口在 `main/.../AppearanceDialog.java:142`（两侧共用），所以手机侧的 `ThemeDialog` 是「只调色不落地」的预览器。
+
+处置：保留双份，双份文件数停在 **64**（方案预期 63，差 1 个）。退出条件写在 ADR-0010：4.6 单包化时由 `DeviceModePolicy` 承载差异，届时该测试改写为行为断言。
+
+### 度量变化
+
+| 指标 | 1.2 后 | 1.3 后 |
+|---|---:|---:|
+| `dup_files` | 69 | **64** |
+| `dup_lines` | 56,834 | 55,492 |
+| L1 逐字节相同 | 0 | 0 |
+| 4A 桶 | 6 | 1（仅剩 ThemeDialog） |
+| 4B / 4C | 25 / 38 | 25 / 38 |
+
+### 编译验证
+
+`assembleMobileArm64_v8aDebug` + `assembleLeanbackArm64_v8aDebug` → **BUILD SUCCESSFUL in 28s**（增量）。
+
 ## 校验命令
 
 ```bash

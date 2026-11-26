@@ -94,8 +94,8 @@
   },
   "flavor": {
     "_note": "80 -> 0 by batch 4.6. dup_files entries are repo-relative to the java root.",
-    "dup_files_max": 69,
-    "dup_lines_max": 56834,
+    "dup_files_max": 64,
+    "dup_lines_max": 55492,
     "dup_files": [
       "com/fongmi/android/tv/Product.java",
       "com/fongmi/android/tv/ui/activity/FileActivity.java",
@@ -116,12 +116,9 @@
       "com/fongmi/android/tv/ui/adapter/GroupAdapter.java",
       "com/fongmi/android/tv/ui/adapter/HistoryAdapter.java",
       "com/fongmi/android/tv/ui/adapter/KeepAdapter.java",
-      "com/fongmi/android/tv/ui/adapter/LiveAdapter.java",
       "com/fongmi/android/tv/ui/adapter/ParseAdapter.java",
-      "com/fongmi/android/tv/ui/adapter/QualityAdapter.java",
       "com/fongmi/android/tv/ui/adapter/QuickAdapter.java",
       "com/fongmi/android/tv/ui/adapter/RecommendationFeedbackAdapter.java",
-      "com/fongmi/android/tv/ui/adapter/RecordAdapter.java",
       "com/fongmi/android/tv/ui/adapter/RestoreAdapter.java",
       "com/fongmi/android/tv/ui/adapter/SearchAdapter.java",
       "com/fongmi/android/tv/ui/adapter/SiteAdapter.java",
@@ -137,9 +134,7 @@
       "com/fongmi/android/tv/ui/dialog/AdBlockStatsDialog.java",
       "com/fongmi/android/tv/ui/dialog/AdRuleEditDialog.java",
       "com/fongmi/android/tv/ui/dialog/AdRuleManageDialog.java",
-      "com/fongmi/android/tv/ui/dialog/AppearanceDialog.java",
       "com/fongmi/android/tv/ui/dialog/BufferDialog.java",
-      "com/fongmi/android/tv/ui/dialog/CastDialog.java",
       "com/fongmi/android/tv/ui/dialog/ConfigDialog.java",
       "com/fongmi/android/tv/ui/dialog/ControlDialog.java",
       "com/fongmi/android/tv/ui/dialog/DanmakuApiDialog.java",
@@ -232,15 +227,15 @@
         "ui"
       ],
       [
+        "setting",
+        "ui"
+      ],
+      [
         "player",
         "setting"
       ],
       [
         "player",
-        "ui"
-      ],
-      [
-        "setting",
         "ui"
       ],
       [
@@ -336,12 +331,12 @@
         "setting"
       ],
       [
-        "api",
-        "playback"
-      ],
-      [
         "server",
         "ui"
+      ],
+      [
+        "api",
+        "playback"
       ],
       [
         "db",
@@ -449,11 +444,11 @@
       "also counts doc mentions, so it is reported but NOT gated."
     ],
     "isLeanback_callsites": 219,
-    "setting_static_callsites": 628,
-    "setting_static_files": 112,
+    "setting_static_callsites": 645,
+    "setting_static_files": 114,
     "app_get_files": 94,
     "player_manager_files": 48,
-    "bean_history_files": 56,
+    "bean_history_files": 57,
     "eventbus_files": 17,
     "androidx_namespace_files": 48
   },
