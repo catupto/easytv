@@ -28,7 +28,6 @@ import java.util.zip.ZipFile;
  */
 public final class ExternalCoreLoader {
 
-    private static final String EXT_DIR = "ext/cores";
     private static final String OUT_DIR = "external-cores";
     private static final String VERSION_FILE = ".version";
 
@@ -36,33 +35,15 @@ public final class ExternalCoreLoader {
     }
 
     /**
-     * 用户放置内核包的目录（首选）。
+     * 唯一的外置内核包目录：/sdcard/easytv/cores —— 固定、好找、App 自动创建。
      *
-     * <p>必须主动 mkdirs：如果用户从未用文件管理器建过这个目录，或该目录曾被 adb shell
-     * 以 shell 属主创建（导致 App 无权访问），由 App 自己创建可保证属主正确。
+     * <p>用户只需把 zip + .sha256 放到这个目录。App 声明了 MANAGE_EXTERNAL_STORAGE，
+     * 可创建并读取该目录，不依赖 Android/data 的复杂权限。
      */
-    public static File extDir(Context context) {
-        File base = context.getExternalFilesDir(null);
-        File dir = new File(base == null ? context.getFilesDir() : base, EXT_DIR);
+    private static File packageDir() {
+        File dir = new File(android.os.Environment.getExternalStorageDirectory(), "easytv/cores");
         if (!dir.isDirectory()) dir.mkdirs();
         return dir;
-    }
-
-    /**
-     * 备选包目录：公共 Download/easytv-cores。
-     *
-     * <p>当应用私有 ext/cores 因权限问题（例如被 adb shell 以 shell 属主创建）
-     * 而读不到包时，用户可以把包放到这里——公共 Download 目录任何方式写入
-     * （文件管理器 / adb push）权限都正确，App 用 READ_EXTERNAL_STORAGE 即可读取。
-     */
-    private static File publicPkgDir() {
-        return new File(android.os.Environment.getExternalStoragePublicDirectory(
-                android.os.Environment.DIRECTORY_DOWNLOADS), "easytv-cores");
-    }
-
-    /** 按优先级返回所有可能的包目录。 */
-    private static File[] packageDirs(Context context) {
-        return new File[]{extDir(context), publicPkgDir()};
     }
 
     /** 内核解压后的私有目录。 */
@@ -87,35 +68,25 @@ public final class ExternalCoreLoader {
     public static synchronized String ensure(Context context, String core, String abi) {
         File installed = installedDir(context, core, abi);
         if (installed != null) return null;
-        StringBuilder tried = new StringBuilder();
-        String lastError = null;
-        // 逐个候选目录完整尝试：某个目录里的包损坏/校验失败时，
-        // 必须继续尝试下一个目录，而不是选中第一个存在的文件就放弃。
-        for (File dir : packageDirs(context)) {
-            File zip = new File(dir, core + "-" + abi + ".zip");
-            File sum = new File(dir, core + "-" + abi + ".zip.sha256");
-            tried.append(zip.getAbsolutePath()).append(' ');
-            if (!zip.isFile() || !sum.isFile()) continue;
-            try {
-                String expected = readFirstLine(sum).trim();
-                String actual = sha256(zip);
-                if (!expected.equalsIgnoreCase(actual)) {
-                    lastError = "内核包 sha256 不匹配: " + zip.getAbsolutePath();
-                    continue;
-                }
-                File out = outDir(context, core, abi);
-                File tmp = new File(out.getParentFile(), core + "-" + abi + ".tmp");
-                deleteRecursively(tmp);
-                unzip(zip, tmp);
-                writeVersion(tmp, actual);
-                deleteRecursively(out);
-                if (!tmp.renameTo(out)) return "无法写入内核目录: " + out;
-                return null;
-            } catch (Throwable e) {
-                lastError = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
-            }
+        File zip = new File(packageDir(), core + "-" + abi + ".zip");
+        File sum = new File(packageDir(), core + "-" + abi + ".zip.sha256");
+        if (!zip.isFile()) return "缺少外置内核包: " + zip.getAbsolutePath();
+        if (!sum.isFile()) return "缺少校验清单: " + sum.getAbsolutePath();
+        try {
+            String expected = readFirstLine(sum).trim();
+            String actual = sha256(zip);
+            if (!expected.equalsIgnoreCase(actual)) return "内核包 sha256 不匹配: " + zip.getAbsolutePath();
+            File out = outDir(context, core, abi);
+            File tmp = new File(out.getParentFile(), core + "-" + abi + ".tmp");
+            deleteRecursively(tmp);
+            unzip(zip, tmp);
+            writeVersion(tmp, actual);
+            deleteRecursively(out);
+            if (!tmp.renameTo(out)) return "无法写入内核目录: " + out;
+            return null;
+        } catch (Throwable e) {
+            return e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
         }
-        return lastError != null ? lastError : "缺少外置内核包或校验清单（已查找: " + tried + "）";
     }
 
     /**
@@ -142,12 +113,11 @@ public final class ExternalCoreLoader {
     /** 诊断信息：列出每个 ABI 的包状态，供失败时展示，避免静默失败。 */
     public static String diagnose(Context context, String core) {
         StringBuilder sb = new StringBuilder();
-        for (File dir : packageDirs(context)) {
-            String[] listed = dir.list();
-            sb.append("dir=").append(dir.getAbsolutePath())
-                    .append(" listable=").append(listed != null)
-                    .append(" files=").append(listed == null ? -1 : listed.length).append('\n');
-        }
+        File dir = packageDir();
+        String[] listed = dir.list();
+        sb.append("dir=").append(dir.getAbsolutePath())
+                .append(" listable=").append(listed != null)
+                .append(" files=").append(listed == null ? -1 : listed.length).append('\n');
         for (String abi : android.os.Build.SUPPORTED_ABIS) {
             String error = ensure(context, core, abi);
             sb.append(core).append('/').append(abi).append(": ")
