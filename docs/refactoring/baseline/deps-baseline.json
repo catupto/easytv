@@ -1,0 +1,2075 @@
+{
+  "schema_version": 1,
+  "metric_counter": "import-static-v1",
+  "commit": "790228d396bb33211a942f676ab568b4b66f297c",
+  "scope": "app/src/main/java/com/fongmi/android/tv (top-level packages)",
+  "packages": [
+    "(root)",
+    "App",
+    "BuildConfig",
+    "Constant",
+    "Product",
+    "R",
+    "Updater",
+    "androidx/media3/mpvplayer",
+    "api",
+    "bean",
+    "browse",
+    "cache",
+    "content",
+    "databinding",
+    "db",
+    "device",
+    "event",
+    "exception",
+    "following",
+    "gitcloud",
+    "gson",
+    "history",
+    "impl",
+    "lab",
+    "model",
+    "node",
+    "nodejs",
+    "playback",
+    "player",
+    "plugin",
+    "receiver",
+    "remote",
+    "server",
+    "service",
+    "setting",
+    "subtitle",
+    "theme",
+    "title",
+    "tts",
+    "ui",
+    "update",
+    "utils",
+    "viewing",
+    "web"
+  ],
+  "package_count": 44,
+  "edge_count": 316,
+  "edges": [
+    {
+      "from": "ui",
+      "to": "utils",
+      "imports": 340
+    },
+    {
+      "from": "ui",
+      "to": "bean",
+      "imports": 192
+    },
+    {
+      "from": "ui",
+      "to": "R",
+      "imports": 121
+    },
+    {
+      "from": "ui",
+      "to": "setting",
+      "imports": 96
+    },
+    {
+      "from": "ui",
+      "to": "player",
+      "imports": 92
+    },
+    {
+      "from": "ui",
+      "to": "theme",
+      "imports": 91
+    },
+    {
+      "from": "ui",
+      "to": "databinding",
+      "imports": 86
+    },
+    {
+      "from": "player",
+      "to": "setting",
+      "imports": 72
+    },
+    {
+      "from": "api",
+      "to": "bean",
+      "imports": 70
+    },
+    {
+      "from": "player",
+      "to": "utils",
+      "imports": 52
+    },
+    {
+      "from": "playback",
+      "to": "bean",
+      "imports": 49
+    },
+    {
+      "from": "ui",
+      "to": "api",
+      "imports": 47
+    },
+    {
+      "from": "web",
+      "to": "bean",
+      "imports": 42
+    },
+    {
+      "from": "ui",
+      "to": "App",
+      "imports": 40
+    },
+    {
+      "from": "service",
+      "to": "bean",
+      "imports": 39
+    },
+    {
+      "from": "player",
+      "to": "App",
+      "imports": 34
+    },
+    {
+      "from": "api",
+      "to": "utils",
+      "imports": 33
+    },
+    {
+      "from": "bean",
+      "to": "App",
+      "imports": 32
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "player",
+      "imports": 31
+    },
+    {
+      "from": "bean",
+      "to": "utils",
+      "imports": 29
+    },
+    {
+      "from": "player",
+      "to": "bean",
+      "imports": 29
+    },
+    {
+      "from": "setting",
+      "to": "bean",
+      "imports": 28
+    },
+    {
+      "from": "ui",
+      "to": "service",
+      "imports": 28
+    },
+    {
+      "from": "server",
+      "to": "utils",
+      "imports": 27
+    },
+    {
+      "from": "setting",
+      "to": "player",
+      "imports": 26
+    },
+    {
+      "from": "ui",
+      "to": "following",
+      "imports": 25
+    },
+    {
+      "from": "server",
+      "to": "bean",
+      "imports": 24
+    },
+    {
+      "from": "utils",
+      "to": "bean",
+      "imports": 24
+    },
+    {
+      "from": "subtitle",
+      "to": "bean",
+      "imports": 22
+    },
+    {
+      "from": "ui",
+      "to": "remote",
+      "imports": 21
+    },
+    {
+      "from": "ui",
+      "to": "gitcloud",
+      "imports": 19
+    },
+    {
+      "from": "db",
+      "to": "bean",
+      "imports": 18
+    },
+    {
+      "from": "ui",
+      "to": "title",
+      "imports": 18
+    },
+    {
+      "from": "bean",
+      "to": "api",
+      "imports": 17
+    },
+    {
+      "from": "ui",
+      "to": "playback",
+      "imports": 17
+    },
+    {
+      "from": "utils",
+      "to": "App",
+      "imports": 17
+    },
+    {
+      "from": "(root)",
+      "to": "utils",
+      "imports": 16
+    },
+    {
+      "from": "api",
+      "to": "App",
+      "imports": 16
+    },
+    {
+      "from": "api",
+      "to": "setting",
+      "imports": 16
+    },
+    {
+      "from": "web",
+      "to": "utils",
+      "imports": 16
+    },
+    {
+      "from": "ui",
+      "to": "cache",
+      "imports": 15
+    },
+    {
+      "from": "ui",
+      "to": "subtitle",
+      "imports": 15
+    },
+    {
+      "from": "lab",
+      "to": "App",
+      "imports": 14
+    },
+    {
+      "from": "ui",
+      "to": "web",
+      "imports": 14
+    },
+    {
+      "from": "bean",
+      "to": "gson",
+      "imports": 13
+    },
+    {
+      "from": "content",
+      "to": "bean",
+      "imports": 13
+    },
+    {
+      "from": "following",
+      "to": "bean",
+      "imports": 13
+    },
+    {
+      "from": "history",
+      "to": "bean",
+      "imports": 13
+    },
+    {
+      "from": "lab",
+      "to": "R",
+      "imports": 13
+    },
+    {
+      "from": "server",
+      "to": "api",
+      "imports": 13
+    },
+    {
+      "from": "web",
+      "to": "ui",
+      "imports": 13
+    },
+    {
+      "from": "bean",
+      "to": "impl",
+      "imports": 12
+    },
+    {
+      "from": "server",
+      "to": "playback",
+      "imports": 12
+    },
+    {
+      "from": "setting",
+      "to": "api",
+      "imports": 12
+    },
+    {
+      "from": "ui",
+      "to": "plugin",
+      "imports": 12
+    },
+    {
+      "from": "browse",
+      "to": "bean",
+      "imports": 11
+    },
+    {
+      "from": "player",
+      "to": "R",
+      "imports": 11
+    },
+    {
+      "from": "server",
+      "to": "App",
+      "imports": 11
+    },
+    {
+      "from": "setting",
+      "to": "App",
+      "imports": 11
+    },
+    {
+      "from": "ui",
+      "to": "event",
+      "imports": 11
+    },
+    {
+      "from": "bean",
+      "to": "db",
+      "imports": 10
+    },
+    {
+      "from": "bean",
+      "to": "setting",
+      "imports": 10
+    },
+    {
+      "from": "playback",
+      "to": "api",
+      "imports": 10
+    },
+    {
+      "from": "playback",
+      "to": "db",
+      "imports": 10
+    },
+    {
+      "from": "setting",
+      "to": "utils",
+      "imports": 10
+    },
+    {
+      "from": "web",
+      "to": "App",
+      "imports": 10
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "setting",
+      "imports": 9
+    },
+    {
+      "from": "lab",
+      "to": "theme",
+      "imports": 9
+    },
+    {
+      "from": "model",
+      "to": "bean",
+      "imports": 9
+    },
+    {
+      "from": "player",
+      "to": "BuildConfig",
+      "imports": 9
+    },
+    {
+      "from": "remote",
+      "to": "bean",
+      "imports": 9
+    },
+    {
+      "from": "server",
+      "to": "setting",
+      "imports": 9
+    },
+    {
+      "from": "(root)",
+      "to": "update",
+      "imports": 8
+    },
+    {
+      "from": "playback",
+      "to": "App",
+      "imports": 8
+    },
+    {
+      "from": "service",
+      "to": "subtitle",
+      "imports": 8
+    },
+    {
+      "from": "subtitle",
+      "to": "player",
+      "imports": 8
+    },
+    {
+      "from": "ui",
+      "to": "server",
+      "imports": 8
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "utils",
+      "imports": 7
+    },
+    {
+      "from": "api",
+      "to": "event",
+      "imports": 7
+    },
+    {
+      "from": "bean",
+      "to": "playback",
+      "imports": 7
+    },
+    {
+      "from": "lab",
+      "to": "utils",
+      "imports": 7
+    },
+    {
+      "from": "playback",
+      "to": "player",
+      "imports": 7
+    },
+    {
+      "from": "player",
+      "to": "api",
+      "imports": 7
+    },
+    {
+      "from": "remote",
+      "to": "utils",
+      "imports": 7
+    },
+    {
+      "from": "server",
+      "to": "remote",
+      "imports": 7
+    },
+    {
+      "from": "service",
+      "to": "utils",
+      "imports": 7
+    },
+    {
+      "from": "utils",
+      "to": "api",
+      "imports": 7
+    },
+    {
+      "from": "(root)",
+      "to": "setting",
+      "imports": 6
+    },
+    {
+      "from": "bean",
+      "to": "R",
+      "imports": 6
+    },
+    {
+      "from": "playback",
+      "to": "setting",
+      "imports": 6
+    },
+    {
+      "from": "playback",
+      "to": "utils",
+      "imports": 6
+    },
+    {
+      "from": "player",
+      "to": "ui",
+      "imports": 6
+    },
+    {
+      "from": "remote",
+      "to": "App",
+      "imports": 6
+    },
+    {
+      "from": "server",
+      "to": "service",
+      "imports": 6
+    },
+    {
+      "from": "service",
+      "to": "App",
+      "imports": 6
+    },
+    {
+      "from": "service",
+      "to": "player",
+      "imports": 6
+    },
+    {
+      "from": "subtitle",
+      "to": "App",
+      "imports": 6
+    },
+    {
+      "from": "subtitle",
+      "to": "utils",
+      "imports": 6
+    },
+    {
+      "from": "theme",
+      "to": "R",
+      "imports": 6
+    },
+    {
+      "from": "ui",
+      "to": "viewing",
+      "imports": 6
+    },
+    {
+      "from": "utils",
+      "to": "setting",
+      "imports": 6
+    },
+    {
+      "from": "web",
+      "to": "api",
+      "imports": 6
+    },
+    {
+      "from": "(root)",
+      "to": "player",
+      "imports": 5
+    },
+    {
+      "from": "api",
+      "to": "impl",
+      "imports": 5
+    },
+    {
+      "from": "bean",
+      "to": "following",
+      "imports": 5
+    },
+    {
+      "from": "node",
+      "to": "R",
+      "imports": 5
+    },
+    {
+      "from": "node",
+      "to": "utils",
+      "imports": 5
+    },
+    {
+      "from": "server",
+      "to": "event",
+      "imports": 5
+    },
+    {
+      "from": "service",
+      "to": "title",
+      "imports": 5
+    },
+    {
+      "from": "setting",
+      "to": "server",
+      "imports": 5
+    },
+    {
+      "from": "subtitle",
+      "to": "setting",
+      "imports": 5
+    },
+    {
+      "from": "ui",
+      "to": "Constant",
+      "imports": 5
+    },
+    {
+      "from": "utils",
+      "to": "R",
+      "imports": 5
+    },
+    {
+      "from": "utils",
+      "to": "player",
+      "imports": 5
+    },
+    {
+      "from": "web",
+      "to": "setting",
+      "imports": 5
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "cache",
+      "imports": 4
+    },
+    {
+      "from": "api",
+      "to": "R",
+      "imports": 4
+    },
+    {
+      "from": "browse",
+      "to": "api",
+      "imports": 4
+    },
+    {
+      "from": "cache",
+      "to": "player",
+      "imports": 4
+    },
+    {
+      "from": "cache",
+      "to": "plugin",
+      "imports": 4
+    },
+    {
+      "from": "content",
+      "to": "ui",
+      "imports": 4
+    },
+    {
+      "from": "event",
+      "to": "bean",
+      "imports": 4
+    },
+    {
+      "from": "following",
+      "to": "App",
+      "imports": 4
+    },
+    {
+      "from": "gitcloud",
+      "to": "App",
+      "imports": 4
+    },
+    {
+      "from": "impl",
+      "to": "bean",
+      "imports": 4
+    },
+    {
+      "from": "lab",
+      "to": "databinding",
+      "imports": 4
+    },
+    {
+      "from": "model",
+      "to": "api",
+      "imports": 4
+    },
+    {
+      "from": "player",
+      "to": "cache",
+      "imports": 4
+    },
+    {
+      "from": "player",
+      "to": "server",
+      "imports": 4
+    },
+    {
+      "from": "player",
+      "to": "service",
+      "imports": 4
+    },
+    {
+      "from": "remote",
+      "to": "api",
+      "imports": 4
+    },
+    {
+      "from": "server",
+      "to": "player",
+      "imports": 4
+    },
+    {
+      "from": "server",
+      "to": "ui",
+      "imports": 4
+    },
+    {
+      "from": "service",
+      "to": "setting",
+      "imports": 4
+    },
+    {
+      "from": "service",
+      "to": "tts",
+      "imports": 4
+    },
+    {
+      "from": "service",
+      "to": "ui",
+      "imports": 4
+    },
+    {
+      "from": "setting",
+      "to": "R",
+      "imports": 4
+    },
+    {
+      "from": "subtitle",
+      "to": "title",
+      "imports": 4
+    },
+    {
+      "from": "title",
+      "to": "bean",
+      "imports": 4
+    },
+    {
+      "from": "ui",
+      "to": "impl",
+      "imports": 4
+    },
+    {
+      "from": "utils",
+      "to": "impl",
+      "imports": 4
+    },
+    {
+      "from": "(root)",
+      "to": "plugin",
+      "imports": 3
+    },
+    {
+      "from": "api",
+      "to": "node",
+      "imports": 3
+    },
+    {
+      "from": "api",
+      "to": "player",
+      "imports": 3
+    },
+    {
+      "from": "bean",
+      "to": "Constant",
+      "imports": 3
+    },
+    {
+      "from": "bean",
+      "to": "event",
+      "imports": 3
+    },
+    {
+      "from": "bean",
+      "to": "title",
+      "imports": 3
+    },
+    {
+      "from": "cache",
+      "to": "App",
+      "imports": 3
+    },
+    {
+      "from": "db",
+      "to": "utils",
+      "imports": 3
+    },
+    {
+      "from": "gson",
+      "to": "bean",
+      "imports": 3
+    },
+    {
+      "from": "history",
+      "to": "utils",
+      "imports": 3
+    },
+    {
+      "from": "lab",
+      "to": "setting",
+      "imports": 3
+    },
+    {
+      "from": "model",
+      "to": "setting",
+      "imports": 3
+    },
+    {
+      "from": "player",
+      "to": "Constant",
+      "imports": 3
+    },
+    {
+      "from": "player",
+      "to": "impl",
+      "imports": 3
+    },
+    {
+      "from": "plugin",
+      "to": "bean",
+      "imports": 3
+    },
+    {
+      "from": "remote",
+      "to": "BuildConfig",
+      "imports": 3
+    },
+    {
+      "from": "server",
+      "to": "R",
+      "imports": 3
+    },
+    {
+      "from": "server",
+      "to": "impl",
+      "imports": 3
+    },
+    {
+      "from": "service",
+      "to": "R",
+      "imports": 3
+    },
+    {
+      "from": "ui",
+      "to": "db",
+      "imports": 3
+    },
+    {
+      "from": "ui",
+      "to": "update",
+      "imports": 3
+    },
+    {
+      "from": "update",
+      "to": "utils",
+      "imports": 3
+    },
+    {
+      "from": "web",
+      "to": "service",
+      "imports": 3
+    },
+    {
+      "from": "(root)",
+      "to": "bean",
+      "imports": 2
+    },
+    {
+      "from": "(root)",
+      "to": "server",
+      "imports": 2
+    },
+    {
+      "from": "(root)",
+      "to": "ui",
+      "imports": 2
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "api",
+      "imports": 2
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "imports": 2
+    },
+    {
+      "from": "api",
+      "to": "playback",
+      "imports": 2
+    },
+    {
+      "from": "api",
+      "to": "server",
+      "imports": 2
+    },
+    {
+      "from": "api",
+      "to": "title",
+      "imports": 2
+    },
+    {
+      "from": "api",
+      "to": "web",
+      "imports": 2
+    },
+    {
+      "from": "bean",
+      "to": "player",
+      "imports": 2
+    },
+    {
+      "from": "bean",
+      "to": "server",
+      "imports": 2
+    },
+    {
+      "from": "bean",
+      "to": "web",
+      "imports": 2
+    },
+    {
+      "from": "browse",
+      "to": "db",
+      "imports": 2
+    },
+    {
+      "from": "browse",
+      "to": "player",
+      "imports": 2
+    },
+    {
+      "from": "cache",
+      "to": "api",
+      "imports": 2
+    },
+    {
+      "from": "cache",
+      "to": "service",
+      "imports": 2
+    },
+    {
+      "from": "cache",
+      "to": "web",
+      "imports": 2
+    },
+    {
+      "from": "content",
+      "to": "api",
+      "imports": 2
+    },
+    {
+      "from": "gitcloud",
+      "to": "web",
+      "imports": 2
+    },
+    {
+      "from": "history",
+      "to": "api",
+      "imports": 2
+    },
+    {
+      "from": "history",
+      "to": "db",
+      "imports": 2
+    },
+    {
+      "from": "history",
+      "to": "setting",
+      "imports": 2
+    },
+    {
+      "from": "history",
+      "to": "ui",
+      "imports": 2
+    },
+    {
+      "from": "model",
+      "to": "Constant",
+      "imports": 2
+    },
+    {
+      "from": "model",
+      "to": "exception",
+      "imports": 2
+    },
+    {
+      "from": "model",
+      "to": "utils",
+      "imports": 2
+    },
+    {
+      "from": "node",
+      "to": "App",
+      "imports": 2
+    },
+    {
+      "from": "node",
+      "to": "playback",
+      "imports": 2
+    },
+    {
+      "from": "playback",
+      "to": "event",
+      "imports": 2
+    },
+    {
+      "from": "player",
+      "to": "exception",
+      "imports": 2
+    },
+    {
+      "from": "plugin",
+      "to": "R",
+      "imports": 2
+    },
+    {
+      "from": "plugin",
+      "to": "ui",
+      "imports": 2
+    },
+    {
+      "from": "plugin",
+      "to": "utils",
+      "imports": 2
+    },
+    {
+      "from": "remote",
+      "to": "R",
+      "imports": 2
+    },
+    {
+      "from": "remote",
+      "to": "setting",
+      "imports": 2
+    },
+    {
+      "from": "server",
+      "to": "Constant",
+      "imports": 2
+    },
+    {
+      "from": "server",
+      "to": "web",
+      "imports": 2
+    },
+    {
+      "from": "service",
+      "to": "BuildConfig",
+      "imports": 2
+    },
+    {
+      "from": "service",
+      "to": "api",
+      "imports": 2
+    },
+    {
+      "from": "service",
+      "to": "event",
+      "imports": 2
+    },
+    {
+      "from": "service",
+      "to": "server",
+      "imports": 2
+    },
+    {
+      "from": "setting",
+      "to": "playback",
+      "imports": 2
+    },
+    {
+      "from": "setting",
+      "to": "update",
+      "imports": 2
+    },
+    {
+      "from": "subtitle",
+      "to": "R",
+      "imports": 2
+    },
+    {
+      "from": "title",
+      "to": "App",
+      "imports": 2
+    },
+    {
+      "from": "title",
+      "to": "utils",
+      "imports": 2
+    },
+    {
+      "from": "ui",
+      "to": "history",
+      "imports": 2
+    },
+    {
+      "from": "update",
+      "to": "App",
+      "imports": 2
+    },
+    {
+      "from": "utils",
+      "to": "BuildConfig",
+      "imports": 2
+    },
+    {
+      "from": "utils",
+      "to": "event",
+      "imports": 2
+    },
+    {
+      "from": "utils",
+      "to": "server",
+      "imports": 2
+    },
+    {
+      "from": "utils",
+      "to": "ui",
+      "imports": 2
+    },
+    {
+      "from": "viewing",
+      "to": "bean",
+      "imports": 2
+    },
+    {
+      "from": "web",
+      "to": "R",
+      "imports": 2
+    },
+    {
+      "from": "web",
+      "to": "db",
+      "imports": 2
+    },
+    {
+      "from": "web",
+      "to": "player",
+      "imports": 2
+    },
+    {
+      "from": "web",
+      "to": "server",
+      "imports": 2
+    },
+    {
+      "from": "(root)",
+      "to": "cache",
+      "imports": 1
+    },
+    {
+      "from": "(root)",
+      "to": "db",
+      "imports": 1
+    },
+    {
+      "from": "(root)",
+      "to": "impl",
+      "imports": 1
+    },
+    {
+      "from": "(root)",
+      "to": "playback",
+      "imports": 1
+    },
+    {
+      "from": "(root)",
+      "to": "remote",
+      "imports": 1
+    },
+    {
+      "from": "(root)",
+      "to": "subtitle",
+      "imports": 1
+    },
+    {
+      "from": "(root)",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "androidx/media3/mpvplayer",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "api",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "bean",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "bean",
+      "to": "Product",
+      "imports": 1
+    },
+    {
+      "from": "bean",
+      "to": "history",
+      "imports": 1
+    },
+    {
+      "from": "bean",
+      "to": "ui",
+      "imports": 1
+    },
+    {
+      "from": "bean",
+      "to": "update",
+      "imports": 1
+    },
+    {
+      "from": "browse",
+      "to": "playback",
+      "imports": 1
+    },
+    {
+      "from": "browse",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "browse",
+      "to": "utils",
+      "imports": 1
+    },
+    {
+      "from": "cache",
+      "to": "Updater",
+      "imports": 1
+    },
+    {
+      "from": "cache",
+      "to": "event",
+      "imports": 1
+    },
+    {
+      "from": "cache",
+      "to": "server",
+      "imports": 1
+    },
+    {
+      "from": "cache",
+      "to": "utils",
+      "imports": 1
+    },
+    {
+      "from": "content",
+      "to": "R",
+      "imports": 1
+    },
+    {
+      "from": "content",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "content",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "content",
+      "to": "utils",
+      "imports": 1
+    },
+    {
+      "from": "db",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "db",
+      "to": "playback",
+      "imports": 1
+    },
+    {
+      "from": "device",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "event",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "event",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "R",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "api",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "db",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "service",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "ui",
+      "imports": 1
+    },
+    {
+      "from": "following",
+      "to": "utils",
+      "imports": 1
+    },
+    {
+      "from": "gitcloud",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "gson",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "history",
+      "to": "Constant",
+      "imports": 1
+    },
+    {
+      "from": "history",
+      "to": "playback",
+      "imports": 1
+    },
+    {
+      "from": "history",
+      "to": "title",
+      "imports": 1
+    },
+    {
+      "from": "lab",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "lab",
+      "to": "server",
+      "imports": 1
+    },
+    {
+      "from": "model",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "model",
+      "to": "player",
+      "imports": 1
+    },
+    {
+      "from": "node",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "node",
+      "to": "api",
+      "imports": 1
+    },
+    {
+      "from": "node",
+      "to": "databinding",
+      "imports": 1
+    },
+    {
+      "from": "node",
+      "to": "nodejs",
+      "imports": 1
+    },
+    {
+      "from": "node",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "playback",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "playback",
+      "to": "R",
+      "imports": 1
+    },
+    {
+      "from": "playback",
+      "to": "following",
+      "imports": 1
+    },
+    {
+      "from": "playback",
+      "to": "node",
+      "imports": 1
+    },
+    {
+      "from": "playback",
+      "to": "service",
+      "imports": 1
+    },
+    {
+      "from": "player",
+      "to": "event",
+      "imports": 1
+    },
+    {
+      "from": "player",
+      "to": "node",
+      "imports": 1
+    },
+    {
+      "from": "player",
+      "to": "subtitle",
+      "imports": 1
+    },
+    {
+      "from": "player",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "plugin",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "plugin",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "receiver",
+      "to": "service",
+      "imports": 1
+    },
+    {
+      "from": "remote",
+      "to": "db",
+      "imports": 1
+    },
+    {
+      "from": "remote",
+      "to": "event",
+      "imports": 1
+    },
+    {
+      "from": "remote",
+      "to": "impl",
+      "imports": 1
+    },
+    {
+      "from": "server",
+      "to": "db",
+      "imports": 1
+    },
+    {
+      "from": "service",
+      "to": "browse",
+      "imports": 1
+    },
+    {
+      "from": "service",
+      "to": "cache",
+      "imports": 1
+    },
+    {
+      "from": "service",
+      "to": "db",
+      "imports": 1
+    },
+    {
+      "from": "service",
+      "to": "playback",
+      "imports": 1
+    },
+    {
+      "from": "setting",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "setting",
+      "to": "gson",
+      "imports": 1
+    },
+    {
+      "from": "setting",
+      "to": "node",
+      "imports": 1
+    },
+    {
+      "from": "setting",
+      "to": "ui",
+      "imports": 1
+    },
+    {
+      "from": "setting",
+      "to": "web",
+      "imports": 1
+    },
+    {
+      "from": "subtitle",
+      "to": "server",
+      "imports": 1
+    },
+    {
+      "from": "subtitle",
+      "to": "service",
+      "imports": 1
+    },
+    {
+      "from": "theme",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "theme",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "theme",
+      "to": "utils",
+      "imports": 1
+    },
+    {
+      "from": "title",
+      "to": "service",
+      "imports": 1
+    },
+    {
+      "from": "title",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "tts",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "ui",
+      "to": "BuildConfig",
+      "imports": 1
+    },
+    {
+      "from": "ui",
+      "to": "model",
+      "imports": 1
+    },
+    {
+      "from": "utils",
+      "to": "cache",
+      "imports": 1
+    },
+    {
+      "from": "utils",
+      "to": "databinding",
+      "imports": 1
+    },
+    {
+      "from": "utils",
+      "to": "gitcloud",
+      "imports": 1
+    },
+    {
+      "from": "utils",
+      "to": "theme",
+      "imports": 1
+    },
+    {
+      "from": "viewing",
+      "to": "App",
+      "imports": 1
+    },
+    {
+      "from": "viewing",
+      "to": "service",
+      "imports": 1
+    },
+    {
+      "from": "viewing",
+      "to": "setting",
+      "imports": 1
+    },
+    {
+      "from": "web",
+      "to": "BuildConfig",
+      "imports": 1
+    }
+  ],
+  "bidirectional_pairs": 52,
+  "bidirectional": [
+    {
+      "a": "ui",
+      "b": "utils",
+      "a_to_b": 340,
+      "b_to_a": 2,
+      "total": 342
+    },
+    {
+      "a": "bean",
+      "b": "ui",
+      "a_to_b": 1,
+      "b_to_a": 192,
+      "total": 193
+    },
+    {
+      "a": "player",
+      "b": "setting",
+      "a_to_b": 72,
+      "b_to_a": 26,
+      "total": 98
+    },
+    {
+      "a": "player",
+      "b": "ui",
+      "a_to_b": 6,
+      "b_to_a": 92,
+      "total": 98
+    },
+    {
+      "a": "setting",
+      "b": "ui",
+      "a_to_b": 1,
+      "b_to_a": 96,
+      "total": 97
+    },
+    {
+      "a": "api",
+      "b": "bean",
+      "a_to_b": 70,
+      "b_to_a": 17,
+      "total": 87
+    },
+    {
+      "a": "player",
+      "b": "utils",
+      "a_to_b": 52,
+      "b_to_a": 5,
+      "total": 57
+    },
+    {
+      "a": "bean",
+      "b": "playback",
+      "a_to_b": 7,
+      "b_to_a": 49,
+      "total": 56
+    },
+    {
+      "a": "bean",
+      "b": "utils",
+      "a_to_b": 29,
+      "b_to_a": 24,
+      "total": 53
+    },
+    {
+      "a": "bean",
+      "b": "web",
+      "a_to_b": 2,
+      "b_to_a": 42,
+      "total": 44
+    },
+    {
+      "a": "api",
+      "b": "utils",
+      "a_to_b": 33,
+      "b_to_a": 7,
+      "total": 40
+    },
+    {
+      "a": "bean",
+      "b": "setting",
+      "a_to_b": 10,
+      "b_to_a": 28,
+      "total": 38
+    },
+    {
+      "a": "service",
+      "b": "ui",
+      "a_to_b": 4,
+      "b_to_a": 28,
+      "total": 32
+    },
+    {
+      "a": "bean",
+      "b": "player",
+      "a_to_b": 2,
+      "b_to_a": 29,
+      "total": 31
+    },
+    {
+      "a": "server",
+      "b": "utils",
+      "a_to_b": 27,
+      "b_to_a": 2,
+      "total": 29
+    },
+    {
+      "a": "api",
+      "b": "setting",
+      "a_to_b": 16,
+      "b_to_a": 12,
+      "total": 28
+    },
+    {
+      "a": "bean",
+      "b": "db",
+      "a_to_b": 10,
+      "b_to_a": 18,
+      "total": 28
+    },
+    {
+      "a": "ui",
+      "b": "web",
+      "a_to_b": 14,
+      "b_to_a": 13,
+      "total": 27
+    },
+    {
+      "a": "bean",
+      "b": "server",
+      "a_to_b": 2,
+      "b_to_a": 24,
+      "total": 26
+    },
+    {
+      "a": "following",
+      "b": "ui",
+      "a_to_b": 1,
+      "b_to_a": 25,
+      "total": 26
+    },
+    {
+      "a": "bean",
+      "b": "following",
+      "a_to_b": 5,
+      "b_to_a": 13,
+      "total": 18
+    },
+    {
+      "a": "bean",
+      "b": "gson",
+      "a_to_b": 13,
+      "b_to_a": 3,
+      "total": 16
+    },
+    {
+      "a": "bean",
+      "b": "impl",
+      "a_to_b": 12,
+      "b_to_a": 4,
+      "total": 16
+    },
+    {
+      "a": "setting",
+      "b": "utils",
+      "a_to_b": 10,
+      "b_to_a": 6,
+      "total": 16
+    },
+    {
+      "a": "api",
+      "b": "server",
+      "a_to_b": 2,
+      "b_to_a": 13,
+      "total": 15
+    },
+    {
+      "a": "bean",
+      "b": "history",
+      "a_to_b": 1,
+      "b_to_a": 13,
+      "total": 14
+    },
+    {
+      "a": "plugin",
+      "b": "ui",
+      "a_to_b": 2,
+      "b_to_a": 12,
+      "total": 14
+    },
+    {
+      "a": "server",
+      "b": "setting",
+      "a_to_b": 9,
+      "b_to_a": 5,
+      "total": 14
+    },
+    {
+      "a": "api",
+      "b": "playback",
+      "a_to_b": 2,
+      "b_to_a": 10,
+      "total": 12
+    },
+    {
+      "a": "server",
+      "b": "ui",
+      "a_to_b": 4,
+      "b_to_a": 8,
+      "total": 12
+    },
+    {
+      "a": "db",
+      "b": "playback",
+      "a_to_b": 1,
+      "b_to_a": 10,
+      "total": 11
+    },
+    {
+      "a": "api",
+      "b": "player",
+      "a_to_b": 3,
+      "b_to_a": 7,
+      "total": 10
+    },
+    {
+      "a": "player",
+      "b": "service",
+      "a_to_b": 4,
+      "b_to_a": 6,
+      "total": 10
+    },
+    {
+      "a": "player",
+      "b": "subtitle",
+      "a_to_b": 1,
+      "b_to_a": 8,
+      "total": 9
+    },
+    {
+      "a": "service",
+      "b": "subtitle",
+      "a_to_b": 8,
+      "b_to_a": 1,
+      "total": 9
+    },
+    {
+      "a": "api",
+      "b": "web",
+      "a_to_b": 2,
+      "b_to_a": 6,
+      "total": 8
+    },
+    {
+      "a": "cache",
+      "b": "player",
+      "a_to_b": 4,
+      "b_to_a": 4,
+      "total": 8
+    },
+    {
+      "a": "playback",
+      "b": "setting",
+      "a_to_b": 6,
+      "b_to_a": 2,
+      "total": 8
+    },
+    {
+      "a": "player",
+      "b": "server",
+      "a_to_b": 4,
+      "b_to_a": 4,
+      "total": 8
+    },
+    {
+      "a": "server",
+      "b": "service",
+      "a_to_b": 6,
+      "b_to_a": 2,
+      "total": 8
+    },
+    {
+      "a": "bean",
+      "b": "event",
+      "a_to_b": 3,
+      "b_to_a": 4,
+      "total": 7
+    },
+    {
+      "a": "bean",
+      "b": "title",
+      "a_to_b": 3,
+      "b_to_a": 4,
+      "total": 7
+    },
+    {
+      "a": "service",
+      "b": "title",
+      "a_to_b": 5,
+      "b_to_a": 1,
+      "total": 6
+    },
+    {
+      "a": "setting",
+      "b": "web",
+      "a_to_b": 1,
+      "b_to_a": 5,
+      "total": 6
+    },
+    {
+      "a": "api",
+      "b": "node",
+      "a_to_b": 3,
+      "b_to_a": 1,
+      "total": 4
+    },
+    {
+      "a": "history",
+      "b": "ui",
+      "a_to_b": 2,
+      "b_to_a": 2,
+      "total": 4
+    },
+    {
+      "a": "server",
+      "b": "web",
+      "a_to_b": 2,
+      "b_to_a": 2,
+      "total": 4
+    },
+    {
+      "a": "cache",
+      "b": "service",
+      "a_to_b": 2,
+      "b_to_a": 1,
+      "total": 3
+    },
+    {
+      "a": "node",
+      "b": "playback",
+      "a_to_b": 2,
+      "b_to_a": 1,
+      "total": 3
+    },
+    {
+      "a": "cache",
+      "b": "utils",
+      "a_to_b": 1,
+      "b_to_a": 1,
+      "total": 2
+    },
+    {
+      "a": "playback",
+      "b": "service",
+      "a_to_b": 1,
+      "b_to_a": 1,
+      "total": 2
+    },
+    {
+      "a": "theme",
+      "b": "utils",
+      "a_to_b": 1,
+      "b_to_a": 1,
+      "total": 2
+    }
+  ],
+  "cycle_count": 1,
+  "cycles": [
+    [
+      "api",
+      "bean",
+      "browse",
+      "cache",
+      "db",
+      "event",
+      "following",
+      "gitcloud",
+      "gson",
+      "history",
+      "impl",
+      "model",
+      "node",
+      "playback",
+      "player",
+      "plugin",
+      "remote",
+      "server",
+      "service",
+      "setting",
+      "subtitle",
+      "theme",
+      "title",
+      "ui",
+      "update",
+      "utils",
+      "viewing",
+      "web"
+    ]
+  ],
+  "ui_to_player_files": 36,
+  "ui_to_player_list": [
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/AudioActivity.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/PlaybackActivity.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/PlaybackRecoveryActivity.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/adapter/MpvConfigProfileAdapter.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/audio/AudioMiniPlayer.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/controller/VodPlayerControlController.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/CustomSeekView.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/KaraokeResultView.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/KaraokeStatusView.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/LutQuickPanel.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/LyricsOverlayView.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/PlayerOsdController.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/CacheManagementDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/CodecCapabilityDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/DanmakuDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/DanmakuSearchDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/DanmakuSearchInputDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/DanmakuSettingDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/DanmakuSettingPanel.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/LutDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/MpvConfigCreateDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/MpvConfigDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/MpvConfigHistoryDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/MpvCustomButtonDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/OffsetDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/OffsetPanel.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/PanNetworkDiagnosticDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/SubtitleDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/TitleDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/TmdbVideoPlayerDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/TrackDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/VideoAspectModeDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/VideoAspectRatioDialog.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/player/VodPlayerUiController.java",
+    "app/src/main/java/com/fongmi/android/tv/ui/player/VodPlayerUiHost.java"
+  ]
+}

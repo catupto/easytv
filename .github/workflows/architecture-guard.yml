@@ -1,0 +1,74 @@
+name: Architecture Guard
+
+# Pure text measurement, no Gradle, no JVM: the whole job must finish in <90 s so it
+# can be a required check without slowing PRs down (master plan §6.3).
+#
+# Why this exists at all (ADR-0001, §3.4): the previous refactor roadmap grew its
+# target file from 9,738 to 14,365 lines (+47.6%) because no mechanism ever reported
+# "this got worse". Every check here is a "只减不增" comparison against
+# docs/refactoring/baseline/debt-baseline.json, so growth fails the PR instead of
+# being discovered months later.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - fongmi-sync
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: architecture-guard-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    name: Architecture debt guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # guard.sh compares against committed baseline files; full history is not
+          # needed, but the HEAD sha is used for reporting.
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Measure (metrics / dep-graph / dup-scan)
+        run: |
+          mkdir -p "$RUNNER_TEMP/arch"
+          bash scripts/arch/metrics.sh   --json-out "$RUNNER_TEMP/arch/metrics.json"
+          bash scripts/arch/dep-graph.sh --json-out "$RUNNER_TEMP/arch/deps.json"
+          bash scripts/arch/dup-scan.sh  --json-out "$RUNNER_TEMP/arch/dup.json"
+
+      - name: Debt guard (只减不增)
+        run: |
+          bash scripts/arch/guard.sh \
+            --baseline docs/refactoring/baseline \
+            --current "$RUNNER_TEMP/arch/metrics.json,$RUNNER_TEMP/arch/deps.json,$RUNNER_TEMP/arch/dup.json"
+
+      - name: Gate self-proof
+        # ADR-0001 requires demonstrating the gate can go red; a gate that has never
+        # failed is indistinguishable from a gate that cannot fail.
+        run: bash scripts/arch/guard.sh --self-test
+
+      - name: Summary
+        if: always()
+        run: |
+          bash scripts/arch/metrics.sh > "$RUNNER_TEMP/arch/summary.json" || true
+          {
+            echo "## Architecture metrics"
+            echo ""
+            echo '```json'
+            grep -E '"(java_files|java_lines|over_1000|max_file_lines|max_methods|max_fields|dup_files|isLeanback_callsites|setting_static_callsites|app_get_files|source_text_locks)"' \
+              "$RUNNER_TEMP/arch/summary.json" || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,1101 @@
+{
+  "schema_version": 1,
+  "metric_counter": "jaccard-L3-v1",
+  "commit": "790228d396bb33211a942f676ab568b4b66f297c",
+  "dup_files": 80,
+  "dup_lines": 58466,
+  "avg_jaccard": 0.5844,
+  "L1_byte_identical": {
+    "count": 11,
+    "lines_one_side": 816,
+    "lines_both_sides": 1632,
+    "files": [
+      "com/fongmi/android/tv/bean/CastVideo.java",
+      "com/fongmi/android/tv/dlna/DLNACast.java",
+      "com/fongmi/android/tv/dlna/DLNACastManager.java",
+      "com/fongmi/android/tv/service/DLNACastService.java",
+      "com/fongmi/android/tv/ui/activity/ScanActivity.java",
+      "com/fongmi/android/tv/ui/adapter/DeviceAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/HotWordAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/WordAdapter.java",
+      "com/fongmi/android/tv/ui/dialog/AdRulePreviewDialog.java",
+      "com/fongmi/android/tv/ui/dialog/TimerDialog.java",
+      "com/fongmi/android/tv/utils/Timer.java"
+    ]
+  },
+  "L2_line_set_identical_extra": {
+    "count": 1,
+    "files": [
+      "com/fongmi/android/tv/ui/adapter/QualityAdapter.java"
+    ]
+  },
+  "buckets": {
+    "1.000": 12,
+    "0.95-1.0": 4,
+    "0.90-0.95": 1,
+    "0.85-0.90": 6,
+    "0.70-0.85": 10,
+    "0.50-0.70": 9,
+    "<0.50": 38
+  },
+  "batches": {
+    "4A": 17,
+    "4B": 25,
+    "4C": 38
+  },
+  "main_overrides": {
+    "leanback": 0,
+    "mobile": 0
+  },
+  "files": [
+    {
+      "path": "com/fongmi/android/tv/bean/CastVideo.java",
+      "leanback_lines": 19,
+      "mobile_lines": 19,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/dlna/DLNACast.java",
+      "leanback_lines": 97,
+      "mobile_lines": 97,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/dlna/DLNACastManager.java",
+      "leanback_lines": 120,
+      "mobile_lines": 120,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/service/DLNACastService.java",
+      "leanback_lines": 27,
+      "mobile_lines": 27,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/ScanActivity.java",
+      "leanback_lines": 93,
+      "mobile_lines": 93,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/DeviceAdapter.java",
+      "leanback_lines": 66,
+      "mobile_lines": 66,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/HotWordAdapter.java",
+      "leanback_lines": 42,
+      "mobile_lines": 42,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/QualityAdapter.java",
+      "leanback_lines": 77,
+      "mobile_lines": 77,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": false,
+      "line_set_identical": true
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/WordAdapter.java",
+      "leanback_lines": 47,
+      "mobile_lines": 47,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/AdRulePreviewDialog.java",
+      "leanback_lines": 111,
+      "mobile_lines": 111,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/TimerDialog.java",
+      "leanback_lines": 104,
+      "mobile_lines": 104,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/utils/Timer.java",
+      "leanback_lines": 90,
+      "mobile_lines": 90,
+      "jaccard": 1.0,
+      "bucket": "1.000",
+      "byte_identical": true,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/CastDialog.java",
+      "leanback_lines": 221,
+      "mobile_lines": 221,
+      "jaccard": 0.9858,
+      "bucket": "0.95-1.0",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/AppearanceDialog.java",
+      "leanback_lines": 205,
+      "mobile_lines": 200,
+      "jaccard": 0.9784,
+      "bucket": "0.95-1.0",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/LiveAdapter.java",
+      "leanback_lines": 80,
+      "mobile_lines": 80,
+      "jaccard": 0.9608,
+      "bucket": "0.95-1.0",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/ThemeDialog.java",
+      "leanback_lines": 533,
+      "mobile_lines": 520,
+      "jaccard": 0.9553,
+      "bucket": "0.95-1.0",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/RecordAdapter.java",
+      "leanback_lines": 90,
+      "mobile_lines": 91,
+      "jaccard": 0.9298,
+      "bucket": "0.90-0.95",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/ThemeAdapter.java",
+      "leanback_lines": 70,
+      "mobile_lines": 75,
+      "jaccard": 0.898,
+      "bucket": "0.85-0.90",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/base/BaseFragment.java",
+      "leanback_lines": 61,
+      "mobile_lines": 69,
+      "jaccard": 0.8974,
+      "bucket": "0.85-0.90",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/AdBlockStatsDialog.java",
+      "leanback_lines": 816,
+      "mobile_lines": 765,
+      "jaccard": 0.8721,
+      "bucket": "0.85-0.90",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/AdRuleAdapter.java",
+      "leanback_lines": 270,
+      "mobile_lines": 269,
+      "jaccard": 0.8563,
+      "bucket": "0.85-0.90",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/PassDialog.java",
+      "leanback_lines": 60,
+      "mobile_lines": 58,
+      "jaccard": 0.8537,
+      "bucket": "0.85-0.90",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/RestoreAdapter.java",
+      "leanback_lines": 85,
+      "mobile_lines": 88,
+      "jaccard": 0.85,
+      "bucket": "0.85-0.90",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/utils/PiP.java",
+      "leanback_lines": 125,
+      "mobile_lines": 172,
+      "jaccard": 0.8119,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/RecommendationFeedbackAdapter.java",
+      "leanback_lines": 115,
+      "mobile_lines": 94,
+      "jaccard": 0.8101,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/holder/VodRectHolder.java",
+      "leanback_lines": 48,
+      "mobile_lines": 50,
+      "jaccard": 0.8,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/holder/VodOvalHolder.java",
+      "leanback_lines": 42,
+      "mobile_lines": 43,
+      "jaccard": 0.7879,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/WebDialog.java",
+      "leanback_lines": 43,
+      "mobile_lines": 37,
+      "jaccard": 0.7857,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/custom/CustomScroller.java",
+      "leanback_lines": 86,
+      "mobile_lines": 79,
+      "jaccard": 0.7818,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/AdRuleEditDialog.java",
+      "leanback_lines": 189,
+      "mobile_lines": 150,
+      "jaccard": 0.771,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/PlayerOsdDialog.java",
+      "leanback_lines": 182,
+      "mobile_lines": 152,
+      "jaccard": 0.7481,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/HistoryDialog.java",
+      "leanback_lines": 203,
+      "mobile_lines": 204,
+      "jaccard": 0.7152,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/UpdateDialog.java",
+      "leanback_lines": 407,
+      "mobile_lines": 308,
+      "jaccard": 0.7033,
+      "bucket": "0.70-0.85",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/holder/VodListHolder.java",
+      "leanback_lines": 38,
+      "mobile_lines": 40,
+      "jaccard": 0.697,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/FileActivity.java",
+      "leanback_lines": 118,
+      "mobile_lines": 161,
+      "jaccard": 0.6408,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/custom/CustomViewPager.java",
+      "leanback_lines": 24,
+      "mobile_lines": 28,
+      "jaccard": 0.619,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/base/ViewType.java",
+      "leanback_lines": 8,
+      "mobile_lines": 14,
+      "jaccard": 0.6,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/AdRuleManageDialog.java",
+      "leanback_lines": 527,
+      "mobile_lines": 431,
+      "jaccard": 0.5891,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/ConfigAdapter.java",
+      "leanback_lines": 234,
+      "mobile_lines": 131,
+      "jaccard": 0.5455,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/EpgDataAdapter.java",
+      "leanback_lines": 84,
+      "mobile_lines": 92,
+      "jaccard": 0.5294,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/KeepAdapter.java",
+      "leanback_lines": 108,
+      "mobile_lines": 131,
+      "jaccard": 0.5288,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/KeepActivity.java",
+      "leanback_lines": 141,
+      "mobile_lines": 220,
+      "jaccard": 0.5282,
+      "bucket": "0.50-0.70",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/UaDialog.java",
+      "leanback_lines": 125,
+      "mobile_lines": 88,
+      "jaccard": 0.4946,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/QuickAdapter.java",
+      "leanback_lines": 123,
+      "mobile_lines": 106,
+      "jaccard": 0.4896,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/ConfigDialog.java",
+      "leanback_lines": 347,
+      "mobile_lines": 275,
+      "jaccard": 0.474,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/RestoreDialog.java",
+      "leanback_lines": 103,
+      "mobile_lines": 74,
+      "jaccard": 0.4667,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/HistoryAdapter.java",
+      "leanback_lines": 128,
+      "mobile_lines": 140,
+      "jaccard": 0.464,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/VideoActivity.java",
+      "leanback_lines": 13255,
+      "mobile_lines": 11976,
+      "jaccard": 0.4492,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/ControlDialog.java",
+      "leanback_lines": 558,
+      "mobile_lines": 741,
+      "jaccard": 0.4397,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/BufferDialog.java",
+      "leanback_lines": 62,
+      "mobile_lines": 63,
+      "jaccard": 0.4286,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/SpeedDialog.java",
+      "leanback_lines": 59,
+      "mobile_lines": 63,
+      "jaccard": 0.4259,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/HistoryActivity.java",
+      "leanback_lines": 181,
+      "mobile_lines": 205,
+      "jaccard": 0.4157,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/LiveActivity.java",
+      "leanback_lines": 1479,
+      "mobile_lines": 2468,
+      "jaccard": 0.4144,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/TypeAdapter.java",
+      "leanback_lines": 89,
+      "mobile_lines": 96,
+      "jaccard": 0.4074,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/base/BaseVodHolder.java",
+      "leanback_lines": 18,
+      "mobile_lines": 19,
+      "jaccard": 0.4,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/GroupAdapter.java",
+      "leanback_lines": 85,
+      "mobile_lines": 126,
+      "jaccard": 0.3977,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/fragment/FolderFragment.java",
+      "leanback_lines": 231,
+      "mobile_lines": 125,
+      "jaccard": 0.3694,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/FlagAdapter.java",
+      "leanback_lines": 148,
+      "mobile_lines": 144,
+      "jaccard": 0.3543,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/base/BaseActivity.java",
+      "leanback_lines": 250,
+      "mobile_lines": 170,
+      "jaccard": 0.35,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/ParseAdapter.java",
+      "leanback_lines": 82,
+      "mobile_lines": 102,
+      "jaccard": 0.3418,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/fragment/TypeFragment.java",
+      "leanback_lines": 440,
+      "mobile_lines": 240,
+      "jaccard": 0.3373,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/RecommendationFeedbackDialog.java",
+      "leanback_lines": 114,
+      "mobile_lines": 90,
+      "jaccard": 0.3366,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/FileAdapter.java",
+      "leanback_lines": 81,
+      "mobile_lines": 175,
+      "jaccard": 0.3333,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/DanmakuApiDialog.java",
+      "leanback_lines": 104,
+      "mobile_lines": 54,
+      "jaccard": 0.3333,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/LiveDialog.java",
+      "leanback_lines": 121,
+      "mobile_lines": 204,
+      "jaccard": 0.3025,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/SearchAdapter.java",
+      "leanback_lines": 230,
+      "mobile_lines": 155,
+      "jaccard": 0.2816,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/Product.java",
+      "leanback_lines": 44,
+      "mobile_lines": 66,
+      "jaccard": 0.2321,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/EpisodeDetailDialog.java",
+      "leanback_lines": 552,
+      "mobile_lines": 403,
+      "jaccard": 0.2298,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/CollectAdapter.java",
+      "leanback_lines": 186,
+      "mobile_lines": 106,
+      "jaccard": 0.2171,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/custom/CustomTextListener.java",
+      "leanback_lines": 84,
+      "mobile_lines": 19,
+      "jaccard": 0.2162,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/EpisodeListDialog.java",
+      "leanback_lines": 676,
+      "mobile_lines": 390,
+      "jaccard": 0.2007,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/QuickSearchDialog.java",
+      "leanback_lines": 246,
+      "mobile_lines": 223,
+      "jaccard": 0.2,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/ChannelAdapter.java",
+      "leanback_lines": 99,
+      "mobile_lines": 256,
+      "jaccard": 0.1907,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/SiteAdapter.java",
+      "leanback_lines": 272,
+      "mobile_lines": 213,
+      "jaccard": 0.1555,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/adapter/EpisodeAdapter.java",
+      "leanback_lines": 595,
+      "mobile_lines": 412,
+      "jaccard": 0.1524,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/HomeActivity.java",
+      "leanback_lines": 1757,
+      "mobile_lines": 545,
+      "jaccard": 0.1031,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/dialog/SiteDialog.java",
+      "leanback_lines": 811,
+      "mobile_lines": 337,
+      "jaccard": 0.1016,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/activity/SearchActivity.java",
+      "leanback_lines": 620,
+      "mobile_lines": 132,
+      "jaccard": 0.092,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/fragment/CollectFragment.java",
+      "leanback_lines": 154,
+      "mobile_lines": 780,
+      "jaccard": 0.0647,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    },
+    {
+      "path": "com/fongmi/android/tv/ui/helper/SiteDialogTheme.java",
+      "leanback_lines": 137,
+      "mobile_lines": 67,
+      "jaccard": 0.0593,
+      "bucket": "<0.50",
+      "byte_identical": false,
+      "line_set_identical": false
+    }
+  ],
+  "namespace": {
+    "count": 48,
+    "files": [
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/HlsAdTimeline.java",
+        "lines": 207
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/HlsManifestTimelineTracker.java",
+        "lines": 235
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/HlsPlaylistRewriter.java",
+        "lines": 423
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/HlsProxyLiveLagTracker.java",
+        "lines": 241
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/HlsSegmentDecryptor.java",
+        "lines": 62
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvAudioDecoderPolicy.java",
+        "lines": 37
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvAudioMimeTypes.java",
+        "lines": 24
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvAutoCacheBaselineState.java",
+        "lines": 32
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvAutoCacheOptionPolicy.java",
+        "lines": 33
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvAutoHlsBitrateState.java",
+        "lines": 92
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvBufferedPositionPolicy.java",
+        "lines": 37
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvCacheObserverState.java",
+        "lines": 172
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvCacheTimePolicy.java",
+        "lines": 213
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvCacheTimeState.java",
+        "lines": 116
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvDiagnosticCollector.java",
+        "lines": 344
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvDiagnosticsPolicy.java",
+        "lines": 216
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvDiscMenuPolicy.java",
+        "lines": 60
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvDiscRebufferTracker.java",
+        "lines": 61
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvDtsHdFallbackPolicy.java",
+        "lines": 81
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvFontConfig.java",
+        "lines": 120
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvGpuLoadTracker.java",
+        "lines": 176
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsAdBoundaryState.java",
+        "lines": 40
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsCacheCoordinator.java",
+        "lines": 719
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsPreloadGate.java",
+        "lines": 96
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsProxy.java",
+        "lines": 2721
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsSegmentContentPolicy.java",
+        "lines": 80
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsTargetIdentity.java",
+        "lines": 55
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsUpstreamEstimator.java",
+        "lines": 164
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvInitialTrackSelectionPolicy.java",
+        "lines": 25
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvMediaReplacementCoordinator.java",
+        "lines": 60
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvOptionPriorityPolicy.java",
+        "lines": 117
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvOsdSurfacePolicy.java",
+        "lines": 51
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPauseIntentPolicy.java",
+        "lines": 19
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPlaybackState.java",
+        "lines": 33
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java",
+        "lines": 6667
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPlayerConfig.java",
+        "lines": 379
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPreloadCachePolicy.java",
+        "lines": 152
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPropertyCache.java",
+        "lines": 73
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPropertySnapshot.java",
+        "lines": 226
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvRenderLogPolicy.java",
+        "lines": 40
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvRequestHeaderPolicy.java",
+        "lines": 69
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvSeekPositionState.java",
+        "lines": 52
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvStartupBufferPolicy.java",
+        "lines": 14
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvSubtitleSourcePolicy.java",
+        "lines": 43
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceLoadPolicy.java",
+        "lines": 15
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceSizePolicy.java",
+        "lines": 23
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceTeardownPolicy.java",
+        "lines": 24
+      },
+      {
+        "path": "app/src/main/java/androidx/media3/mpvplayer/MpvTrackRefreshPolicy.java",
+        "lines": 23
+      }
+    ]
+  },
+  "dup_files_list": [
+    "com/fongmi/android/tv/Product.java",
+    "com/fongmi/android/tv/bean/CastVideo.java",
+    "com/fongmi/android/tv/dlna/DLNACast.java",
+    "com/fongmi/android/tv/dlna/DLNACastManager.java",
+    "com/fongmi/android/tv/service/DLNACastService.java",
+    "com/fongmi/android/tv/ui/activity/FileActivity.java",
+    "com/fongmi/android/tv/ui/activity/HistoryActivity.java",
+    "com/fongmi/android/tv/ui/activity/HomeActivity.java",
+    "com/fongmi/android/tv/ui/activity/KeepActivity.java",
+    "com/fongmi/android/tv/ui/activity/LiveActivity.java",
+    "com/fongmi/android/tv/ui/activity/ScanActivity.java",
+    "com/fongmi/android/tv/ui/activity/SearchActivity.java",
+    "com/fongmi/android/tv/ui/activity/VideoActivity.java",
+    "com/fongmi/android/tv/ui/adapter/AdRuleAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/ChannelAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/CollectAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/ConfigAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/DeviceAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/EpgDataAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/EpisodeAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/FileAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/FlagAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/GroupAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/HistoryAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/HotWordAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/KeepAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/LiveAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/ParseAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/QualityAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/QuickAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/RecommendationFeedbackAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/RecordAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/RestoreAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/SearchAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/SiteAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/ThemeAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/TypeAdapter.java",
+    "com/fongmi/android/tv/ui/adapter/WordAdapter.java",
+    "com/fongmi/android/tv/ui/base/BaseActivity.java",
+    "com/fongmi/android/tv/ui/base/BaseFragment.java",
+    "com/fongmi/android/tv/ui/base/BaseVodHolder.java",
+    "com/fongmi/android/tv/ui/base/ViewType.java",
+    "com/fongmi/android/tv/ui/custom/CustomScroller.java",
+    "com/fongmi/android/tv/ui/custom/CustomTextListener.java",
+    "com/fongmi/android/tv/ui/custom/CustomViewPager.java",
+    "com/fongmi/android/tv/ui/dialog/AdBlockStatsDialog.java",
+    "com/fongmi/android/tv/ui/dialog/AdRuleEditDialog.java",
+    "com/fongmi/android/tv/ui/dialog/AdRuleManageDialog.java",
+    "com/fongmi/android/tv/ui/dialog/AdRulePreviewDialog.java",
+    "com/fongmi/android/tv/ui/dialog/AppearanceDialog.java",
+    "com/fongmi/android/tv/ui/dialog/BufferDialog.java",
+    "com/fongmi/android/tv/ui/dialog/CastDialog.java",
+    "com/fongmi/android/tv/ui/dialog/ConfigDialog.java",
+    "com/fongmi/android/tv/ui/dialog/ControlDialog.java",
+    "com/fongmi/android/tv/ui/dialog/DanmakuApiDialog.java",
+    "com/fongmi/android/tv/ui/dialog/EpisodeDetailDialog.java",
+    "com/fongmi/android/tv/ui/dialog/EpisodeListDialog.java",
+    "com/fongmi/android/tv/ui/dialog/HistoryDialog.java",
+    "com/fongmi/android/tv/ui/dialog/LiveDialog.java",
+    "com/fongmi/android/tv/ui/dialog/PassDialog.java",
+    "com/fongmi/android/tv/ui/dialog/PlayerOsdDialog.java",
+    "com/fongmi/android/tv/ui/dialog/QuickSearchDialog.java",
+    "com/fongmi/android/tv/ui/dialog/RecommendationFeedbackDialog.java",
+    "com/fongmi/android/tv/ui/dialog/RestoreDialog.java",
+    "com/fongmi/android/tv/ui/dialog/SiteDialog.java",
+    "com/fongmi/android/tv/ui/dialog/SpeedDialog.java",
+    "com/fongmi/android/tv/ui/dialog/ThemeDialog.java",
+    "com/fongmi/android/tv/ui/dialog/TimerDialog.java",
+    "com/fongmi/android/tv/ui/dialog/UaDialog.java",
+    "com/fongmi/android/tv/ui/dialog/UpdateDialog.java",
+    "com/fongmi/android/tv/ui/dialog/WebDialog.java",
+    "com/fongmi/android/tv/ui/fragment/CollectFragment.java",
+    "com/fongmi/android/tv/ui/fragment/FolderFragment.java",
+    "com/fongmi/android/tv/ui/fragment/TypeFragment.java",
+    "com/fongmi/android/tv/ui/helper/SiteDialogTheme.java",
+    "com/fongmi/android/tv/ui/holder/VodListHolder.java",
+    "com/fongmi/android/tv/ui/holder/VodOvalHolder.java",
+    "com/fongmi/android/tv/ui/holder/VodRectHolder.java",
+    "com/fongmi/android/tv/utils/PiP.java",
+    "com/fongmi/android/tv/utils/Timer.java"
+  ],
+  "namespace_files_list": [
+    "app/src/main/java/androidx/media3/mpvplayer/HlsAdTimeline.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsManifestTimelineTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsPlaylistRewriter.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsProxyLiveLagTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsSegmentDecryptor.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAudioDecoderPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAudioMimeTypes.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAutoCacheBaselineState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAutoCacheOptionPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAutoHlsBitrateState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvBufferedPositionPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvCacheObserverState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvCacheTimePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvCacheTimeState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiagnosticCollector.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiagnosticsPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiscMenuPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiscRebufferTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDtsHdFallbackPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvFontConfig.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvGpuLoadTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsAdBoundaryState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsCacheCoordinator.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsPreloadGate.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsProxy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsSegmentContentPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsTargetIdentity.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsUpstreamEstimator.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvInitialTrackSelectionPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvMediaReplacementCoordinator.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvOptionPriorityPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvOsdSurfacePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPauseIntentPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlaybackState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlayerConfig.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPreloadCachePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPropertyCache.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPropertySnapshot.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvRenderLogPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvRequestHeaderPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSeekPositionState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvStartupBufferPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSubtitleSourcePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceLoadPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceSizePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceTeardownPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvTrackRefreshPolicy.java"
+  ]
+}

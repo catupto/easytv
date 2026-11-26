@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "metric_counter": "regex-v1",
+  "commit": "790228d396bb33211a942f676ab568b4b66f297c",
+  "branch": "master",
+  "totals": {
+    "java_files": 2701,
+    "java_lines": 577365,
+    "xml_files_app_src": 1129,
+    "xml_lines_app_src": 74187
+  },
+  "distribution": {
+    "over_1000": 55,
+    "over_2000": 15,
+    "over_3000": 8
+  },
+  "extremes": {
+    "max_file_lines": 14365,
+    "max_file": "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java",
+    "max_methods": 1099,
+    "max_methods_file": "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java",
+    "max_fields": 278,
+    "max_fields_file": "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java",
+    "max_package_lines": 93249,
+    "max_package": "player",
+    "max_direct_classes": 90,
+    "max_direct_classes_dir": "app/src/main/java/com/fongmi/android/tv/player/exo",
+    "tmdb_detail_lines": 14365,
+    "tmdb_detail_methods": 1063,
+    "tmdb_detail_fields": 230
+  },
+  "packages": [
+    {
+      "name": "player",
+      "files": 322,
+      "lines": 93249
+    },
+    {
+      "name": "ui",
+      "files": 208,
+      "lines": 87857
+    },
+    {
+      "name": "bean",
+      "files": 76,
+      "lines": 15445
+    },
+    {
+      "name": "androidx/media3/mpvplayer",
+      "files": 48,
+      "lines": 14962
+    },
+    {
+      "name": "utils",
+      "files": 73,
+      "lines": 13573
+    },
+    {
+      "name": "setting",
+      "files": 50,
+      "lines": 12356
+    },
+    {
+      "name": "service",
+      "files": 23,
+      "lines": 11891
+    },
+    {
+      "name": "web",
+      "files": 37,
+      "lines": 10580
+    },
+    {
+      "name": "server",
+      "files": 50,
+      "lines": 9618
+    },
+    {
+      "name": "lab",
+      "files": 24,
+      "lines": 7617
+    },
+    {
+      "name": "plugin",
+      "files": 30,
+      "lines": 7432
+    },
+    {
+      "name": "playback",
+      "files": 41,
+      "lines": 6774
+    },
+    {
+      "name": "api",
+      "files": 37,
+      "lines": 6607
+    },
+    {
+      "name": "subtitle",
+      "files": 53,
+      "lines": 6471
+    },
+    {
+      "name": "theme",
+      "files": 29,
+      "lines": 5568
+    },
+    {
+      "name": "(root)",
+      "files": 40,
+      "lines": 4750
+    },
+    {
+      "name": "node",
+      "files": 10,
+      "lines": 2988
+    },
+    {
+      "name": "tts",
+      "files": 14,
+      "lines": 2718
+    },
+    {
+      "name": "following",
+      "files": 23,
+      "lines": 2670
+    },
+    {
+      "name": "cache",
+      "files": 34,
+      "lines": 2623
+    },
+    {
+      "name": "remote",
+      "files": 11,
+      "lines": 2121
+    },
+    {
+      "name": "title",
+      "files": 8,
+      "lines": 1813
+    },
+    {
+      "name": "gitcloud",
+      "files": 31,
+      "lines": 1666
+    },
+    {
+      "name": "viewing",
+      "files": 5,
+      "lines": 1041
+    },
+    {
+      "name": "db",
+      "files": 12,
+      "lines": 998
+    },
+    {
+      "name": "update",
+      "files": 12,
+      "lines": 795
+    },
+    {
+      "name": "history",
+      "files": 3,
+      "lines": 697
+    },
+    {
+      "name": "browse",
+      "files": 3,
+      "lines": 617
+    },
+    {
+      "name": "content",
+      "files": 7,
+      "lines": 612
+    },
+    {
+      "name": "model",
+      "files": 4,
+      "lines": 594
+    },
+    {
+      "name": "dlna",
+      "files": 3,
+      "lines": 359
+    },
+    {
+      "name": "event",
+      "files": 7,
+      "lines": 343
+    },
+    {
+      "name": "impl",
+      "files": 16,
+      "lines": 274
+    },
+    {
+      "name": "gson",
+      "files": 7,
+      "lines": 170
+    },
+    {
+      "name": "device",
+      "files": 3,
+      "lines": 105
+    },
+    {
+      "name": "widget",
+      "files": 1,
+      "lines": 94
+    },
+    {
+      "name": "receiver",
+      "files": 1,
+      "lines": 23
+    },
+    {
+      "name": "exception",
+      "files": 1,
+      "lines": 12
+    }
+  ],
+  "large_files": [
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java",
+      "lines": 14365
+    },
+    {
+      "path": "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java",
+      "lines": 13255
+    },
+    {
+      "path": "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java",
+      "lines": 11976
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java",
+      "lines": 9819
+    },
+    {
+      "path": "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java",
+      "lines": 6667
+    },
+    {
+      "path": "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java",
+      "lines": 4182
+    },
+    {
+      "path": "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java",
+      "lines": 3935
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/dialog/RemoteTrustDialog.java",
+      "lines": 3515
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/dialog/GitCloudDialog.java",
+      "lines": 2894
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapter.java",
+      "lines": 2742
+    },
+    {
+      "path": "app/src/main/java/androidx/media3/mpvplayer/MpvHlsProxy.java",
+      "lines": 2721
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/custom/TmdbHeaderView.java",
+      "lines": 2553
+    },
+    {
+      "path": "app/src/mobile/java/com/fongmi/android/tv/ui/activity/LiveActivity.java",
+      "lines": 2468
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/web/HomeWebController.java",
+      "lines": 2288
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/dialog/CustomCspDialog.java",
+      "lines": 2083
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/exo/ExoUtil.java",
+      "lines": 1994
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/custom/PlayerOsdController.java",
+      "lines": 1910
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/service/PersonalRecommendationService.java",
+      "lines": 1873
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/web/WebReaderActivity.java",
+      "lines": 1851
+    },
+    {
+      "path": "app/src/leanback/java/com/fongmi/android/tv/ui/activity/HomeActivity.java",
+      "lines": 1757
+    },
+    {
+      "path": "app/src/test/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicyTest.java",
+      "lines": 1668
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/setting/Setting.java",
+      "lines": 1655
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/lab/LabEnv.java",
+      "lines": 1624
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/engine/IjkSimplePlayer.java",
+      "lines": 1563
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/utils/LoginStateSync.java",
+      "lines": 1557
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/custom/AudioPlayerBackgroundDrawable.java",
+      "lines": 1544
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/bean/History.java",
+      "lines": 1501
+    },
+    {
+      "path": "app/src/testLeanback/java/com/fongmi/android/tv/ui/activity/TvFocusRingContractTest.java",
+      "lines": 1499
+    },
+    {
+      "path": "app/src/leanback/java/com/fongmi/android/tv/ui/activity/LiveActivity.java",
+      "lines": 1479
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/activity/AudioActivity.java",
+      "lines": 1474
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/karaoke/KaraokePitchTrackGenerator.java",
+      "lines": 1468
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/mpv/MpvConfigStore.java",
+      "lines": 1448
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/PlaybackAutoContext.java",
+      "lines": 1438
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/activity/PlaybackActivity.java",
+      "lines": 1434
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicy.java",
+      "lines": 1426
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/setting/CustomCspSetting.java",
+      "lines": 1416
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/engine/ExoPlayerEngine.java",
+      "lines": 1396
+    },
+    {
+      "path": "app/src/testMobile/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapterTest.java",
+      "lines": 1335
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/service/TmdbService.java",
+      "lines": 1325
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/exo/PreCache.java",
+      "lines": 1273
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/ijk/IjkRuntimeProfileController.java",
+      "lines": 1262
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/dialog/WebHomeExtensionDialog.java",
+      "lines": 1262
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/theme/ThemeBinder.java",
+      "lines": 1241
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/service/AiRecommendationService.java",
+      "lines": 1231
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/engine/MpvPlayerEngine.java",
+      "lines": 1177
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/setting/PlaybackPerformanceSetting.java",
+      "lines": 1131
+    },
+    {
+      "path": "app/src/leanback/java/com/fongmi/android/tv/ui/activity/CollectActivity.java",
+      "lines": 1130
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/exo/AutoTargetLoadControl.java",
+      "lines": 1115
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/diagnostic/PanNetworkDiagnosticRunner.java",
+      "lines": 1098
+    },
+    {
+      "path": "app/src/androidTest/java/com/fongmi/android/tv/playback/origin/OriginIsolationPlaybackTest.java",
+      "lines": 1084
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/dialog/PanNetworkDiagnosticDialog.java",
+      "lines": 1078
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/setting/PlayerSetting.java",
+      "lines": 1064
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/player/exo/PlaybackAnalyticsListener.java",
+      "lines": 1053
+    },
+    {
+      "path": "app/src/main/java/com/fongmi/android/tv/ui/activity/PluginManagerActivity.java",
+      "lines": 1040
+    },
+    {
+      "path": "app/src/main/java/tv/danmaku/ijk/media/player/IjkMediaPlayer.java",
+      "lines": 1031
+    }
+  ],
+  "flavor": {
+    "dup_files": 80,
+    "dup_lines": 58466,
+    "avg_jaccard": 0.5844,
+    "buckets": {
+      "1.000": 12,
+      "0.95-1.0": 4,
+      "0.90-0.95": 1,
+      "0.85-0.90": 6,
+      "0.70-0.85": 10,
+      "0.50-0.70": 9,
+      "<0.50": 38
+    },
+    "byte_identical": [
+      "com/fongmi/android/tv/bean/CastVideo.java",
+      "com/fongmi/android/tv/dlna/DLNACast.java",
+      "com/fongmi/android/tv/dlna/DLNACastManager.java",
+      "com/fongmi/android/tv/service/DLNACastService.java",
+      "com/fongmi/android/tv/ui/activity/ScanActivity.java",
+      "com/fongmi/android/tv/ui/adapter/DeviceAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/HotWordAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/WordAdapter.java",
+      "com/fongmi/android/tv/ui/dialog/AdRulePreviewDialog.java",
+      "com/fongmi/android/tv/ui/dialog/TimerDialog.java",
+      "com/fongmi/android/tv/utils/Timer.java"
+    ],
+    "line_set_identical": [
+      "com/fongmi/android/tv/ui/adapter/QualityAdapter.java"
+    ],
+    "main_overrides": {
+      "leanback": 0,
+      "mobile": 0
+    }
+  },
+  "offenders": {
+    "isLeanback_callsites": 219,
+    "isLeanback_raw_lines": 237,
+    "isLeanback_prod_raw": 204,
+    "isLeanback_test_raw": 33,
+    "isLeanback_files": 74,
+    "setting_static_callsites": 628,
+    "setting_static_files": 112,
+    "setting_static_use_files": 109,
+    "app_get_files": 93,
+    "player_manager_files": 48,
+    "bean_history_files": 56,
+    "eventbus_files": 17,
+    "androidx_namespace_files": 48
+  },
+  "tests": {
+    "source_text_locks": 218,
+    "source_text_lock_cases": 1661,
+    "source_text_lock_lines": 44150,
+    "source_text_locks_by_set": {
+      "test": 144,
+      "testMobile": 48,
+      "testLeanback": 26
+    }
+  },
+  "source_sets": {
+    "androidTest": {
+      "files": 46,
+      "lines": 8983
+    },
+    "androidTestMobile": {
+      "files": 1,
+      "lines": 199
+    },
+    "catvod": {
+      "files": 54,
+      "lines": 5743
+    },
+    "chaquo": {
+      "files": 5,
+      "lines": 587
+    },
+    "debug": {
+      "files": 2,
+      "lines": 267
+    },
+    "full": {
+      "files": 1,
+      "lines": 493
+    },
+    "leanback": {
+      "files": 146,
+      "lines": 40612
+    },
+    "main": {
+      "files": 1357,
+      "lines": 338083
+    },
+    "mobile": {
+      "files": 134,
+      "lines": 36819
+    },
+    "nodejs": {
+      "files": 1,
+      "lines": 76
+    },
+    "quickjs": {
+      "files": 16,
+      "lines": 1407
+    },
+    "test": {
+      "files": 766,
+      "lines": 105361
+    },
+    "testLeanback": {
+      "files": 64,
+      "lines": 15001
+    },
+    "testMobile": {
+      "files": 108,
+      "lines": 23734
+    }
+  }
+}
