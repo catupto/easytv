@@ -119,6 +119,11 @@ public final class ExternalCoreLoader {
     /** 诊断信息：列出每个 ABI 的包状态，供失败时展示，避免静默失败。 */
     public static String diagnose(Context context, String core) {
         StringBuilder sb = new StringBuilder();
+        File dir = extDir(context);
+        String[] listed = dir.list();
+        sb.append("dir=").append(dir.getAbsolutePath())
+                .append(" listable=").append(listed != null)
+                .append(" files=").append(listed == null ? -1 : listed.length).append('\n');
         for (String abi : android.os.Build.SUPPORTED_ABIS) {
             String error = ensure(context, core, abi);
             sb.append(core).append('/').append(abi).append(": ")
