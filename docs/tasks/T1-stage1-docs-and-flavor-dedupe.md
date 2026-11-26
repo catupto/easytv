@@ -225,3 +225,75 @@ mobile:   (..., boolean collect,                    TmdbItem, String wallPic, St
 
 两侧都断言了「全部 12 个重载存在」，因为合并两份文件最容易犯的错就是只留一份的签名，
 而单变体构建发现不了。
+
+## 批次 4.3-a · `ui/dialog` + `ui/adapter` 的 `isLeanback()` 迁移
+
+> 主方案依据：§4.8.6（232 个调用点的迁移顺序）、§4.8.7（先建谓词再拆上帝类）、§6.5 C3/C11。
+
+### 迁移纪律与实测偏差
+
+方案把 4.3 分成 3 批（a: dialog+adapter / b: activity+fragment / c: player+setting+剩余）。
+实测 4.3-a 的规模是 **157 个调用点 / 45 个文件**，远超单批「代码 ≤800 行、文件数 ≤10」的红线
+（目标队列第 8 条）。因此 4.3-a 自身再拆成 4 个可独立回滚的子批：
+
+| 子批 | 提交 | 范围 | 调用点 | `isLeanback_callsites` |
+|---|---|---|---:|---:|
+| 4.3-a1 | `aa40ea1` | 9 个 `ui/adapter` 文件 | 9 | 219 → 207 |
+| 4.3-a2 | `7c9486e` | 两个最大 dialog（PanNetworkDiagnostic 33、DanmakuSearch 29） | 62 | 207 → 154 |
+| 4.3-a3 | `8ab58a4` | 10 个中型 dialog | 44 | 154 → 114 |
+| 4.3-a4 | `714a6c7` | dialog 尾部 17 个文件 + 4 个测试迁移 | 32 | 114 → 79 |
+
+**合计 219 → 79（−140）**，`ui/dialog` + `ui/adapter` 生产代码调用点 **146 → 2**。
+
+### 迁移形式
+
+统一替换：`Util.isLeanback()` → `DeviceModePolicy.current().isTv()`。
+
+在 `FlavorDeviceModePolicy` 下（`"leanback".equals(BuildConfig.FLAVOR_mode)`）两者
+**逐字节等价**，所以本批不改任何运行期数值。绝大多数站点是尺寸三元表达式
+（`dp(Util.isLeanback() ? 24 : 18)`），替换后表达式形状不变。
+
+顺带清理了 6 个文件中已无任何引用的 `import com.fongmi.android.tv.utils.Util;`，
+避免 diff 留下死 import。
+
+### 补齐 T2 遗漏：`gridColumnCount()`
+
+批次 T2 的交付清单里点名要有 `gridColumnCount()` / `gridColumnCount(Style)`，但 T2 实际只交了
+`getColumn()` 系列。本批补上（`app/src/main/java/com/fongmi/android/tv/Product.java`）：
+
+```java
+public static int gridColumnCount(Context context)              // 按 policy 选 TV / 触屏算法
+public static int gridColumnCount(Context context, Style style) // 横屏少一列
+```
+
+两个方法都是 `getColumn` 系列的**别名，不是第二套计算**。`Context == null` 时回落到 TV 算法，
+并在 Javadoc 里写明原因（部分迁移点处于构造期/静态初始化，拿不到可靠 `Context`），
+防止被误当作通用入口。
+
+### 源码文本断言的同步迁移（§2.9.4 B 类）
+
+4 个测试因断言旧表达式而变红 —— 这是方案 §2.9 预测的必然结果，不是回归：
+
+| 测试类 | 旧断言 | 新断言 |
+|---|---|---|
+| `AboutDialogLayoutTest` | `"if (Util.isLeanback()) return configureFullscreenWindow(...)"` | 同句改为 `DeviceModePolicy.current().isTv()` |
+| `GroupRuleDialogLayoutTest` | `setFocusableInTouchMode(Util.isLeanback())` ×2 | 同句改为新表达式 |
+| `TmdbSearchDialogSelectionSourceTest` | `"boolean leanback = Util.isLeanback();"` | 同句改为新表达式 |
+| `VideoAspectUiSourceTest` | `indexOf("if (Util.isLeanback())")` | 同句改为新表达式 |
+
+断言内容（必须成立的是什么）**没有变化**，只是被查找的 token 随生产代码表达式一起改。
+另有 `TmdbDetailActivityLayoutTest` 的一处 adapter 断言在 4.3-a1 中同步迁移。
+
+### 为什么 `ThemeDialog` 还留着 2 处
+
+`ThemeDialog` 按 [ADR-0010](../adr/ADR-0010-themedialog-stays-flavor-split.md) 保持双 flavor 实现，
+它的 `isLeanback()` 调用属于「等 4.6 合并 `mode` 维度时随文件一起处理」的尾巴，不单独迁移。
+
+### 验证
+
+| 项 | 结果 |
+|---|---|
+| 每个子批双变体构建 | a1 40s / a2 23s / a3 33s / a4 39s，全部 SUCCESSFUL |
+| 每个子批双变体 device 测试 | a1 17s+20s / a2 8s+13s / a3 8s+14s / a4 212tests+19s，全部绿 |
+| 新增失败 | 0（a4 的 2 个失败是 `CacheTotalLimitApplyContractTest`，在 21 条基线内） |
+| `guard.sh` | 每个子批后均绿 |
