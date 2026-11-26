@@ -1,0 +1,597 @@
+{
+  "schema_version": 1,
+  "_pinned": {
+    "frozen_at_commit": "5e3dc1c",
+    "frozen_on": "2026-11-26",
+    "note": "不可变地板。只能由显式的 refreeze 提交下调；任何上调都必须改走 approved-drift.json 并写明批次/理由/失效阶段。guard.sh 对每个指标同时校验本文件与 debt-baseline.json，取二者更严者。"
+  },
+  "_readme": [
+    "Frozen debt whitelist for the WebHTV architecture refactor (master plan §6.9).",
+    "Rule: the CURRENT set must be a SUBSET of each list here, and every count must",
+    "be <= its frozen number. Growth is a hard failure; shrinkage is the goal, and",
+    "when an item shrinks its entry must be pruned in the same commit so the",
+    "whitelist never rots into a permanent exemption.",
+    "",
+    "All numbers were produced by scripts/arch/*.sh, not by hand (plan §6.2). The",
+    "anchor commit is 91cdb8c; every structural number below was re-derived on a",
+    "clean worktree of that commit and matches master plan §2 within 0%.",
+    "Commit 790228d (HEAD at capture) carries +166 lines of 4.2 device-policy",
+    "scaffolding, which is why totals.java_* here are the 790228d values."
+  ],
+  "captured_at": "2026-11-26T18:59:00+08:00",
+  "anchor_commit": "91cdb8c",
+  "capture_commit": "790228d396bb33211a942f676ab568b4b66f297c",
+  "metric_counter": "regex-v1",
+  "totals": {
+    "_note": "Ceilings, not equalities: a batch may add scaffolding while shrinking debt.",
+    "java_files_max": 2701,
+    "java_lines_max": 577365
+  },
+  "extremes": {
+    "_note": "Each of these may only go down (plan §6.1 ladder).",
+    "max_file_lines": 14365,
+    "max_methods": 1099,
+    "max_fields": 278,
+    "max_package_lines": 93249,
+    "max_direct_classes": 90
+  },
+  "distribution": {
+    "_note": "Counts of files at/above a threshold; only down.",
+    "over_1000": 55,
+    "over_2000": 15,
+    "over_3000": 8
+  },
+  "large_files": {
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java": 14365,
+    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 13255,
+    "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11976,
+    "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9819,
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java": 6667,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4182,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java": 3935,
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/RemoteTrustDialog.java": 3515,
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/GitCloudDialog.java": 2894,
+    "app/src/main/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapter.java": 2742,
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsProxy.java": 2721,
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/TmdbHeaderView.java": 2553,
+    "app/src/mobile/java/com/fongmi/android/tv/ui/activity/LiveActivity.java": 2468,
+    "app/src/main/java/com/fongmi/android/tv/web/HomeWebController.java": 2288,
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/CustomCspDialog.java": 2083,
+    "app/src/main/java/com/fongmi/android/tv/player/exo/ExoUtil.java": 1994,
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/PlayerOsdController.java": 1910,
+    "app/src/main/java/com/fongmi/android/tv/service/PersonalRecommendationService.java": 1873,
+    "app/src/main/java/com/fongmi/android/tv/ui/web/WebReaderActivity.java": 1851,
+    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/HomeActivity.java": 1757,
+    "app/src/test/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicyTest.java": 1668,
+    "app/src/main/java/com/fongmi/android/tv/setting/Setting.java": 1655,
+    "app/src/main/java/com/fongmi/android/tv/lab/LabEnv.java": 1624,
+    "app/src/main/java/com/fongmi/android/tv/player/engine/IjkSimplePlayer.java": 1563,
+    "app/src/main/java/com/fongmi/android/tv/utils/LoginStateSync.java": 1557,
+    "app/src/main/java/com/fongmi/android/tv/ui/custom/AudioPlayerBackgroundDrawable.java": 1544,
+    "app/src/main/java/com/fongmi/android/tv/bean/History.java": 1501,
+    "app/src/testLeanback/java/com/fongmi/android/tv/ui/activity/TvFocusRingContractTest.java": 1499,
+    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/LiveActivity.java": 1479,
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/AudioActivity.java": 1474,
+    "app/src/main/java/com/fongmi/android/tv/player/karaoke/KaraokePitchTrackGenerator.java": 1468,
+    "app/src/main/java/com/fongmi/android/tv/player/mpv/MpvConfigStore.java": 1448,
+    "app/src/main/java/com/fongmi/android/tv/player/PlaybackAutoContext.java": 1438,
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/PlaybackActivity.java": 1434,
+    "app/src/main/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicy.java": 1426,
+    "app/src/main/java/com/fongmi/android/tv/setting/CustomCspSetting.java": 1416,
+    "app/src/main/java/com/fongmi/android/tv/player/engine/ExoPlayerEngine.java": 1396,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapterTest.java": 1335,
+    "app/src/main/java/com/fongmi/android/tv/service/TmdbService.java": 1325,
+    "app/src/main/java/com/fongmi/android/tv/player/exo/PreCache.java": 1273,
+    "app/src/main/java/com/fongmi/android/tv/player/ijk/IjkRuntimeProfileController.java": 1262,
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/WebHomeExtensionDialog.java": 1262,
+    "app/src/main/java/com/fongmi/android/tv/theme/ThemeBinder.java": 1241,
+    "app/src/main/java/com/fongmi/android/tv/service/AiRecommendationService.java": 1231,
+    "app/src/main/java/com/fongmi/android/tv/player/engine/MpvPlayerEngine.java": 1177,
+    "app/src/main/java/com/fongmi/android/tv/setting/PlaybackPerformanceSetting.java": 1131,
+    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/CollectActivity.java": 1130,
+    "app/src/main/java/com/fongmi/android/tv/player/exo/AutoTargetLoadControl.java": 1115,
+    "app/src/main/java/com/fongmi/android/tv/player/diagnostic/PanNetworkDiagnosticRunner.java": 1098,
+    "app/src/androidTest/java/com/fongmi/android/tv/playback/origin/OriginIsolationPlaybackTest.java": 1084,
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/PanNetworkDiagnosticDialog.java": 1078,
+    "app/src/main/java/com/fongmi/android/tv/setting/PlayerSetting.java": 1064,
+    "app/src/main/java/com/fongmi/android/tv/player/exo/PlaybackAnalyticsListener.java": 1053,
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/PluginManagerActivity.java": 1040,
+    "app/src/main/java/tv/danmaku/ijk/media/player/IjkMediaPlayer.java": 1031
+  },
+  "flavor": {
+    "_note": "80 -> 0 by batch 4.6. dup_files entries are repo-relative to the java root.",
+    "dup_files_max": 80,
+    "dup_lines_max": 58466,
+    "dup_files": [
+      "com/fongmi/android/tv/Product.java",
+      "com/fongmi/android/tv/bean/CastVideo.java",
+      "com/fongmi/android/tv/dlna/DLNACast.java",
+      "com/fongmi/android/tv/dlna/DLNACastManager.java",
+      "com/fongmi/android/tv/service/DLNACastService.java",
+      "com/fongmi/android/tv/ui/activity/FileActivity.java",
+      "com/fongmi/android/tv/ui/activity/HistoryActivity.java",
+      "com/fongmi/android/tv/ui/activity/HomeActivity.java",
+      "com/fongmi/android/tv/ui/activity/KeepActivity.java",
+      "com/fongmi/android/tv/ui/activity/LiveActivity.java",
+      "com/fongmi/android/tv/ui/activity/ScanActivity.java",
+      "com/fongmi/android/tv/ui/activity/SearchActivity.java",
+      "com/fongmi/android/tv/ui/activity/VideoActivity.java",
+      "com/fongmi/android/tv/ui/adapter/AdRuleAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/ChannelAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/CollectAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/ConfigAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/DeviceAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/EpgDataAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/EpisodeAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/FileAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/FlagAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/GroupAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/HistoryAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/HotWordAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/KeepAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/LiveAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/ParseAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/QualityAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/QuickAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/RecommendationFeedbackAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/RecordAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/RestoreAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/SearchAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/SiteAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/ThemeAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/TypeAdapter.java",
+      "com/fongmi/android/tv/ui/adapter/WordAdapter.java",
+      "com/fongmi/android/tv/ui/base/BaseActivity.java",
+      "com/fongmi/android/tv/ui/base/BaseFragment.java",
+      "com/fongmi/android/tv/ui/base/BaseVodHolder.java",
+      "com/fongmi/android/tv/ui/base/ViewType.java",
+      "com/fongmi/android/tv/ui/custom/CustomScroller.java",
+      "com/fongmi/android/tv/ui/custom/CustomTextListener.java",
+      "com/fongmi/android/tv/ui/custom/CustomViewPager.java",
+      "com/fongmi/android/tv/ui/dialog/AdBlockStatsDialog.java",
+      "com/fongmi/android/tv/ui/dialog/AdRuleEditDialog.java",
+      "com/fongmi/android/tv/ui/dialog/AdRuleManageDialog.java",
+      "com/fongmi/android/tv/ui/dialog/AdRulePreviewDialog.java",
+      "com/fongmi/android/tv/ui/dialog/AppearanceDialog.java",
+      "com/fongmi/android/tv/ui/dialog/BufferDialog.java",
+      "com/fongmi/android/tv/ui/dialog/CastDialog.java",
+      "com/fongmi/android/tv/ui/dialog/ConfigDialog.java",
+      "com/fongmi/android/tv/ui/dialog/ControlDialog.java",
+      "com/fongmi/android/tv/ui/dialog/DanmakuApiDialog.java",
+      "com/fongmi/android/tv/ui/dialog/EpisodeDetailDialog.java",
+      "com/fongmi/android/tv/ui/dialog/EpisodeListDialog.java",
+      "com/fongmi/android/tv/ui/dialog/HistoryDialog.java",
+      "com/fongmi/android/tv/ui/dialog/LiveDialog.java",
+      "com/fongmi/android/tv/ui/dialog/PassDialog.java",
+      "com/fongmi/android/tv/ui/dialog/PlayerOsdDialog.java",
+      "com/fongmi/android/tv/ui/dialog/QuickSearchDialog.java",
+      "com/fongmi/android/tv/ui/dialog/RecommendationFeedbackDialog.java",
+      "com/fongmi/android/tv/ui/dialog/RestoreDialog.java",
+      "com/fongmi/android/tv/ui/dialog/SiteDialog.java",
+      "com/fongmi/android/tv/ui/dialog/SpeedDialog.java",
+      "com/fongmi/android/tv/ui/dialog/ThemeDialog.java",
+      "com/fongmi/android/tv/ui/dialog/TimerDialog.java",
+      "com/fongmi/android/tv/ui/dialog/UaDialog.java",
+      "com/fongmi/android/tv/ui/dialog/UpdateDialog.java",
+      "com/fongmi/android/tv/ui/dialog/WebDialog.java",
+      "com/fongmi/android/tv/ui/fragment/CollectFragment.java",
+      "com/fongmi/android/tv/ui/fragment/FolderFragment.java",
+      "com/fongmi/android/tv/ui/fragment/TypeFragment.java",
+      "com/fongmi/android/tv/ui/helper/SiteDialogTheme.java",
+      "com/fongmi/android/tv/ui/holder/VodListHolder.java",
+      "com/fongmi/android/tv/ui/holder/VodOvalHolder.java",
+      "com/fongmi/android/tv/ui/holder/VodRectHolder.java",
+      "com/fongmi/android/tv/utils/PiP.java",
+      "com/fongmi/android/tv/utils/Timer.java"
+    ]
+  },
+  "namespace_files": [
+    "app/src/main/java/androidx/media3/mpvplayer/HlsAdTimeline.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsManifestTimelineTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsPlaylistRewriter.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsProxyLiveLagTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/HlsSegmentDecryptor.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAudioDecoderPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAudioMimeTypes.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAutoCacheBaselineState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAutoCacheOptionPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvAutoHlsBitrateState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvBufferedPositionPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvCacheObserverState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvCacheTimePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvCacheTimeState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiagnosticCollector.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiagnosticsPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiscMenuPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDiscRebufferTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvDtsHdFallbackPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvFontConfig.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvGpuLoadTracker.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsAdBoundaryState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsCacheCoordinator.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsPreloadGate.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsProxy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsSegmentContentPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsTargetIdentity.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvHlsUpstreamEstimator.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvInitialTrackSelectionPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvMediaReplacementCoordinator.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvOptionPriorityPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvOsdSurfacePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPauseIntentPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlaybackState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPlayerConfig.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPreloadCachePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPropertyCache.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvPropertySnapshot.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvRenderLogPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvRequestHeaderPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSeekPositionState.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvStartupBufferPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSubtitleSourcePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceLoadPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceSizePolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvSurfaceTeardownPolicy.java",
+    "app/src/main/java/androidx/media3/mpvplayer/MpvTrackRefreshPolicy.java"
+  ],
+  "deps": {
+    "_note": "52 pairs -> <=20 (stage 2) -> 0. ui_to_player_files 36 -> 0.",
+    "bidirectional_pairs_max": 52,
+    "ui_to_player_files_max": 36,
+    "bidirectional_pairs": [
+      [
+        "ui",
+        "utils"
+      ],
+      [
+        "bean",
+        "ui"
+      ],
+      [
+        "player",
+        "setting"
+      ],
+      [
+        "player",
+        "ui"
+      ],
+      [
+        "setting",
+        "ui"
+      ],
+      [
+        "api",
+        "bean"
+      ],
+      [
+        "player",
+        "utils"
+      ],
+      [
+        "bean",
+        "playback"
+      ],
+      [
+        "bean",
+        "utils"
+      ],
+      [
+        "bean",
+        "web"
+      ],
+      [
+        "api",
+        "utils"
+      ],
+      [
+        "bean",
+        "setting"
+      ],
+      [
+        "service",
+        "ui"
+      ],
+      [
+        "bean",
+        "player"
+      ],
+      [
+        "server",
+        "utils"
+      ],
+      [
+        "api",
+        "setting"
+      ],
+      [
+        "bean",
+        "db"
+      ],
+      [
+        "ui",
+        "web"
+      ],
+      [
+        "bean",
+        "server"
+      ],
+      [
+        "following",
+        "ui"
+      ],
+      [
+        "bean",
+        "following"
+      ],
+      [
+        "bean",
+        "gson"
+      ],
+      [
+        "bean",
+        "impl"
+      ],
+      [
+        "setting",
+        "utils"
+      ],
+      [
+        "api",
+        "server"
+      ],
+      [
+        "bean",
+        "history"
+      ],
+      [
+        "plugin",
+        "ui"
+      ],
+      [
+        "server",
+        "setting"
+      ],
+      [
+        "api",
+        "playback"
+      ],
+      [
+        "server",
+        "ui"
+      ],
+      [
+        "db",
+        "playback"
+      ],
+      [
+        "api",
+        "player"
+      ],
+      [
+        "player",
+        "service"
+      ],
+      [
+        "player",
+        "subtitle"
+      ],
+      [
+        "service",
+        "subtitle"
+      ],
+      [
+        "api",
+        "web"
+      ],
+      [
+        "cache",
+        "player"
+      ],
+      [
+        "playback",
+        "setting"
+      ],
+      [
+        "player",
+        "server"
+      ],
+      [
+        "server",
+        "service"
+      ],
+      [
+        "bean",
+        "event"
+      ],
+      [
+        "bean",
+        "title"
+      ],
+      [
+        "service",
+        "title"
+      ],
+      [
+        "setting",
+        "web"
+      ],
+      [
+        "api",
+        "node"
+      ],
+      [
+        "history",
+        "ui"
+      ],
+      [
+        "server",
+        "web"
+      ],
+      [
+        "cache",
+        "service"
+      ],
+      [
+        "node",
+        "playback"
+      ],
+      [
+        "cache",
+        "utils"
+      ],
+      [
+        "playback",
+        "service"
+      ],
+      [
+        "theme",
+        "utils"
+      ]
+    ]
+  },
+  "offenders": {
+    "_note": [
+      "isLeanback_callsites is the GATE number: comment-stripped, declarations",
+      "excluded. It reads 219 on both 91cdb8c and HEAD (proof 4.2 changed nothing).",
+      "isLeanback_raw_lines is the plan's §2.2.4 `grep -c` number (232 at anchor); it",
+      "also counts doc mentions, so it is reported but NOT gated."
+    ],
+    "isLeanback_callsites": 219,
+    "setting_static_callsites": 628,
+    "setting_static_files": 112,
+    "app_get_files": 93,
+    "player_manager_files": 48,
+    "bean_history_files": 56,
+    "eventbus_files": 17,
+    "androidx_namespace_files": 48
+  },
+  "tests": {
+    "_note": "既有失败不是回归；source_text_locks 只减不增（plan §6.9 特殊规则）。",
+    "known_failures": [
+      {
+        "class": "CacheTotalLimitApplyContractTest",
+        "test": "bothLimitEntriesShareThePlaybackApplyPath",
+        "category": "源码断言"
+      },
+      {
+        "class": "CacheTotalLimitApplyContractTest",
+        "test": "totalLimitChangeAppliesAndRepaintsTheSummary",
+        "category": "行为"
+      },
+      {
+        "class": "ChaquopyRequirementsTest",
+        "test": "requestsCertificateDependencyIsPackagedExplicitly",
+        "category": "打包配置"
+      },
+      {
+        "class": "FfmpegVc1SupportTest",
+        "test": "bundledFfmpeg_hasVc1DecoderForEveryAbi",
+        "category": "原生资产"
+      },
+      {
+        "class": "FollowingAlistImportTest",
+        "test": "serverlessNormalizersPreserveFollowOption",
+        "category": "行为"
+      },
+      {
+        "class": "LabEnvTest",
+        "test": "deleteTreeUnlocksReadOnlyDirectory",
+        "category": "环境/文件系统"
+      },
+      {
+        "class": "MpvFontConfigTest",
+        "test": "writeIfChanged_replacesStaleConfigurationAndCleansTemporaryFile",
+        "category": "文件系统"
+      },
+      {
+        "class": "MpvHlsCacheCoordinatorTest",
+        "test": "successfulCommitPublishesCompleteFileAndReleasesReservation",
+        "category": "缓存"
+      },
+      {
+        "class": "PlaybackOwnershipSourceTest",
+        "test": "staleSwitchCallbacksRecheckPageAndPlaybackContext",
+        "category": "源码断言"
+      },
+      {
+        "class": "PlaybackOwnershipSourceTest",
+        "test": "staleSwitchCallbacksRecheckPageAndPlaybackContextWithApplyGuard",
+        "category": "源码断言"
+      },
+      {
+        "class": "PlayerPlaybackRegressionSourceTest",
+        "test": "mobileExoStartupPassesResumePositionAndSkipsTheSecondRestoreSeek",
+        "category": "源码断言"
+      },
+      {
+        "class": "PythonSpiderDiagnosticsWiringTest",
+        "test": "dependencyFailureKeepsAnUnconditionalLogcatChannel",
+        "category": "源码断言"
+      },
+      {
+        "class": "PythonSpiderDiagnosticsWiringTest",
+        "test": "dependencyFailureKeepsTheBridgeCallGuarded",
+        "category": "源码断言"
+      },
+      {
+        "class": "PythonStartIdempotenceSourceTest",
+        "test": "constructorStartsPythonThroughTheGuardedEntryPoint",
+        "category": "源码断言"
+      },
+      {
+        "class": "PythonStartIdempotenceSourceTest",
+        "test": "theStarterIsSynchronizedAndToleratesALostRace",
+        "category": "源码断言"
+      },
+      {
+        "class": "ThemeBinderContractTest",
+        "test": "nativeActivitiesOutsideBaseActivityAreExplicitlyAccountedFor",
+        "category": "契约"
+      },
+      {
+        "class": "TmdbDetailActivityLayoutTest",
+        "test": "colorfulDetailDoesNotKeepPlaybackServiceBoundBetweenEpisodeLaunches",
+        "category": "布局"
+      },
+      {
+        "class": "TmdbVideoTest",
+        "test": "displayTypeUsesChineseCategoryNames",
+        "category": "行为"
+      },
+      {
+        "class": "TvAppExitSourceTest",
+        "test": "backgroundResumeIsDebouncedAndWorkerStopIsVisible",
+        "category": "源码断言"
+      },
+      {
+        "class": "TvFixedLightSurfaceContrastTest",
+        "test": "paletteForegroundsStayReadableOnFixedLightSurfaces",
+        "category": "视觉契约"
+      },
+      {
+        "class": "VideoActivityLayoutTest",
+        "test": "leanbackPlaybackLoadingIgnoresStaleReadyBeforeNewPlayerStarts",
+        "category": "布局"
+      }
+    ],
+    "_known_failures_total": 21,
+    "baseline": {
+      "task": ":app:testMobileArm64_v8aDebugUnitTest",
+      "flavor": "mobileArm64_v8aDebug",
+      "recorded": "2026-11-25",
+      "total_cases": 6226,
+      "failed": 21,
+      "skipped": 3,
+      "passed_floor": 6202,
+      "_rule": "Failure set must be a SUBSET of known_failures AND passed >= passed_floor. Only the first condition is not enough: a new failure hides behind the existing 21."
+    },
+    "source_text_locks_max": 218,
+    "source_text_lock_cases_max": 1661,
+    "source_text_locks_by_set": {
+      "test": 144,
+      "testMobile": 48,
+      "testLeanback": 26
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "stage": 2,
+  "_readme": [
+    "门禁的『显式豁免』通道。只有在这里登记过的条目，guard.sh 才允许越过 pinned/工作基线。",
+    "两种 kind：",
+    "  increment  给『计数类』指标一个增量上限。字段：metric / increment / batch / reason / expires_stage",
+    "  new_item   给『集合类』指标放行一个具名条目。字段：metric / items / batch / reason / expires_stage",
+    "硬规则：",
+    "  1. 五类字段缺一即红；reason 为空即红；increment 必须为正整数。",
+    "  2. expires_stage 是失效阶段号，到达后 guard.sh 直接判红——豁免必须被清掉，不能变成永久基线。",
+    "  3. 本条目不抬高 pinned 基线，也不改 debt-baseline.json；下一批仍要在这条增量之内运行。",
+    "  4. 禁止用它把『基线改成现实』。只允许一次性、具名、可解释的漂移；说不清理由的增长应当被修掉。"
+  ],
+  "entries": [
+    {
+      "kind": "increment",
+      "metric": "offenders.setting_static_callsites",
+      "increment": 11,
+      "batch": "1.3",
+      "reason": "合并 leanback/mobile 近乎重复的设置界面时取了两端分支的并集（AppearanceDialog +13、RecordAdapter +4），不是新增的耦合点；这些设置读取随阶段 3 的 UI 垂直切片下沉后应回收。",
+      "expires_stage": 3
+    },
+    {
+      "kind": "increment",
+      "metric": "offenders.app_get_files",
+      "increment": 1,
+      "batch": "4.3",
+      "reason": "utils/Timer 在 4.3 迁移后新增一处 App.get()（用于构造 PlaybackService 的 Intent）。Timer 本身是播放业务而非通用工具，按 §2.8 的处置应在阶段 3 前移入 service 包，届时本增量自动消失。",
+      "expires_stage": 3
+    },
+    {
+      "kind": "increment",
+      "metric": "offenders.bean_history_files",
+      "increment": 1,
+      "batch": "1.3",
+      "reason": "CastDialog 在 1.3 合并双端副本时引入了对 bean.History 的引用，属合并并集而非新功能。",
+      "expires_stage": 3
+    },
+    {
+      "kind": "new_item",
+      "metric": "deps.bidirectional_pairs",
+      "items": [["dlna", "service"]],
+      "batch": "1.3",
+      "reason": "合并双端 DLNACastManager 副本后，dlna→service（启动 DLNACastService）与 service→dlna（引用 DLNAServiceConfiguration 这个纯 POJO）同时存在。建议修法：把 DLNAServiceConfiguration(32 行) 迁入 service 包，边即变单向。",
+      "expires_stage": 3
+    },
+    {
+      "kind": "new_item",
+      "metric": "deps.bidirectional_pairs",
+      "items": [["service", "utils"]],
+      "batch": "1.3",
+      "reason": "utils/Timer 持有 PlaybackService 引用形成 utils→service，而 service 早已依赖 utils 的 Task/Notify。建议修法：Timer 与 Clock 随播放业务迁入 service 包，utils 侧不再持有服务引用。",
+      "expires_stage": 3
+    }
+  ]
+}

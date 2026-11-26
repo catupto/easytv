@@ -1652,6 +1652,8 @@ bash scripts/arch/dep-graph.sh | grep -E "cycles|bidirectional"   # 目标 0
 
 **关键设计**：门禁 1–4 是纯文本脚本，**90 秒内必定跑完**，因此可以设为 required check 而不拖慢 PR。这与"跑全套 Gradle 矩阵"有本质区别——后者永远会因为太慢而被绕过（这也是 `android-release.yml` 只跑 10 个测试类的原因）。
 
+**单元测试门禁（2026-11-26 补齐）**：`scripts/arch/test-gate.sh` 把"失败 N 条能不能接受"变成机器判定——`passed ≥ passed_floor` **且** 失败集合 ⊆ `known_failures`。它读 `app/build/test-results/` 的 XML，秒级完成，可放进 PR 门禁（前提是 CI 能跑 Gradle）。已实测：从 `known_failures` 删一条即变红，证明不是只看总数的橡皮章。`leanback` 变体目前仅报告，需用 `--record-leanback` 建立基线后才严格判定。
+
 **lint 门禁**：把 `app/build.gradle:156-160` 的 `lint { disable ... }` 收敛为"`disable` 列表进白名单，新增 disable 项需 ADR"。不要求一次清空所有告警。
 
 ### 6.4 依赖守护

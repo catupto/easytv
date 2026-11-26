@@ -23,10 +23,10 @@
   },
   "extremes": {
     "_note": "Each of these may only go down (plan §6.1 ladder).",
-    "max_file_lines": 14366,
-    "max_methods": 1100,
+    "max_file_lines": 14365,
+    "max_methods": 1099,
     "max_fields": 278,
-    "max_package_lines": 93257,
+    "max_package_lines": 93249,
     "max_direct_classes": 90
   },
   "distribution": {
@@ -35,13 +35,13 @@
     "over_3000": 8
   },
   "large_files": {
-    "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java": 14366,
-    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 13272,
-    "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11977,
-    "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9820,
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivity.java": 14365,
+    "app/src/leanback/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 13255,
+    "app/src/mobile/java/com/fongmi/android/tv/ui/activity/VideoActivity.java": 11976,
+    "app/src/main/java/com/fongmi/android/tv/player/PlayerManager.java": 9819,
     "app/src/main/java/androidx/media3/mpvplayer/MpvPlayer.java": 6667,
-    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4187,
-    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java": 3940,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/VideoActivityLayoutTest.java": 4182,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/activity/TmdbDetailActivityLayoutTest.java": 3935,
     "app/src/main/java/com/fongmi/android/tv/ui/dialog/RemoteTrustDialog.java": 3515,
     "app/src/main/java/com/fongmi/android/tv/ui/dialog/GitCloudDialog.java": 2894,
     "app/src/main/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapter.java": 2742,
@@ -50,19 +50,19 @@
     "app/src/mobile/java/com/fongmi/android/tv/ui/activity/LiveActivity.java": 2468,
     "app/src/main/java/com/fongmi/android/tv/web/HomeWebController.java": 2288,
     "app/src/main/java/com/fongmi/android/tv/ui/dialog/CustomCspDialog.java": 2083,
-    "app/src/main/java/com/fongmi/android/tv/player/exo/ExoUtil.java": 1995,
+    "app/src/main/java/com/fongmi/android/tv/player/exo/ExoUtil.java": 1994,
     "app/src/main/java/com/fongmi/android/tv/ui/custom/PlayerOsdController.java": 1910,
     "app/src/main/java/com/fongmi/android/tv/service/PersonalRecommendationService.java": 1873,
     "app/src/main/java/com/fongmi/android/tv/ui/web/WebReaderActivity.java": 1851,
     "app/src/leanback/java/com/fongmi/android/tv/ui/activity/HomeActivity.java": 1757,
     "app/src/test/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicyTest.java": 1668,
-    "app/src/main/java/com/fongmi/android/tv/setting/Setting.java": 1657,
+    "app/src/main/java/com/fongmi/android/tv/setting/Setting.java": 1655,
     "app/src/main/java/com/fongmi/android/tv/lab/LabEnv.java": 1624,
     "app/src/main/java/com/fongmi/android/tv/player/engine/IjkSimplePlayer.java": 1563,
     "app/src/main/java/com/fongmi/android/tv/utils/LoginStateSync.java": 1557,
     "app/src/main/java/com/fongmi/android/tv/ui/custom/AudioPlayerBackgroundDrawable.java": 1544,
-    "app/src/testLeanback/java/com/fongmi/android/tv/ui/activity/TvFocusRingContractTest.java": 1504,
     "app/src/main/java/com/fongmi/android/tv/bean/History.java": 1501,
+    "app/src/testLeanback/java/com/fongmi/android/tv/ui/activity/TvFocusRingContractTest.java": 1499,
     "app/src/leanback/java/com/fongmi/android/tv/ui/activity/LiveActivity.java": 1479,
     "app/src/main/java/com/fongmi/android/tv/ui/activity/AudioActivity.java": 1474,
     "app/src/main/java/com/fongmi/android/tv/player/karaoke/KaraokePitchTrackGenerator.java": 1468,
@@ -72,7 +72,7 @@
     "app/src/main/java/com/fongmi/android/tv/player/exo/ExoCompressedAudioDirectPolicy.java": 1426,
     "app/src/main/java/com/fongmi/android/tv/setting/CustomCspSetting.java": 1416,
     "app/src/main/java/com/fongmi/android/tv/player/engine/ExoPlayerEngine.java": 1396,
-    "app/src/testMobile/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapterTest.java": 1340,
+    "app/src/testMobile/java/com/fongmi/android/tv/ui/helper/TmdbUIAdapterTest.java": 1335,
     "app/src/main/java/com/fongmi/android/tv/service/TmdbService.java": 1325,
     "app/src/main/java/com/fongmi/android/tv/player/exo/PreCache.java": 1273,
     "app/src/main/java/com/fongmi/android/tv/player/ijk/IjkRuntimeProfileController.java": 1262,
@@ -85,10 +85,10 @@
     "app/src/main/java/com/fongmi/android/tv/player/exo/AutoTargetLoadControl.java": 1115,
     "app/src/main/java/com/fongmi/android/tv/player/diagnostic/PanNetworkDiagnosticRunner.java": 1098,
     "app/src/androidTest/java/com/fongmi/android/tv/playback/origin/OriginIsolationPlaybackTest.java": 1084,
-    "app/src/main/java/com/fongmi/android/tv/ui/dialog/PanNetworkDiagnosticDialog.java": 1079,
+    "app/src/main/java/com/fongmi/android/tv/ui/dialog/PanNetworkDiagnosticDialog.java": 1078,
     "app/src/main/java/com/fongmi/android/tv/setting/PlayerSetting.java": 1064,
     "app/src/main/java/com/fongmi/android/tv/player/exo/PlaybackAnalyticsListener.java": 1053,
-    "app/src/main/java/com/fongmi/android/tv/ui/activity/PluginManagerActivity.java": 1041,
+    "app/src/main/java/com/fongmi/android/tv/ui/activity/PluginManagerActivity.java": 1040,
     "app/src/main/java/tv/danmaku/ijk/media/player/IjkMediaPlayer.java": 1031
   },
   "flavor": {
@@ -226,11 +226,11 @@
         "setting"
       ],
       [
-        "setting",
+        "player",
         "ui"
       ],
       [
-        "player",
+        "setting",
         "ui"
       ],
       [
@@ -238,12 +238,12 @@
         "bean"
       ],
       [
-        "bean",
-        "playback"
-      ],
-      [
         "player",
         "utils"
+      ],
+      [
+        "bean",
+        "playback"
       ],
       [
         "bean",
@@ -282,12 +282,12 @@
         "db"
       ],
       [
-        "bean",
-        "server"
-      ],
-      [
         "ui",
         "web"
+      ],
+      [
+        "bean",
+        "server"
       ],
       [
         "following",
@@ -306,6 +306,10 @@
         "impl"
       ],
       [
+        "setting",
+        "utils"
+      ],
+      [
         "api",
         "server"
       ],
@@ -322,16 +326,12 @@
         "setting"
       ],
       [
-        "server",
-        "ui"
-      ],
-      [
         "api",
         "playback"
       ],
       [
-        "setting",
-        "utils"
+        "server",
+        "ui"
       ],
       [
         "db",
@@ -374,10 +374,6 @@
         "service"
       ],
       [
-        "service",
-        "utils"
-      ],
-      [
         "bean",
         "event"
       ],
@@ -418,10 +414,6 @@
         "utils"
       ],
       [
-        "dlna",
-        "service"
-      ],
-      [
         "playback",
         "service"
       ]
@@ -435,11 +427,11 @@
       "also counts doc mentions, so it is reported but NOT gated."
     ],
     "isLeanback_callsites": 13,
-    "setting_static_callsites": 639,
+    "setting_static_callsites": 628,
     "setting_static_files": 111,
-    "app_get_files": 94,
+    "app_get_files": 93,
     "player_manager_files": 48,
-    "bean_history_files": 57,
+    "bean_history_files": 56,
     "eventbus_files": 17,
     "androidx_namespace_files": 48
   },
@@ -571,5 +563,11 @@
       "testLeanback": 26
     },
     "_source_text_category_note": "Batch 1.4 tagged the 4 heavy classes with @Category(SourceTextAssertion.class) so the transition switch -PexcludeSourceTextTests can separate real regressions from text drift. That is +5 lines each (2 imports, 1 comment, 1 annotation, 1 blank). The 4 large_files entries above were raised by exactly that amount; they may only go DOWN from here, and the tags are removed as each class is migrated/deleted per §2.9.4."
+  },
+  "_baseline_policy": {
+    "pinned": "debt-baseline.pinned.json（不可变地板，只能显式重冻）",
+    "tolerance": "行数/成员数类指标允许 1%（上限 50 行）的机械漂移；计数与集合类零容差",
+    "exemptions": "任何超出容差的增长必须登记到 approved-drift.json，写明 batch/reason/expires_stage",
+    "rule": "本文件只允许下调或删除条目；上调属于改基线，必须走 approved-drift 并到期清除"
   }
 }

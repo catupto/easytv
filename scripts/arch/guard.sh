@@ -98,64 +98,148 @@ def load_base(name):
 failures = []
 warnings = []
 
+# 容差只给"行数/成员数"这类会被机械替换带偏的指标：把 Util.isLeanback() 换成
+# DeviceModePolicy.current().isTv() 会让所在行变长并可能折行，+1~+5 行属于噪声。
+# 集合与计数类指标（调用点、文件数、双份文件、环）一律零容差。
+TOLERANCE_PCT = 0.01
+TOLERANCE_CAP = 50
 
-def check_at_most(label, current, base):
-    if current > base:
-        failures.append("%s: %s > baseline %s" % (label, current, base))
+
+def tolerance(base):
+    return min(int(base * TOLERANCE_PCT), TOLERANCE_CAP)
 
 
-def check_subset(label, current_set, base_set):
-    new = sorted(set(current_set) - set(base_set))
-    if new:
-        failures.append("%s: %d item(s) not in baseline" % (label, len(new)))
-        # Showing 5 keeps the output readable when a refactor adds many at once.
-        for item in new[:5]:
-            failures.append("    + %s" % (item,))
-    removed = sorted(set(base_set) - set(current_set))
+def drift_increment(label):
+    total = 0
+    for entry in drift.get("entries", []):
+        if entry.get("metric") == label and entry.get("kind", "increment") == "increment":
+            total += int(entry.get("increment", 0))
+    return total
+
+
+def drift_allows_item(label, item):
+    """集合类指标的唯一豁免通道：必须点名具体条目，且同样带失效阶段。"""
+    for entry in drift.get("entries", []):
+        if entry.get("metric") != label or entry.get("kind") != "new_item":
+            continue
+        allowed = entry.get("items", [])
+        if isinstance(item, tuple):
+            hit = any(tuple(x) == item for x in allowed if isinstance(x, (list, tuple)))
+        else:
+            hit = item in allowed
+        if hit:
+            return True
+    return False
+
+
+def check_at_most(label, current, base, pinned_value=None, tolerant=False):
+    # 同时受工作基线与 pinned 地板约束，取更严者；两边任一被抬高都绕不过去。
+    strict = base if pinned_value is None else min(base, pinned_value)
+    ceiling = strict + (tolerance(strict) if tolerant else 0) + drift_increment(label)
+    if current > ceiling:
+        origin = ""
+        if pinned_value is not None and pinned_value != base:
+            origin = " [working=%s pinned=%s]" % (base, pinned_value)
+        failures.append("%s: %s > ceiling %s%s" % (label, current, ceiling, origin))
+
+
+def check_subset(label, current_set, base_set, pinned_set=None):
+    current = set(current_set)
+    # 必须同时是工作基线与 pinned 地板的上集约束下的子集：任一记录里没有的都算新增。
+    for name, recorded in (("baseline", base_set), ("pinned", pinned_set)):
+        if recorded is None:
+            continue
+        new = sorted(item for item in current - set(recorded)
+                     if not drift_allows_item(label, item))
+        if new:
+            failures.append("%s: %d item(s) not in %s" % (label, len(new), name))
+            # Showing 5 keeps the output readable when a refactor adds many at once.
+            for item in new[:5]:
+                failures.append("    + %s" % (item,))
+    removed = sorted(set(base_set) - current)
     if removed:
         warnings.append("%s: %d baseline entr(ies) no longer present — prune them "
                         "from debt-baseline.json in the same commit" % (label, len(removed)))
 
 
+def check_drift_entries():
+    """豁免条目本身也要被守：字段缺失、越权、过了失效阶段都判红。"""
+    for index, entry in enumerate(drift.get("entries", [])):
+        where = "approved-drift[%d]" % index
+        kind = entry.get("kind", "increment")
+        for field in ("metric", "batch", "reason", "expires_stage"):
+            if field not in entry:
+                failures.append("%s: missing field '%s'" % (where, field))
+        if not str(entry.get("reason", "")).strip():
+            failures.append("%s: empty reason (an unjustified exemption is not an exemption)" % where)
+        if kind == "increment":
+            if int(entry.get("increment", 0)) <= 0:
+                failures.append("%s: increment must be positive" % where)
+        elif kind == "new_item":
+            if not entry.get("items"):
+                failures.append("%s: new_item must name the allowed item(s)" % where)
+        else:
+            failures.append("%s: unknown kind '%s'" % (where, kind))
+        expires = entry.get("expires_stage")
+        if isinstance(expires, int) and CURRENT_STAGE >= expires:
+            failures.append("%s: drifted allowance expired at stage %s (current stage %s) — "
+                            "delete the entry or close the debt" % (where, expires, CURRENT_STAGE))
+
+
 def guard(metrics, deps, dup, debt):
     totals = metrics["totals"]
     base_totals = debt["totals"]
+    pin_totals = pinned["totals"]
     # File/line counts may grow briefly while a batch adds scaffolding, so they are
     # gated by the ceiling (never by equality); the real floor is the pass count.
-    check_at_most("totals.java_files", totals["java_files"], base_totals["java_files_max"])
-    check_at_most("totals.java_lines", totals["java_lines"], base_totals["java_lines_max"])
+    check_at_most("totals.java_files", totals["java_files"],
+                  base_totals["java_files_max"], pin_totals["java_files_max"])
+    check_at_most("totals.java_lines", totals["java_lines"],
+                  base_totals["java_lines_max"], pin_totals["java_lines_max"], tolerant=True)
 
     ext = metrics["extremes"]
+    # max_file_lines / max_methods / max_package_lines 属于会随机械替换漂移的量，给容差；
+    # max_fields / max_direct_classes 变化只可能来自真的加了成员，零容差。
+    tolerant_extremes = {"max_file_lines", "max_methods", "max_package_lines"}
     for key in ("max_file_lines", "max_methods", "max_fields",
                 "max_package_lines", "max_direct_classes"):
-        check_at_most("extremes." + key, ext[key], debt["extremes"][key])
+        check_at_most("extremes." + key, ext[key], debt["extremes"][key],
+                      pinned["extremes"][key], tolerant=(key in tolerant_extremes))
 
     for bucket in ("over_1000", "over_2000", "over_3000"):
         check_at_most("distribution." + bucket, metrics["distribution"][bucket],
-                      debt["distribution"][bucket])
+                      debt["distribution"][bucket], pinned["distribution"][bucket])
 
     # Large files: current set must be a subset of the frozen list, and each file's
     # own line count must not exceed its frozen value.
     large = {r["path"]: r["lines"] for r in metrics.get("large_files", [])}
-    check_subset("large_files", large.keys(), debt["large_files"].keys())
+    check_subset("large_files", large.keys(), debt["large_files"].keys(),
+                 pinned["large_files"].keys())
     for path, lines in large.items():
-        if path in debt["large_files"]:
-            check_at_most("large_file:%s" % path.split("/")[-1], lines, debt["large_files"][path])
+        check_at_most("large_file:%s" % path.split("/")[-1], lines,
+                      debt["large_files"][path], pinned["large_files"].get(path),
+                      tolerant=True)
 
-    check_at_most("flavor.dup_files", metrics["flavor"]["dup_files"], debt["flavor"]["dup_files_max"])
-    check_at_most("flavor.dup_lines", metrics["flavor"]["dup_lines"], debt["flavor"]["dup_lines_max"])
-    check_subset("flavor.dup_files", dup["dup_files_list"], debt["flavor"]["dup_files"])
+    check_at_most("flavor.dup_files", metrics["flavor"]["dup_files"],
+                  debt["flavor"]["dup_files_max"], pinned["flavor"]["dup_files_max"])
+    check_at_most("flavor.dup_lines", metrics["flavor"]["dup_lines"],
+                  debt["flavor"]["dup_lines_max"], pinned["flavor"]["dup_lines_max"], tolerant=True)
+    check_subset("flavor.dup_files", dup["dup_files_list"], debt["flavor"]["dup_files"],
+                 pinned["flavor"]["dup_files"])
     for flavor, count in dup["main_overrides"].items():
         if count:
             failures.append("flavor.main_overrides[%s]: %d (flavor must not shadow main)" % (flavor, count))
 
     check_at_most("deps.bidirectional_pairs", deps["bidirectional_pairs"],
-                  debt["deps"]["bidirectional_pairs_max"])
+                  debt["deps"]["bidirectional_pairs_max"],
+                  pinned["deps"]["bidirectional_pairs_max"])
     base_pairs = {tuple(p) for p in debt["deps"]["bidirectional_pairs"]}
+    pin_pairs = {tuple(p) for p in pinned["deps"]["bidirectional_pairs"]}
     current_pairs = {(e["a"], e["b"]) for e in deps["bidirectional"]}
-    check_subset("deps.bidirectional_pairs", current_pairs, base_pairs)
+    check_subset("deps.bidirectional_pairs", current_pairs, base_pairs, pin_pairs)
     check_at_most("deps.ui_to_player_files", deps["ui_to_player_files"],
-                  debt["deps"]["ui_to_player_files_max"])
+                  debt["deps"]["ui_to_player_files_max"],
+                  pinned["deps"]["ui_to_player_files_max"])
 
     off = metrics["offenders"]
     # Explicit key list: debt-baseline.json also carries "_note" keys, and iterating
@@ -163,16 +247,27 @@ def guard(metrics, deps, dup, debt):
     for key in ("isLeanback_callsites", "setting_static_callsites", "setting_static_files",
                 "app_get_files", "player_manager_files", "bean_history_files",
                 "eventbus_files", "androidx_namespace_files"):
-        check_at_most("offenders." + key, off[key], debt["offenders"][key])
+        check_at_most("offenders." + key, off[key], debt["offenders"][key],
+                      pinned["offenders"][key])
 
-    check_subset("namespace_files", dup["namespace_files_list"], debt["namespace_files"])
+    check_subset("namespace_files", dup["namespace_files_list"], debt["namespace_files"],
+                 pinned["namespace_files"])
     check_at_most("tests.source_text_locks", metrics["tests"]["source_text_locks"],
-                  debt["tests"]["source_text_locks_max"])
+                  debt["tests"]["source_text_locks_max"],
+                  pinned["tests"]["source_text_locks_max"])
     check_at_most("tests.source_text_lock_cases", metrics["tests"]["source_text_lock_cases"],
-                  debt["tests"]["source_text_lock_cases_max"])
+                  debt["tests"]["source_text_lock_cases_max"],
+                  pinned["tests"]["source_text_lock_cases_max"])
+
+    check_drift_entries()
 
 
 debt = load_base("debt-baseline.json")
+# 不可变地板 + 显式增长通道。两者缺失都按"门禁配置错误"处理，不允许静默降级为
+# 只看工作基线——那正是上一轮把基线改成现实、门禁变成橡皮章的原因。
+pinned = load_base("debt-baseline.pinned.json")
+drift = load_base("approved-drift.json")
+CURRENT_STAGE = int(drift.get("stage", 0))
 
 if current_arg:
     # Explicit artifacts: the caller already ran metrics/dep-graph/dup-scan.
@@ -209,15 +304,16 @@ elif self_test:
             sys.exit(1)
 
         # Inject one synthetic regression per guard family and assert each goes red.
+        mfl_base = min(debt["extremes"]["max_file_lines"], pinned["extremes"]["max_file_lines"])
         probes = [
             ("dup_files grows by 1",
              lambda: dup.__setitem__("dup_files_list", dup["dup_files_list"] + ["ui/activity/Injected.java"])),
             ("bidirectional pair added",
              lambda: deps["bidirectional"].append({"a": "zzz", "b": "yyy", "a_to_b": 1, "b_to_a": 1})),
-            ("max_file_lines grows",
+            ("max_file_lines grows beyond tolerance",
              lambda: metrics["extremes"].__setitem__("max_file_lines",
-                                                      metrics["extremes"]["max_file_lines"] + 1)),
-            ("isLeanback callsites grow",
+                                                     mfl_base + tolerance(mfl_base) + 1)),
+            ("isLeanback callsites grow (zero tolerance)",
              lambda: metrics["offenders"].__setitem__("isLeanback_callsites",
                                                       metrics["offenders"]["isLeanback_callsites"] + 1)),
             ("source_text_locks grow",
@@ -239,8 +335,34 @@ elif self_test:
             metrics.clear(); metrics.update(saved_m)
             deps.clear(); deps.update(saved_d)
             dup.clear(); dup.update(saved_u)
-        print("SELF-TEST OK: current tree is clean and all %d synthetic regressions were caught."
-              % len(probes))
+        # 容差不等于豁免：正好落在容差内的增长必须仍然通过，超出一行才红。
+        saved_mfl = metrics["extremes"]["max_file_lines"]
+        metrics["extremes"]["max_file_lines"] = mfl_base + tolerance(mfl_base)
+        del failures[:]
+        guard(metrics, deps, dup, debt)
+        if failures:
+            print("SELF-TEST FAILED: growth inside tolerance must stay green, got: %s"
+                  % failures, file=sys.stderr)
+            sys.exit(1)
+        metrics["extremes"]["max_file_lines"] = saved_mfl
+
+        # 过期豁免必须判红，否则"临时豁免"会变成永久豁免。
+        saved_entries = list(drift.get("entries", []))
+        drift["entries"] = [{
+            "metric": "extremes.max_file_lines", "increment": 1, "batch": "self-test",
+            "reason": "probe", "expires_stage": max(CURRENT_STAGE, 0),
+        }]
+        del failures[:]
+        guard(metrics, deps, dup, debt)
+        expired = [f for f in failures if "expired" in f]
+        drift["entries"] = saved_entries
+        del failures[:]
+        if not expired:
+            print("SELF-TEST FAILED: an expired drift allowance was accepted", file=sys.stderr)
+            sys.exit(1)
+
+        print("SELF-TEST OK: current tree is clean, all %d synthetic regressions were caught, "
+              "tolerance boundary and drift expiry both behave." % len(probes))
         sys.exit(0)
 else:
     with tempfile.TemporaryDirectory() as tmp:
